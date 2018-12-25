@@ -112,12 +112,15 @@
     <Compile Include="ServiceRegistry.cs" />
     <Compile Include="Services\CommanderInventory.cs" />
     <Compile Include="Services\IInventoryService.cs" />
+    <Compile Include="Services\IMaterialTraderService.cs" />
     <Compile Include="Services\Implementations\InventoryService.cs" />
+    <Compile Include="Services\Implementations\MaterialTraderService.cs" />
     <Compile Include="Services\Material.cs" />
     <Compile Include="Services\MaterialCategory.cs" />
     <Compile Include="Services\MaterialGrade.cs" />
     <Compile Include="Services\Materials.cs" />
     <Compile Include="Services\MaterialSubcategory.cs" />
+    <Compile Include="Services\TradeRate.cs" />
     <Compile Include="Store.cs" />
     <Compile Include="Stores\InventoryStore.cs" />
     <Compile Include="Stores\StoredMaterial.cs" />

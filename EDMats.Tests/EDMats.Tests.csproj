@@ -52,6 +52,8 @@
     <Compile Include="DispatcherTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\MaterialsTests.cs" />
+    <Compile Include="Services\MaterialTraderServiceTests.cs" />
+    <Compile Include="Services\TradeRateTests.cs" />
     <Compile Include="StoreTests.cs" />
   </ItemGroup>
   <ItemGroup>
