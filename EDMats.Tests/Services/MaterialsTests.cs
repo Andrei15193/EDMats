@@ -14,42 +14,42 @@ namespace EDMats.Tests.Services
         public void RawMaterials()
         {
             var expected =
-                new Category
+                new Type
                 {
                     Name = "Raw",
-                    Subcategories = new[]
+                    Categories = new[]
                     {
-                        new Subcategory
+                        new Category
                         {
                             Name = "Raw Material Category 1",
                             Materials = new[]{ "Carbon", "Vanadium", "Niobium", "Yttrium" }
                         },
-                        new Subcategory
+                        new Category
                         {
                             Name = "Raw Material Category 2",
                             Materials = new[]{ "Phosphorus", "Chromium", "Molybdenum", "Technetium" }
                         },
-                        new Subcategory
+                        new Category
                         {
                             Name = "Raw Material Category 3",
                             Materials = new[]{ "Sulphur", "Manganese", "Cadmium", "Ruthenium" }
                         },
-                        new Subcategory
+                        new Category
                         {
                             Name = "Raw Material Category 4",
                             Materials = new[]{ "Iron", "Zinc", "Tin", "Selenium" }
                         },
-                        new Subcategory
+                        new Category
                         {
                             Name = "Raw Material Category 5",
                             Materials = new[]{ "Nickel", "Germanium", "Tungsten", "Tellurium" }
                         },
-                        new Subcategory
+                        new Category
                         {
                             Name = "Raw Material Category 6",
                             Materials = new[]{ "Rhenium", "Arsenic", "Mercury", "Polonium" }
                         },
-                        new Subcategory
+                        new Category
                         {
                             Name  ="Raw Material Category 7",
                             Materials = new[]{ "Lead", "Zirconium", "Boron", "Antimony" }
@@ -57,7 +57,7 @@ namespace EDMats.Tests.Services
                     }
                 };
 
-            _AssertCategory(expected, Materials.Raw);
+            _AssertMaterialType(expected, Materials.Raw);
             _AssertReflection(Materials.Raw);
             _AssertFindById(Materials.Raw);
         }
@@ -66,57 +66,57 @@ namespace EDMats.Tests.Services
         public void ManufacturedMaterials()
         {
             var expected =
-                new Category
+                new Type
                 {
                     Name = "Manufactured",
-                    Subcategories = new[]
+                    Categories = new[]
                     {
-                        new Subcategory
+                        new Category
                         {
                             Name = "Chemical",
                             Materials = new[]{ "Chemical Storage Units", "Chemical Processors", "Chemical Distillery", "Chemical Manipulators", "Pharmaceutical Isolators" }
                         },
-                        new Subcategory
+                        new Category
                         {
                             Name = "Thermic",
                             Materials = new[]{ "Tempered Alloys", "Heat Resistant Ceramics", "Precipitated Alloys", "Thermic Alloys", "Military Grade Alloys" }
                         },
-                        new Subcategory
+                        new Category
                         {
                             Name = "Heat",
                             Materials = new[]{ "Heat Conduction Wiring", "Heat Dispersion Plate", "Heat Exchangers", "Heat Vanes", "Proto Heat Radiators" }
                         },
-                        new Subcategory
+                        new Category
                         {
                             Name = "Conductive",
                             Materials = new[]{ "Basic Conductors", "Conductive Components", "Conductive Ceramics", "Conductive Polymers", "Biotech Conductors" }
                         },
-                        new Subcategory
+                        new Category
                         {
                             Name = "Mechanical Components",
                             Materials = new[]{ "Mechanical Scrap", "Mechanical Equipment", "Mechanical Components", "Configurable Components", "Improvised Components" }
                         },
-                        new Subcategory
+                        new Category
                         {
                             Name = "Capacitors",
                             Materials = new[]{ "Grid Resistors", "Hybrid Capacitors", "Electrochemical Arrays", "Polymer Capacitors", "Military Supercapacitors" }
                         },
-                        new Subcategory
+                        new Category
                         {
                             Name = "Shielding",
                             Materials = new[]{ "Worn Shield Emitters", "Shield Emitters", "Shielding Sensors", "Compound Shielding", "Imperial Shielding" }
                         },
-                        new Subcategory
+                        new Category
                         {
                             Name = "Composite",
                             Materials = new[]{ "Compact Composites", "Filament Composites", "High Density Composites", "Proprietary Composites", "Core Dynamics Composites" }
                         },
-                        new Subcategory
+                        new Category
                         {
                             Name = "Crystals",
                             Materials = new[]{ "Crystal Shards", "Flawed Focus Crystals", "Focus Crystals", "Refined Focus Crystals", "Exquisite Focus Crystals" }
                         },
-                        new Subcategory
+                        new Category
                         {
                             Name = "Alloys",
                             Materials = new[]{ "Salvaged Alloys", "Galvanising Alloys", "Phase Alloys", "Proto Light Alloys", "Proto Radiolic Alloys" }
@@ -124,7 +124,7 @@ namespace EDMats.Tests.Services
                     }
                 };
 
-            _AssertCategory(expected, Materials.Manufactured);
+            _AssertMaterialType(expected, Materials.Manufactured);
             _AssertReflection(Materials.Manufactured);
             _AssertFindById(Materials.Manufactured);
         }
@@ -133,37 +133,37 @@ namespace EDMats.Tests.Services
         public void EncodedMaterials()
         {
             var expected =
-                new Category
+                new Type
                 {
                     Name = "Encoded",
-                    Subcategories = new[]
+                    Categories = new[]
                     {
-                        new Subcategory
+                        new Category
                         {
                             Name = "Emission Data",
                             Materials = new[]{ "Exceptional Scrambled Emission Data", "Irregular Emission Data", "Unexpected Emission Data", "Decoded Emission Data", "Abnormal Compact Emissions Data" }
                         },
-                        new Subcategory
+                        new Category
                         {
                             Name = "Wake Scans",
                             Materials = new[]{ "Atypical Disrupted Wake Echoes", "Anomalous FSD Telemetry", "Strange Wake Solutions", "Eccentric Hyperspace Trajectories", "Datamined Wake Exceptions" }
                         },
-                        new Subcategory
+                        new Category
                         {
                             Name = "Shield Data",
                             Materials = new[]{ "Distorted Shield Cycle Recordings", "Inconsistent Shield Soak Analysis", "Untypical Shield Scans", "Aberrant Shield Pattern Analysis", "Peculiar Shield Frequency Data" }
                         },
-                        new Subcategory
+                        new Category
                         {
                             Name = "Encryption Files",
                             Materials = new[]{ "Unusual Encrypted Files", "Tagged Encryption Codes", "Open Symmetric Keys", "Atypical Encryption Archives", "Adaptive Encryptors Capture" }
                         },
-                        new Subcategory
+                        new Category
                         {
                             Name = "Data Archives",
                             Materials = new[]{ "Anomalous Bulk Scan Data", "Unidentified Scan Archives", "Classified Scan Databanks", "Divergend Scan Data", "Classified Scan Fragment" }
                         },
-                        new Subcategory
+                        new Category
                         {
                             Name = "Encoded Firmware",
                             Materials = new[]{ "Specialised Legacy Firmware", "Modified Consumer Firmware", "Cracked Industrial Firmware", "Security Firmware Patch", "Modified Embedded Firmware" }
@@ -171,7 +171,7 @@ namespace EDMats.Tests.Services
                     }
                 };
 
-            _AssertCategory(expected, Materials.Encoded);
+            _AssertMaterialType(expected, Materials.Encoded);
             _AssertReflection(Materials.Encoded);
             _AssertFindById(Materials.Encoded);
         }
@@ -191,29 +191,29 @@ namespace EDMats.Tests.Services
             Assert.AreEqual(new ArgumentException($"Material with id '{invalidId}' does not exist.", "id").Message, exception.Message);
         }
 
-        private static void _AssertCategory(Category expected, MaterialCategory actual)
+        private static void _AssertMaterialType(Type expected, MaterialType actual)
         {
             Assert.AreEqual(expected.Name, actual.Name);
-            Assert.AreEqual(expected.Subcategories.Count, actual.Subcategories.Count);
+            Assert.AreEqual(expected.Categories.Count, actual.Categories.Count);
             foreach (var pair in expected
-                .Subcategories
+                .Categories
                 .Zip(
-                    actual.Subcategories,
-                    (expectedSubcategory, actualSubcategory) =>
+                    actual.Categories,
+                    (expectedCategory, actualCategory) =>
                         new
                         {
-                            ExpectedSubcategory = expectedSubcategory,
-                            ActualSubcategory = actualSubcategory
+                            ExpectedCategory = expectedCategory,
+                            ActualCategory = actualCategory
                         }
                     )
                 )
-                _AssertSubcategory(pair.ExpectedSubcategory, actual, pair.ActualSubcategory);
+                _AssertCategory(pair.ExpectedCategory, actual, pair.ActualCategory);
         }
 
-        private static void _AssertSubcategory(Subcategory expected, MaterialCategory expectedMaterialCategory, MaterialSubcategory actual)
+        private static void _AssertCategory(Category expected, MaterialType expectedMaterialCategory, MaterialCategory actual)
         {
             Assert.AreEqual(expected.Name, actual.Name);
-            Assert.AreSame(expectedMaterialCategory, actual.Category);
+            Assert.AreSame(expectedMaterialCategory, actual.Type);
             Assert.AreEqual(expected.Materials.Count, actual.Materials.Count);
 
             for (var index = 0; index < expected.Materials.Count; index++)
@@ -221,11 +221,12 @@ namespace EDMats.Tests.Services
                 var grade = (MaterialGrade)(index + 1);
                 Assert.AreEqual(expected.Materials[index], actual.Materials[index].Name);
                 Assert.AreEqual(grade, actual.Materials[index].Grade);
-                Assert.AreSame(actual, actual.Materials[index].Subcategory);
+                Assert.AreSame(actual, actual.Materials[index].Category);
+                Assert.AreSame(actual.Type, actual.Materials[index].Type);
             }
         }
 
-        private static void _AssertReflection(MaterialCategory expected)
+        private static void _AssertReflection(MaterialType expected)
         {
             var actual = typeof(Materials)
                 .GetProperty(
@@ -235,11 +236,11 @@ namespace EDMats.Tests.Services
                 .GetValue(null);
             Assert.AreSame(expected, actual);
 
-            foreach (var subcategory in expected.Subcategories)
-                _AssertReflection(subcategory);
+            foreach (var category in expected.Categories)
+                _AssertReflection(category);
         }
 
-        private static void _AssertReflection(MaterialSubcategory expected)
+        private static void _AssertReflection(MaterialCategory expected)
         {
             var actual = typeof(Materials)
                 .GetProperty(
@@ -268,23 +269,23 @@ namespace EDMats.Tests.Services
             Assert.AreSame(expected, actual);
         }
 
-        private static void _AssertFindById(MaterialCategory expected)
+        private static void _AssertFindById(MaterialType expected)
         {
-            foreach (var expectedMaterial in expected.Subcategories.SelectMany(subcategory => subcategory.Materials))
+            foreach (var expectedMaterial in expected.Categories.SelectMany(category => category.Materials))
             {
                 var actualMaterial = Materials.FindById(expectedMaterial.Id.ToUpperInvariant());
                 Assert.AreSame(expectedMaterial, actualMaterial);
             }
         }
 
-        private sealed class Category
+        private sealed class Type
         {
             public string Name { get; set; }
 
-            public IReadOnlyList<Subcategory> Subcategories { get; set; }
+            public IReadOnlyList<Category> Categories { get; set; }
         }
 
-        private sealed class Subcategory
+        private sealed class Category
         {
             public string Name { get; set; }
 

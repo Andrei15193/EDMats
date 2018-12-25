@@ -2,12 +2,12 @@
 {
     public class Material
     {
-        internal Material(string id, string name, MaterialGrade grade, MaterialSubcategory subcategory)
+        internal Material(string id, string name, MaterialGrade grade, MaterialCategory category)
         {
             Id = id;
             Name = name;
             Grade = grade;
-            Subcategory = subcategory;
+            Category = category;
         }
 
         public string Id { get; }
@@ -16,6 +16,9 @@
 
         public MaterialGrade Grade { get; }
 
-        public MaterialSubcategory Subcategory { get; }
+        public MaterialCategory Category { get; }
+
+        public MaterialType Type
+            => Category.Type;
     }
 }

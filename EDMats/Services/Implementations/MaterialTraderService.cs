@@ -6,7 +6,7 @@ namespace EDMats.Services.Implementations
     {
         public TradeRate GetTradeRate(Material demand, Material offer)
         {
-            if (demand == offer || demand == null || offer == null || demand.Subcategory.Category != offer.Subcategory.Category)
+            if (demand == offer || demand == null || offer == null || demand.Category.Type != offer.Category.Type)
                 return TradeRate.Invalid;
 
             var tradeRate = _GetTradeRate(demand, offer);
@@ -20,7 +20,7 @@ namespace EDMats.Services.Implementations
 
         private static TradeRate _GetTradeRate(Material demand, Material offer)
         {
-            if (demand.Subcategory == offer.Subcategory)
+            if (demand.Category == offer.Category)
                 if (demand.Grade > offer.Grade)
                     return new TradeRate(
                         1,

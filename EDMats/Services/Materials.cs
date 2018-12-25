@@ -8,9 +8,9 @@ namespace EDMats.Services
     {
         private static readonly IReadOnlyDictionary<string, Material> _materialsById;
 
-        public static MaterialCategory Raw { get; }
+        public static MaterialType Raw { get; }
 
-        public static MaterialSubcategory RawMaterialsCategory1 { get; }
+        public static MaterialCategory RawMaterialsCategory1 { get; }
 
         public static Material Carbon { get; }
 
@@ -20,7 +20,7 @@ namespace EDMats.Services
 
         public static Material Yttrium { get; }
 
-        public static MaterialSubcategory RawMaterialsCategory2 { get; }
+        public static MaterialCategory RawMaterialsCategory2 { get; }
 
         public static Material Phosphorus { get; }
 
@@ -30,7 +30,7 @@ namespace EDMats.Services
 
         public static Material Technetium { get; }
 
-        public static MaterialSubcategory RawMaterialsCategory3 { get; }
+        public static MaterialCategory RawMaterialsCategory3 { get; }
 
         public static Material Sulphur { get; }
 
@@ -40,7 +40,7 @@ namespace EDMats.Services
 
         public static Material Ruthenium { get; }
 
-        public static MaterialSubcategory RawMaterialsCategory4 { get; }
+        public static MaterialCategory RawMaterialsCategory4 { get; }
 
         public static Material Iron { get; }
 
@@ -50,7 +50,7 @@ namespace EDMats.Services
 
         public static Material Selenium { get; }
 
-        public static MaterialSubcategory RawMaterialsCategory5 { get; }
+        public static MaterialCategory RawMaterialsCategory5 { get; }
 
         public static Material Nickel { get; }
 
@@ -60,7 +60,7 @@ namespace EDMats.Services
 
         public static Material Tellurium { get; }
 
-        public static MaterialSubcategory RawMaterialsCategory6 { get; }
+        public static MaterialCategory RawMaterialsCategory6 { get; }
 
         public static Material Rhenium { get; }
 
@@ -70,7 +70,7 @@ namespace EDMats.Services
 
         public static Material Polonium { get; }
 
-        public static MaterialSubcategory RawMaterialsCategory7 { get; }
+        public static MaterialCategory RawMaterialsCategory7 { get; }
 
         public static Material Lead { get; }
 
@@ -80,9 +80,9 @@ namespace EDMats.Services
 
         public static Material Antimony { get; }
 
-        public static MaterialCategory Manufactured { get; }
+        public static MaterialType Manufactured { get; }
 
-        public static MaterialSubcategory Chemical { get; }
+        public static MaterialCategory Chemical { get; }
 
         public static Material ChemicalStorageUnits { get; }
 
@@ -94,7 +94,7 @@ namespace EDMats.Services
 
         public static Material PharmaceuticalIsolators { get; }
 
-        public static MaterialSubcategory Thermic { get; }
+        public static MaterialCategory Thermic { get; }
 
         public static Material TemperedAlloys { get; }
 
@@ -106,7 +106,7 @@ namespace EDMats.Services
 
         public static Material MilitaryGradeAlloys { get; }
 
-        public static MaterialSubcategory Heat { get; }
+        public static MaterialCategory Heat { get; }
 
         public static Material HeatConductionWiring { get; }
 
@@ -118,7 +118,7 @@ namespace EDMats.Services
 
         public static Material ProtoHeatRadiators { get; }
 
-        public static MaterialSubcategory Conductive { get; }
+        public static MaterialCategory Conductive { get; }
 
         public static Material BasicConductors { get; }
 
@@ -130,7 +130,7 @@ namespace EDMats.Services
 
         public static Material BiotechConductors { get; }
 
-        public static MaterialSubcategory MechanicalComponentsCategory { get; }
+        public static MaterialCategory MechanicalComponentsCategory { get; }
 
         public static Material MechanicalScrap { get; }
 
@@ -142,7 +142,7 @@ namespace EDMats.Services
 
         public static Material ImprovisedComponents { get; }
 
-        public static MaterialSubcategory Capacitors { get; }
+        public static MaterialCategory Capacitors { get; }
 
         public static Material GridResistors { get; }
 
@@ -154,7 +154,7 @@ namespace EDMats.Services
 
         public static Material MilitarySupercapacitors { get; }
 
-        public static MaterialSubcategory Shielding { get; }
+        public static MaterialCategory Shielding { get; }
 
         public static Material WornShieldEmitters { get; }
 
@@ -166,7 +166,7 @@ namespace EDMats.Services
 
         public static Material ImperialShielding { get; }
 
-        public static MaterialSubcategory Composite { get; }
+        public static MaterialCategory Composite { get; }
 
         public static Material CompactComposites { get; }
 
@@ -178,7 +178,7 @@ namespace EDMats.Services
 
         public static Material CoreDynamicsComposites { get; }
 
-        public static MaterialSubcategory Crystals { get; }
+        public static MaterialCategory Crystals { get; }
 
         public static Material CrystalShards { get; }
 
@@ -190,7 +190,7 @@ namespace EDMats.Services
 
         public static Material ExquisiteFocusCrystals { get; }
 
-        public static MaterialSubcategory Alloys { get; }
+        public static MaterialCategory Alloys { get; }
 
         public static Material SalvagedAlloys { get; }
 
@@ -202,9 +202,9 @@ namespace EDMats.Services
 
         public static Material ProtoRadiolicAlloys { get; }
 
-        public static MaterialCategory Encoded { get; }
+        public static MaterialType Encoded { get; }
 
-        public static MaterialSubcategory EmissionData { get; }
+        public static MaterialCategory EmissionData { get; }
 
         public static Material ExceptionalScrambledEmissionData { get; }
 
@@ -216,7 +216,7 @@ namespace EDMats.Services
 
         public static Material AbnormalCompactEmissionsData { get; }
 
-        public static MaterialSubcategory WakeScans { get; }
+        public static MaterialCategory WakeScans { get; }
 
         public static Material AtypicalDisruptedWakeEchoes { get; }
 
@@ -228,7 +228,7 @@ namespace EDMats.Services
 
         public static Material DataminedWakeExceptions { get; }
 
-        public static MaterialSubcategory ShieldData { get; }
+        public static MaterialCategory ShieldData { get; }
 
         public static Material DistortedShieldCycleRecordings { get; }
 
@@ -240,7 +240,7 @@ namespace EDMats.Services
 
         public static Material PeculiarShieldFrequencyData { get; }
 
-        public static MaterialSubcategory EncryptionFiles { get; }
+        public static MaterialCategory EncryptionFiles { get; }
 
         public static Material UnusualEncryptedFiles { get; }
 
@@ -252,7 +252,7 @@ namespace EDMats.Services
 
         public static Material AdaptiveEncryptorsCapture { get; }
 
-        public static MaterialSubcategory DataArchives { get; }
+        public static MaterialCategory DataArchives { get; }
 
         public static Material AnomalousBulkScanData { get; }
 
@@ -264,7 +264,7 @@ namespace EDMats.Services
 
         public static Material ClassifiedScanFragment { get; }
 
-        public static MaterialSubcategory EncodedFirmware { get; }
+        public static MaterialCategory EncodedFirmware { get; }
 
         public static Material SpecialisedLegacyFirmware { get; }
 
@@ -294,12 +294,12 @@ namespace EDMats.Services
         static Materials()
         {
             {
-                var subcategories = new List<MaterialSubcategory>(7);
-                Raw = new MaterialCategory("Raw", subcategories);
+                var categories = new List<MaterialCategory>(7);
+                Raw = new MaterialType("Raw", categories);
                 {
                     var materials = new List<Material>(4);
-                    subcategories.Add(
-                        RawMaterialsCategory1 = new MaterialSubcategory("Raw Material Category 1", Raw, materials)
+                    categories.Add(
+                        RawMaterialsCategory1 = new MaterialCategory("Raw Material Category 1", Raw, materials)
                     );
                     materials.Add(
                         Carbon = new Material("carbon", "Carbon", MaterialGrade.VeryCommon, RawMaterialsCategory1)
@@ -316,8 +316,8 @@ namespace EDMats.Services
                 }
                 {
                     var materials = new List<Material>(4);
-                    subcategories.Add(
-                        RawMaterialsCategory2 = new MaterialSubcategory("Raw Material Category 2", Raw, materials)
+                    categories.Add(
+                        RawMaterialsCategory2 = new MaterialCategory("Raw Material Category 2", Raw, materials)
                     );
                     materials.Add(
                         Phosphorus = new Material("phosphorus", "Phosphorus", MaterialGrade.VeryCommon, RawMaterialsCategory2)
@@ -334,8 +334,8 @@ namespace EDMats.Services
                 }
                 {
                     var materials = new List<Material>(4);
-                    subcategories.Add(
-                        RawMaterialsCategory3 = new MaterialSubcategory("Raw Material Category 3", Raw, materials)
+                    categories.Add(
+                        RawMaterialsCategory3 = new MaterialCategory("Raw Material Category 3", Raw, materials)
                     );
                     materials.Add(
                         Sulphur = new Material("sulphur", "Sulphur", MaterialGrade.VeryCommon, RawMaterialsCategory3)
@@ -352,8 +352,8 @@ namespace EDMats.Services
                 }
                 {
                     var materials = new List<Material>(4);
-                    subcategories.Add(
-                        RawMaterialsCategory4 = new MaterialSubcategory("Raw Material Category 4", Raw, materials)
+                    categories.Add(
+                        RawMaterialsCategory4 = new MaterialCategory("Raw Material Category 4", Raw, materials)
                     );
                     materials.Add(
                         Iron = new Material("iron", "Iron", MaterialGrade.VeryCommon, RawMaterialsCategory4)
@@ -370,8 +370,8 @@ namespace EDMats.Services
                 }
                 {
                     var materials = new List<Material>(4);
-                    subcategories.Add(
-                        RawMaterialsCategory5 = new MaterialSubcategory("Raw Material Category 5", Raw, materials)
+                    categories.Add(
+                        RawMaterialsCategory5 = new MaterialCategory("Raw Material Category 5", Raw, materials)
                     );
                     materials.Add(
                         Nickel = new Material("nickel", "Nickel", MaterialGrade.VeryCommon, RawMaterialsCategory5)
@@ -388,8 +388,8 @@ namespace EDMats.Services
                 }
                 {
                     var materials = new List<Material>(4);
-                    subcategories.Add(
-                        RawMaterialsCategory6 = new MaterialSubcategory("Raw Material Category 6", Raw, materials)
+                    categories.Add(
+                        RawMaterialsCategory6 = new MaterialCategory("Raw Material Category 6", Raw, materials)
                     );
                     materials.Add(
                         Rhenium = new Material("rhenium", "Rhenium", MaterialGrade.VeryCommon, RawMaterialsCategory6)
@@ -406,8 +406,8 @@ namespace EDMats.Services
                 }
                 {
                     var materials = new List<Material>(4);
-                    subcategories.Add(
-                        RawMaterialsCategory7 = new MaterialSubcategory("Raw Material Category 7", Raw, materials)
+                    categories.Add(
+                        RawMaterialsCategory7 = new MaterialCategory("Raw Material Category 7", Raw, materials)
                     );
                     materials.Add(
                         Lead = new Material("lead", "Lead", MaterialGrade.VeryCommon, RawMaterialsCategory7)
@@ -425,12 +425,12 @@ namespace EDMats.Services
             }
 
             {
-                var subcategories = new List<MaterialSubcategory>(10);
-                Manufactured = new MaterialCategory("Manufactured", subcategories);
+                var categories = new List<MaterialCategory>(10);
+                Manufactured = new MaterialType("Manufactured", categories);
                 {
                     var materials = new List<Material>(5);
-                    subcategories.Add(
-                        Chemical = new MaterialSubcategory("Chemical", Manufactured, materials)
+                    categories.Add(
+                        Chemical = new MaterialCategory("Chemical", Manufactured, materials)
                     );
                     materials.Add(
                         ChemicalStorageUnits = new Material("chemicalstorageunits", "Chemical Storage Units", MaterialGrade.VeryCommon, Chemical)
@@ -450,8 +450,8 @@ namespace EDMats.Services
                 }
                 {
                     var materials = new List<Material>(5);
-                    subcategories.Add(
-                        Thermic = new MaterialSubcategory("Thermic", Manufactured, materials)
+                    categories.Add(
+                        Thermic = new MaterialCategory("Thermic", Manufactured, materials)
                     );
                     materials.Add(
                         TemperedAlloys = new Material("temperedalloys", "Tempered Alloys", MaterialGrade.VeryCommon, Thermic)
@@ -471,8 +471,8 @@ namespace EDMats.Services
                 }
                 {
                     var materials = new List<Material>(5);
-                    subcategories.Add(
-                        Heat = new MaterialSubcategory("Heat", Manufactured, materials)
+                    categories.Add(
+                        Heat = new MaterialCategory("Heat", Manufactured, materials)
                     );
                     materials.Add(
                         HeatConductionWiring = new Material("heatconductionwiring", "Heat Conduction Wiring", MaterialGrade.VeryCommon, Heat)
@@ -492,8 +492,8 @@ namespace EDMats.Services
                 }
                 {
                     var materials = new List<Material>(5);
-                    subcategories.Add(
-                        Conductive = new MaterialSubcategory("Conductive", Manufactured, materials)
+                    categories.Add(
+                        Conductive = new MaterialCategory("Conductive", Manufactured, materials)
                     );
                     materials.Add(
                         BasicConductors = new Material("basicconductors", "Basic Conductors", MaterialGrade.VeryCommon, Conductive)
@@ -513,8 +513,8 @@ namespace EDMats.Services
                 }
                 {
                     var materials = new List<Material>(5);
-                    subcategories.Add(
-                        MechanicalComponentsCategory = new MaterialSubcategory("Mechanical Components", Manufactured, materials)
+                    categories.Add(
+                        MechanicalComponentsCategory = new MaterialCategory("Mechanical Components", Manufactured, materials)
                     );
                     materials.Add(
                         MechanicalScrap = new Material("mechanicalscrap", "Mechanical Scrap", MaterialGrade.VeryCommon, MechanicalComponentsCategory)
@@ -534,8 +534,8 @@ namespace EDMats.Services
                 }
                 {
                     var materials = new List<Material>(5);
-                    subcategories.Add(
-                        Capacitors = new MaterialSubcategory("Capacitors", Manufactured, materials)
+                    categories.Add(
+                        Capacitors = new MaterialCategory("Capacitors", Manufactured, materials)
                     );
                     materials.Add(
                         GridResistors = new Material("gridresistors", "Grid Resistors", MaterialGrade.VeryCommon, Capacitors)
@@ -555,8 +555,8 @@ namespace EDMats.Services
                 }
                 {
                     var materials = new List<Material>(5);
-                    subcategories.Add(
-                        Shielding = new MaterialSubcategory("Shielding", Manufactured, materials)
+                    categories.Add(
+                        Shielding = new MaterialCategory("Shielding", Manufactured, materials)
                     );
                     materials.Add(
                         WornShieldEmitters = new Material("wornshieldemitters", "Worn Shield Emitters", MaterialGrade.VeryCommon, Shielding)
@@ -576,8 +576,8 @@ namespace EDMats.Services
                 }
                 {
                     var materials = new List<Material>(5);
-                    subcategories.Add(
-                        Composite = new MaterialSubcategory("Composite", Manufactured, materials)
+                    categories.Add(
+                        Composite = new MaterialCategory("Composite", Manufactured, materials)
                     );
                     materials.Add(
                         CompactComposites = new Material("compactcomposites", "Compact Composites", MaterialGrade.VeryCommon, Composite)
@@ -597,8 +597,8 @@ namespace EDMats.Services
                 }
                 {
                     var materials = new List<Material>(5);
-                    subcategories.Add(
-                        Crystals = new MaterialSubcategory("Crystals", Manufactured, materials)
+                    categories.Add(
+                        Crystals = new MaterialCategory("Crystals", Manufactured, materials)
                     );
                     materials.Add(
                         CrystalShards = new Material("crystalshards", "Crystal Shards", MaterialGrade.VeryCommon, Crystals)
@@ -618,8 +618,8 @@ namespace EDMats.Services
                 }
                 {
                     var materials = new List<Material>(5);
-                    subcategories.Add(
-                        Alloys = new MaterialSubcategory("Alloys", Manufactured, materials)
+                    categories.Add(
+                        Alloys = new MaterialCategory("Alloys", Manufactured, materials)
                     );
                     materials.Add(
                         SalvagedAlloys = new Material("salvagedalloys", "Salvaged Alloys", MaterialGrade.VeryCommon, Alloys)
@@ -640,12 +640,12 @@ namespace EDMats.Services
             }
 
             {
-                var subcategories = new List<MaterialSubcategory>(6);
-                Encoded = new MaterialCategory("Encoded", subcategories);
+                var categories = new List<MaterialCategory>(6);
+                Encoded = new MaterialType("Encoded", categories);
                 {
                     var materials = new List<Material>(5);
-                    subcategories.Add(
-                        EmissionData = new MaterialSubcategory("Emission Data", Encoded, materials)
+                    categories.Add(
+                        EmissionData = new MaterialCategory("Emission Data", Encoded, materials)
                     );
                     materials.Add(
                         ExceptionalScrambledEmissionData = new Material("scrambledemissiondata", "Exceptional Scrambled Emission Data", MaterialGrade.VeryCommon, EmissionData)
@@ -665,8 +665,8 @@ namespace EDMats.Services
                 }
                 {
                     var materials = new List<Material>(5);
-                    subcategories.Add(
-                        WakeScans = new MaterialSubcategory("Wake Scans", Encoded, materials)
+                    categories.Add(
+                        WakeScans = new MaterialCategory("Wake Scans", Encoded, materials)
                     );
                     materials.Add(
                         AtypicalDisruptedWakeEchoes = new Material("disruptedwakeechoes", "Atypical Disrupted Wake Echoes", MaterialGrade.VeryCommon, WakeScans)
@@ -686,8 +686,8 @@ namespace EDMats.Services
                 }
                 {
                     var materials = new List<Material>(5);
-                    subcategories.Add(
-                        ShieldData = new MaterialSubcategory("Shield Data", Encoded, materials)
+                    categories.Add(
+                        ShieldData = new MaterialCategory("Shield Data", Encoded, materials)
                     );
                     materials.Add(
                         DistortedShieldCycleRecordings = new Material("shieldcyclerecordings", "Distorted Shield Cycle Recordings", MaterialGrade.VeryCommon, ShieldData)
@@ -707,8 +707,8 @@ namespace EDMats.Services
                 }
                 {
                     var materials = new List<Material>(5);
-                    subcategories.Add(
-                        EncryptionFiles = new MaterialSubcategory("Encryption Files", Encoded, materials)
+                    categories.Add(
+                        EncryptionFiles = new MaterialCategory("Encryption Files", Encoded, materials)
                     );
                     materials.Add(
                         UnusualEncryptedFiles = new Material("unusualencryptedfiles", "Unusual Encrypted Files", MaterialGrade.VeryCommon, EncryptionFiles)
@@ -728,8 +728,8 @@ namespace EDMats.Services
                 }
                 {
                     var materials = new List<Material>(5);
-                    subcategories.Add(
-                        DataArchives = new MaterialSubcategory("Data Archives", Encoded, materials)
+                    categories.Add(
+                        DataArchives = new MaterialCategory("Data Archives", Encoded, materials)
                     );
                     materials.Add(
                         AnomalousBulkScanData = new Material("bulkscandata", "Anomalous Bulk Scan Data", MaterialGrade.VeryCommon, DataArchives)
@@ -749,8 +749,8 @@ namespace EDMats.Services
                 }
                 {
                     var materials = new List<Material>(5);
-                    subcategories.Add(
-                        EncodedFirmware = new MaterialSubcategory("Encoded Firmware", Encoded, materials)
+                    categories.Add(
+                        EncodedFirmware = new MaterialCategory("Encoded Firmware", Encoded, materials)
                     );
                     materials.Add(
                         SpecialisedLegacyFirmware = new Material("specialisedlegacyfirmware", "Specialised Legacy Firmware", MaterialGrade.VeryCommon, EncodedFirmware)
@@ -771,10 +771,10 @@ namespace EDMats.Services
             }
 
             _materialsById = Raw
-                .Subcategories
-                .Concat(Manufactured.Subcategories)
-                .Concat(Encoded.Subcategories)
-                .SelectMany(subcategory => subcategory.Materials)
+                .Categories
+                .Concat(Manufactured.Categories)
+                .Concat(Encoded.Categories)
+                .SelectMany(category => category.Materials)
                 .ToDictionary(material => material.Id, StringComparer.OrdinalIgnoreCase);
         }
     }

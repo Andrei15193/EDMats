@@ -116,10 +116,10 @@
     <Compile Include="Services\Implementations\InventoryService.cs" />
     <Compile Include="Services\Implementations\MaterialTraderService.cs" />
     <Compile Include="Services\Material.cs" />
-    <Compile Include="Services\MaterialCategory.cs" />
+    <Compile Include="Services\MaterialType.cs" />
     <Compile Include="Services\MaterialGrade.cs" />
     <Compile Include="Services\Materials.cs" />
-    <Compile Include="Services\MaterialSubcategory.cs" />
+    <Compile Include="Services\MaterialCategory.cs" />
     <Compile Include="Services\TradeRate.cs" />
     <Compile Include="Store.cs" />
     <Compile Include="Stores\InventoryStore.cs" />

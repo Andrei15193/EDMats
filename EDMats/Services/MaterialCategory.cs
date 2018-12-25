@@ -4,14 +4,17 @@ namespace EDMats.Services
 {
     public class MaterialCategory
     {
-        internal MaterialCategory(string name, IReadOnlyList<MaterialSubcategory> subcategories)
+        internal MaterialCategory(string name, MaterialType type, IReadOnlyList<Material> materials)
         {
             Name = name;
-            Subcategories = subcategories;
+            Type = type;
+            Materials = materials;
         }
 
         public string Name { get; }
 
-        public IReadOnlyList<MaterialSubcategory> Subcategories { get; }
+        public MaterialType Type { get; }
+
+        public IReadOnlyList<Material> Materials { get; }
     }
 }
