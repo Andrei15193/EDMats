@@ -3,10 +3,46 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:EDMats"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="MainWindow" Height="450" Width="800"
+        DataContext="{StaticResource SettingStore}">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0"
+                     Text="{Binding JournalFilePath, Mode=OneWay}"/>
+            <Button Grid.Column="1"
+                    Margin="10,0,0,0"
+                    Content="Browse"
+                    Click="_BrowseJournalFile"/>
+        </Grid>
+        <TextBox Grid.Row="1"
+                 Margin="0,10,0,0"
+                 x:Name="_FilterTextBox"
+                 x:FieldModifier="private"
+                 TextChanged="_FilterTextChanged"
+                 Text="{Binding FilterText, Mode=OneTime}"/>
+        <ListView Grid.Row="2"
+                  Margin="0,10,0,0"
+                  ItemsSource="{Binding FilteredStoredMaterials, Mode=OneTime}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock>
+                        <Run
+                            Text="{Binding Name}"/><Run
+                            Text=": "/><Run
+                            Text="{Binding Amount}"/>
+                    </TextBlock>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Window>

@@ -1,9 +1,9 @@
 ﻿<Application x:Class="EDMats.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:EDMats"
-             StartupUri="MainWindow.xaml">
+             Startup="Application_Startup"
+             xmlns:stores="clr-namespace:EDMats.Stores">
     <Application.Resources>
-         
+        <stores:InventoryStore x:Key="SettingStore" />
     </Application.Resources>
 </Application>

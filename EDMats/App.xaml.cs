@@ -1,17 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
+using EDMats.Services;
+using EDMats.Services.Implementations;
+using Unity;
 
 namespace EDMats
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            MainWindow = Container.BuildUp(new MainWindow());
+            MainWindow.Show();
+        }
+
+        public static IUnityContainer Container { get; } = _GetUnityContainer();
+
+        private static IUnityContainer _GetUnityContainer()
+            => new UnityContainer()
+                .RegisterType<IInventoryService, InventoryService>();
     }
 }
