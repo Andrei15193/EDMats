@@ -17,6 +17,7 @@ namespace EDMats
 
         private static IUnityContainer _GetUnityContainer()
             => new UnityContainer()
-                .RegisterType<IInventoryService, InventoryService>();
+                .RegisterType<IInventoryService, InventoryService>()
+                .RegisterType<IJournalReaderService, JournalReaderService>();
     }
 }

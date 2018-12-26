@@ -3,53 +3,53 @@ using System.Dynamic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using EDMats.Services.LogEntries;
 using Newtonsoft.Json;
 
 namespace EDMats.Services.Implementations
 {
     public class InventoryService : IInventoryService
     {
+        private readonly IJournalReaderService _journalReaderService;
+
+        public InventoryService(IJournalReaderService journalReaderService)
+        {
+            _journalReaderService = journalReaderService;
+        }
+
         public Task<CommanderInventory> GetInventoryAsync(string journalFilePath)
             => GetInventoryAsync(journalFilePath, CancellationToken.None);
 
         public async Task<CommanderInventory> GetInventoryAsync(string journalFilePath, CancellationToken cancellationToken)
         {
-            var logs = await _ReadLogsAsync(journalFilePath, cancellationToken).ConfigureAwait(false);
-            var materials = new Dictionary<Material, int>();
+            IReadOnlyCollection<LogEntry> logs;
+            using (var fileReader = new StreamReader(journalFilePath, Encoding.UTF8))
+                logs = await _journalReaderService.ReadAsync(fileReader, cancellationToken).ConfigureAwait(false);
 
+            var materials = new Dictionary<Material, int>();
             foreach (var log in logs)
             {
-                switch (log.@event)
+                switch (log)
                 {
-                    case "Materials":
-                        materials = ((IEnumerable<dynamic>)log.Raw)
-                                .Concat((IEnumerable<dynamic>)log.Manufactured)
-                                .Concat((IEnumerable<dynamic>)log.Encoded)
-                                .ToDictionary(
-                                    material =>
-                                    {
-#warning Remove when all materials have been tested
-                                        var mat = Materials.FindById((string)material.Name);
-                                        if (((IDictionary<string, object>)material).TryGetValue("Name_Localised", out object nameLocalised2) && mat.Name != ((string)nameLocalised2).Trim())
-                                            throw new InvalidDataException();
-                                        return mat;
-                                    },
-                                    material => (int)material.Count);
+                    case MaterialsLogEntry materialsLogEntry:
+                        materials = materialsLogEntry
+                            .Raw
+                            .Concat(materialsLogEntry.Manufactured)
+                            .Concat(materialsLogEntry.Encoded)
+                            .ToDictionary(
+                                materialQuantity => materialQuantity.Material,
+                                materialQuantity => materialQuantity.Amount
+                            );
                         break;
 
-                    case "MaterialCollected":
-                        var collectedMaterial = Materials.FindById((string)log.Name);
-                        var collectedAmount = (int)log.Count;
-                        if (materials.TryGetValue(collectedMaterial, out int amount))
-                            materials[collectedMaterial] = amount + collectedAmount;
+                    case MaterialCollectedLogEntry materialCollectedLogEntry:
+                        if (materials.TryGetValue(materialCollectedLogEntry.MaterialQuantity.Material, out var amount))
+                            materials[materialCollectedLogEntry.MaterialQuantity.Material] = amount + materialCollectedLogEntry.MaterialQuantity.Amount;
                         else
-                            materials.Add(collectedMaterial, collectedAmount);
-
-#warning Remove when all materials have been tested
-                        if (((IDictionary<string, object>)log).TryGetValue("Name_Localised", out object nameLocalised) && collectedMaterial.Name != ((string)nameLocalised).Trim())
-                            throw new InvalidDataException();
+                            materials.Add(materialCollectedLogEntry.MaterialQuantity.Material, materialCollectedLogEntry.MaterialQuantity.Amount);
                         break;
                 }
             }
