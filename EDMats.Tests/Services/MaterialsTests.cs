@@ -219,9 +219,11 @@ namespace EDMats.Tests.Services
             for (var index = 0; index < expected.Materials.Count; index++)
             {
                 var grade = (MaterialGrade)(index + 1);
+                var maximumCapacity =  300 - 50 * index;
                 Assert.AreEqual(expected.Materials[index], actual.Materials[index].Name);
                 Assert.AreEqual(grade, actual.Materials[index].Grade);
                 Assert.AreSame(actual, actual.Materials[index].Category);
+                Assert.AreEqual(maximumCapacity, actual.Materials[index].MaximumCapacity);
                 Assert.AreSame(actual.Type, actual.Materials[index].Type);
             }
         }

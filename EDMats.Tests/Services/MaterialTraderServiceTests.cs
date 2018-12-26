@@ -1,4 +1,5 @@
-﻿using EDMats.Services;
+﻿using System;
+using EDMats.Services;
 using EDMats.Services.Implementations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -109,9 +110,75 @@ namespace EDMats.Tests.Services
             _AssertTradeRate(new TradeRate(1, 6), Materials.ProtoRadiolicAlloys, Materials.ExquisiteFocusCrystals);
         }
 
+        [TestMethod]
+        public void GettingRateForMultipleTimes()
+        {
+            _AssertTradeRate(TradeRate.Invalid, 2, Materials.CrystalShards, Materials.CrystalShards);
+            _AssertTradeRate(new TradeRate(2, 12), 2, Materials.FlawedFocusCrystals, Materials.CrystalShards);
+            _AssertTradeRate(new TradeRate(2, 72), 2, Materials.FocusCrystals, Materials.CrystalShards);
+            _AssertTradeRate(TradeRate.Invalid, 2, Materials.RefinedFocusCrystals, Materials.CrystalShards);
+            _AssertTradeRate(TradeRate.Invalid, Materials.ExquisiteFocusCrystals, Materials.CrystalShards);
+        }
+
+        [TestMethod]
+        public void TradingMultipleTimesForMaximumCapacityWorks()
+        {
+            _AssertTradeRate(new TradeRate(300, 100), 100, Materials.CrystalShards, Materials.FlawedFocusCrystals);
+            _AssertTradeRate(new TradeRate(150, 50), 50, Materials.RefinedFocusCrystals, Materials.ExquisiteFocusCrystals);
+            _AssertTradeRate(new TradeRate(50, 300), 50, Materials.FlawedFocusCrystals, Materials.CrystalShards);
+        }
+
+        [TestMethod]
+        public void TradingMultipleTimesForAnAmountThatExceedMaximumCapacityReturnsInvalidTradeRate()
+        {
+            _AssertTradeRate(TradeRate.Invalid, 101, Materials.CrystalShards, Materials.FlawedFocusCrystals);
+            _AssertTradeRate(TradeRate.Invalid, 51, Materials.RefinedFocusCrystals, Materials.ExquisiteFocusCrystals);
+            _AssertTradeRate(TradeRate.Invalid, 51, Materials.FlawedFocusCrystals, Materials.CrystalShards);
+        }
+
+        [TestMethod]
+        public void TradingCrossMaterialTypeReturnsInvalidTradeRate()
+        {
+            _AssertTradeRate(TradeRate.Invalid, Materials.Iron, Materials.GalvanisingAlloys);
+        }
+
+        [TestMethod]
+        public void TradingNullDemandThrowsException()
+        {
+            var exception = Assert.ThrowsException<ArgumentNullException>(() => _materialTraderService.GetTradeRate(null, Materials.Iron));
+            Assert.AreEqual(new ArgumentNullException("demand").Message, exception.Message);
+        }
+
+        [TestMethod]
+        public void TradingNullOfferThrowsException()
+        {
+            var exception = Assert.ThrowsException<ArgumentNullException>(() => _materialTraderService.GetTradeRate(Materials.Iron, null));
+            Assert.AreEqual(new ArgumentNullException("offer").Message, exception.Message);
+        }
+
+        [TestMethod]
+        public void TradingZeroTimesThrowsException()
+        {
+            var exception = Assert.ThrowsException<ArgumentException>(() => _materialTraderService.GetTradeRate(0, Materials.Sulphur, Materials.Iron));
+            Assert.AreEqual(new ArgumentException("Trade times must be greater than 0 (zero), '0' provided.", "times").Message, exception.Message);
+        }
+
+        [TestMethod]
+        public void TradingNegativeTimesThrowsException()
+        {
+            var exception = Assert.ThrowsException<ArgumentException>(() => _materialTraderService.GetTradeRate(-20, Materials.Sulphur, Materials.Iron));
+            Assert.AreEqual(new ArgumentException("Trade times must be greater than 0 (zero), '-20' provided.", "times").Message, exception.Message);
+        }
+
         private void _AssertTradeRate(TradeRate expectedTradeRate, Material target, Material source)
         {
             var actualTradeRate = _materialTraderService.GetTradeRate(target, source);
+            Assert.AreEqual(expectedTradeRate, actualTradeRate);
+        }
+
+        private void _AssertTradeRate(TradeRate expectedTradeRate, int times, Material target, Material source)
+        {
+            var actualTradeRate = _materialTraderService.GetTradeRate(times, target, source);
             Assert.AreEqual(expectedTradeRate, actualTradeRate);
         }
     }

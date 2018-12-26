@@ -5,16 +5,24 @@ namespace EDMats.Services.Implementations
     public class MaterialTraderService : IMaterialTraderService
     {
         public TradeRate GetTradeRate(Material demand, Material offer)
+            => GetTradeRate(1, demand, offer);
+        
+        public TradeRate GetTradeRate(int times, Material demand, Material offer)
         {
-            if (demand == offer || demand == null || offer == null || demand.Category.Type != offer.Category.Type)
+            if (demand == null)
+                throw new ArgumentNullException(nameof(demand));
+            if (offer == null)
+                throw new ArgumentNullException(nameof(offer));
+            if (times <= 0)
+                throw new ArgumentException($"Trade times must be greater than 0 (zero), '{times}' provided.", nameof(times));
+
+            if (demand == offer || demand.Type != offer.Type || times > 100)
                 return TradeRate.Invalid;
 
-            var tradeRate = _GetTradeRate(demand, offer);
-            var maximumDemandCapacity = _GetMaximumMaterialCapacity(demand.Grade);
-            var maximumOfferCapacity = _GetMaximumMaterialCapacity(offer.Grade);
-            if (tradeRate.Demand <= maximumDemandCapacity && tradeRate.Offer <= maximumOfferCapacity)
+            var baseTradeRate = _GetTradeRate(demand, offer);
+            var tradeRate = times == 1 ? baseTradeRate : new TradeRate(times * baseTradeRate.Demand, times * baseTradeRate.Offer);
+            if (tradeRate.Demand <= demand.MaximumCapacity && tradeRate.Offer <= offer.MaximumCapacity)
                 return tradeRate;
-
             return TradeRate.Invalid;
         }
 
@@ -41,30 +49,6 @@ namespace EDMats.Services.Implementations
                     (int)Math.Pow(3, offer.Grade - demand.Grade - 1),
                     2
                 );
-        }
-
-        private static int _GetMaximumMaterialCapacity(MaterialGrade materialGrade)
-        {
-            switch (materialGrade)
-            {
-                case MaterialGrade.VeryCommon:
-                    return 300;
-
-                case MaterialGrade.Common:
-                    return 250;
-
-                case MaterialGrade.Standard:
-                    return 200;
-
-                case MaterialGrade.Rare:
-                    return 150;
-
-                case MaterialGrade.VeryRare:
-                    return 100;
-
-                default:
-                    return 0;
-            }
         }
     }
 }
