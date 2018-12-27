@@ -16,27 +16,27 @@ namespace EDMats.Tests.Services
         private IJournalReaderService _JournalReaderService { get; } = new JournalReaderService();
 
         [TestMethod]
-        public async Task ReadingEmptyStringReturnsEmptyLogsCollection()
+        public async Task ReadingEmptyStringReturnsEmptyJournalEntriesCollection()
         {
-            IReadOnlyList<JournalEntry> logs;
+            IReadOnlyList<JournalEntry> journalEntries;
 
             using (var stringReader = new StringReader(""))
-                logs = await _JournalReaderService.ReadAsync(stringReader);
+                journalEntries = await _JournalReaderService.ReadAsync(stringReader);
 
-            Assert.AreEqual(0, logs.Count);
+            Assert.AreEqual(0, journalEntries.Count);
         }
 
         [TestMethod]
         public async Task ReadingMaterialsEntryReturnsListOfMaterials()
         {
-            IReadOnlyList<JournalEntry> logs;
+            IReadOnlyList<JournalEntry> journalEntries;
 
             using (var stringReader = new StringReader(@"{ ""timestamp"":""2018-12-23T17:44:26Z"", ""event"":""Materials"", ""Raw"":[ { ""Name"":""carbon"", ""Count"":21 }, { ""Name"":""manganese"", ""Count"":11 }, { ""Name"":""nickel"", ""Count"":33 } ], ""Manufactured"":[ { ""Name"":""focuscrystals"", ""Count"":4 }, { ""Name"":""exquisitefocuscrystals"", ""Count"":7 }, { ""Name"":""mechanicalscrap"", ""Count"":2 } ], ""Encoded"":[ { ""Name"":""shieldcyclerecordings"", ""Count"":9 }, { ""Name"":""shieldsoakanalysis"", ""Count"":3 }, { ""Name"":""bulkscandata"", ""Count"":45 } ] }"))
-                logs = await _JournalReaderService.ReadAsync(stringReader);
+                journalEntries = await _JournalReaderService.ReadAsync(stringReader);
 
-            Assert.AreEqual(1, logs.Count);
-            var materialsLogEntry = (MaterialsJournalEntry)logs.Single();
-            Assert.AreEqual(new DateTime(2018, 12, 23, 17, 44, 26, DateTimeKind.Utc), materialsLogEntry.Timestamp);
+            Assert.AreEqual(1, journalEntries.Count);
+            var materialsJournalEntry = (MaterialsJournalEntry)journalEntries.Single();
+            Assert.AreEqual(new DateTime(2018, 12, 23, 17, 44, 26, DateTimeKind.Utc), materialsJournalEntry.Timestamp);
             _AssertCollectionsAreEqual(
                 new[]
                 {
@@ -56,7 +56,7 @@ namespace EDMats.Tests.Services
                         Amount = 33
                     }
                 },
-                materialsLogEntry.Raw
+                materialsJournalEntry.Raw
             );
 
             _AssertCollectionsAreEqual(
@@ -78,7 +78,7 @@ namespace EDMats.Tests.Services
                         Amount = 2
                     }
                 },
-                materialsLogEntry.Manufactured
+                materialsJournalEntry.Manufactured
             );
 
             _AssertCollectionsAreEqual(new[]
@@ -99,39 +99,39 @@ namespace EDMats.Tests.Services
                         Amount = 45
                     }
                 },
-                materialsLogEntry.Encoded
+                materialsJournalEntry.Encoded
             );
         }
 
         [TestMethod]
         public async Task ReadingMaterialsEntryWithoutCorrespondingPropertiesReturnsEmptyCollections()
         {
-            IReadOnlyList<JournalEntry> logs;
+            IReadOnlyList<JournalEntry> journalEntries;
 
             using (var stringReader = new StringReader(@"{ ""timestamp"":""2018-12-23T17:44:26Z"", ""event"":""Materials"" }"))
-                logs = await _JournalReaderService.ReadAsync(stringReader);
+                journalEntries = await _JournalReaderService.ReadAsync(stringReader);
 
-            Assert.AreEqual(1, logs.Count);
-            var materialsLogEntry = (MaterialsJournalEntry)logs.Single();
-            Assert.AreEqual(new DateTime(2018, 12, 23, 17, 44, 26, DateTimeKind.Utc), materialsLogEntry.Timestamp);
-            _AssertCollectionsAreEqual(Enumerable.Empty<MaterialQuantity>(), materialsLogEntry.Raw);
-            _AssertCollectionsAreEqual(Enumerable.Empty<MaterialQuantity>(), materialsLogEntry.Manufactured);
-            _AssertCollectionsAreEqual(Enumerable.Empty<MaterialQuantity>(), materialsLogEntry.Encoded);
+            Assert.AreEqual(1, journalEntries.Count);
+            var materialsJournalEntry = (MaterialsJournalEntry)journalEntries.Single();
+            Assert.AreEqual(new DateTime(2018, 12, 23, 17, 44, 26, DateTimeKind.Utc), materialsJournalEntry.Timestamp);
+            _AssertCollectionsAreEqual(Enumerable.Empty<MaterialQuantity>(), materialsJournalEntry.Raw);
+            _AssertCollectionsAreEqual(Enumerable.Empty<MaterialQuantity>(), materialsJournalEntry.Manufactured);
+            _AssertCollectionsAreEqual(Enumerable.Empty<MaterialQuantity>(), materialsJournalEntry.Encoded);
         }
 
         [TestMethod]
         public async Task ReadingMaterialCollectedEntryReturnsCollectedMaterialQuantity()
         {
-            IReadOnlyList<JournalEntry> logs;
+            IReadOnlyList<JournalEntry> journalEntries;
 
             using (var stringReader = new StringReader(@"{ ""timestamp"":""2018-12-23T18:25:17Z"", ""event"":""MaterialCollected"", ""Name"":""bulkscandata"", ""Count"":3 }"))
-                logs = await _JournalReaderService.ReadAsync(stringReader);
+                journalEntries = await _JournalReaderService.ReadAsync(stringReader);
 
-            Assert.AreEqual(1, logs.Count);
-            var materialCollectedLogEntry = (MaterialCollectedJournalEntry)logs.Single();
-            Assert.AreEqual(new DateTime(2018, 12, 23, 18, 25, 17, DateTimeKind.Utc), materialCollectedLogEntry.Timestamp);
-            Assert.AreEqual(Materials.AnomalousBulkScanData, materialCollectedLogEntry.MaterialQuantity.Material);
-            Assert.AreEqual(3, materialCollectedLogEntry.MaterialQuantity.Amount);
+            Assert.AreEqual(1, journalEntries.Count);
+            var materialCollectedJournalEntry = (MaterialCollectedJournalEntry)journalEntries.Single();
+            Assert.AreEqual(new DateTime(2018, 12, 23, 18, 25, 17, DateTimeKind.Utc), materialCollectedJournalEntry.Timestamp);
+            Assert.AreEqual(Materials.AnomalousBulkScanData, materialCollectedJournalEntry.MaterialQuantity.Material);
+            Assert.AreEqual(3, materialCollectedJournalEntry.MaterialQuantity.Amount);
         }
 
         private static void _AssertCollectionsAreEqual(IEnumerable<MaterialQuantity> expected, IEnumerable<MaterialQuantity> actual)

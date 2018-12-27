@@ -14,7 +14,7 @@ namespace EDMats.Tests.Services
     [TestClass]
     public class JournalImportServiceTests
     {
-        private List<JournalEntry> _logEntries = new List<JournalEntry>();
+        private List<JournalEntry> _journalEntries = new List<JournalEntry>();
 
         private Mock<IJournalReaderService> _JournalReaderService { get; set; }
 
@@ -23,14 +23,14 @@ namespace EDMats.Tests.Services
         [TestInitialize]
         public void TestInitialize()
         {
-            _logEntries = new List<JournalEntry>();
+            _journalEntries = new List<JournalEntry>();
             _JournalReaderService = new Mock<IJournalReaderService>();
             _JournalReaderService
                 .Setup(journalReaderService => journalReaderService.ReadAsync(It.IsAny<TextReader>()))
-                .ReturnsAsync(_logEntries);
+                .ReturnsAsync(_journalEntries);
             _JournalReaderService
                 .Setup(journalReaderService => journalReaderService.ReadAsync(It.IsAny<TextReader>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(_logEntries);
+                .ReturnsAsync(_journalEntries);
 
             _JournalImportService = new JournalImportService(_JournalReaderService.Object);
         }
@@ -56,7 +56,7 @@ namespace EDMats.Tests.Services
                     Amount = 9
                 }
             };
-            _logEntries.Add(
+            _journalEntries.Add(
                 new MaterialsJournalEntry
                 {
                     Encoded = expectedMaterials
@@ -97,7 +97,7 @@ namespace EDMats.Tests.Services
                     Amount = 9
                 }
             };
-            _logEntries.Add(
+            _journalEntries.Add(
                 new MaterialsJournalEntry
                 {
                     Encoded = expectedMaterials
@@ -116,7 +116,7 @@ namespace EDMats.Tests.Services
                     }
                 }
             );
-            _logEntries.Add(
+            _journalEntries.Add(
                 new MaterialCollectedJournalEntry
                 {
                     MaterialQuantity = new MaterialQuantity
@@ -153,7 +153,7 @@ namespace EDMats.Tests.Services
                     Amount = 9
                 }
             };
-            _logEntries.Add(
+            _journalEntries.Add(
                 new MaterialsJournalEntry
                 {
                     Encoded = expectedMaterials
@@ -167,7 +167,7 @@ namespace EDMats.Tests.Services
                         .ToList(),
                 }
             );
-            _logEntries.Add(
+            _journalEntries.Add(
                 new MaterialCollectedJournalEntry
                 {
                     MaterialQuantity = new MaterialQuantity
@@ -177,7 +177,7 @@ namespace EDMats.Tests.Services
                     }
                 }
             );
-            _logEntries.Add(_logEntries[0]);
+            _journalEntries.Add(_journalEntries[0]);
 
             var commanderData = await _JournalImportService.ImportJournalAsync(null);
 
@@ -205,7 +205,7 @@ namespace EDMats.Tests.Services
                     Amount = 9
                 }
             };
-            _logEntries.Add(
+            _journalEntries.Add(
                 new MaterialsJournalEntry
                 {
                     Encoded = expectedMaterials
@@ -217,7 +217,7 @@ namespace EDMats.Tests.Services
                     Raw = new List<MaterialQuantity>()
                 }
             );
-            _logEntries.Add(
+            _journalEntries.Add(
                 new MaterialCollectedJournalEntry
                 {
                     MaterialQuantity = new MaterialQuantity

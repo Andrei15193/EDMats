@@ -114,8 +114,6 @@
       <DependentUpon>Notifications.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dispatcher.cs" />
-    <Compile Include="ReflectionServiceRegistry.cs" />
-    <Compile Include="ServiceRegistry.cs" />
     <Compile Include="Services\JournalCommanderInformation.cs" />
     <Compile Include="Services\IFileSystemService.cs" />
     <Compile Include="Services\IJournalFileImportService.cs" />

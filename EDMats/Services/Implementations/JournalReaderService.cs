@@ -12,10 +12,10 @@ namespace EDMats.Services.Implementations
 {
     public class JournalReaderService : IJournalReaderService
     {
-        private readonly IReadOnlyDictionary<string, Func<JObject, JournalEntry>> _logEntryFactories = new Dictionary<string, Func<JObject, JournalEntry>>(StringComparer.OrdinalIgnoreCase)
+        private readonly IReadOnlyDictionary<string, Func<JObject, JournalEntry>> _journalEntryFactories = new Dictionary<string, Func<JObject, JournalEntry>>(StringComparer.OrdinalIgnoreCase)
         {
-            { "Materials", _GetMaterialsLogEntry },
-            { "MaterialCollected", _GetMaterialCollectedLogEntry }
+            { "Materials", _GetMaterialsJournalEntry },
+            { "MaterialCollected", _GetMaterialCollectedJournalEntry }
         };
 
         public Task<IReadOnlyList<JournalEntry>> ReadAsync(TextReader textReader)
@@ -23,32 +23,32 @@ namespace EDMats.Services.Implementations
 
         public async Task<IReadOnlyList<JournalEntry>> ReadAsync(TextReader textReader, CancellationToken cancellationToken)
         {
-            var logEntries = new List<JournalEntry>();
+            var journalEntries = new List<JournalEntry>();
 
-            var logEntryJsonText = await textReader.ReadLineAsync().ConfigureAwait(false);
+            var journalEntryJsonText = await textReader.ReadLineAsync().ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested();
-            while (logEntryJsonText != null)
+            while (journalEntryJsonText != null)
             {
-                var jsonLogEntry = await Task
-                    .Run(() => JsonConvert.DeserializeObject<JObject>(logEntryJsonText))
+                var journalEntryJson = await Task
+                    .Run(() => JsonConvert.DeserializeObject<JObject>(journalEntryJsonText))
                     .ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
 
-                if (_logEntryFactories.TryGetValue((string)jsonLogEntry["event"], out var factory))
-                    logEntries.Add(factory(jsonLogEntry));
+                if (_journalEntryFactories.TryGetValue((string)journalEntryJson["event"], out var factory))
+                    journalEntries.Add(factory(journalEntryJson));
 
-                logEntryJsonText = await textReader.ReadLineAsync().ConfigureAwait(false);
+                journalEntryJsonText = await textReader.ReadLineAsync().ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
             }
 
-            return logEntries;
+            return journalEntries;
         }
 
-        private static JournalEntry _GetMaterialsLogEntry(JObject jsonLogEntry)
+        private static JournalEntry _GetMaterialsJournalEntry(JObject journalEntryJson)
         {
             return new MaterialsJournalEntry
             {
-                Timestamp = _GetTimestampFrom(jsonLogEntry),
+                Timestamp = _GetTimestampFrom(journalEntryJson),
                 Encoded = _GetMaterialQuantities("Encoded"),
                 Manufactured = _GetMaterialQuantities("Manufactured"),
                 Raw = _GetMaterialQuantities("Raw")
@@ -56,10 +56,10 @@ namespace EDMats.Services.Implementations
 
             IReadOnlyCollection<MaterialQuantity> _GetMaterialQuantities(string propertyName)
             {
-                jsonLogEntry.TryGetValue(propertyName, StringComparison.OrdinalIgnoreCase, out var x);
+                journalEntryJson.TryGetValue(propertyName, StringComparison.OrdinalIgnoreCase, out var x);
                 var y = x;
 
-                var materialQuantities = jsonLogEntry.TryGetValue(propertyName, StringComparison.OrdinalIgnoreCase, out var materialQuantitiesJson)
+                var materialQuantities = journalEntryJson.TryGetValue(propertyName, StringComparison.OrdinalIgnoreCase, out var materialQuantitiesJson)
                     ? ((JArray)materialQuantitiesJson).OfType<JObject>().Select(_GetMaterialQuantityFrom)
                     : Enumerable.Empty<MaterialQuantity>();
 
@@ -67,15 +67,15 @@ namespace EDMats.Services.Implementations
             }
         }
 
-        private static JournalEntry _GetMaterialCollectedLogEntry(JObject jsonLogEntry)
+        private static JournalEntry _GetMaterialCollectedJournalEntry(JObject journalEntryJson)
             => new MaterialCollectedJournalEntry
             {
-                Timestamp = _GetTimestampFrom(jsonLogEntry),
-                MaterialQuantity = _GetMaterialQuantityFrom(jsonLogEntry)
+                Timestamp = _GetTimestampFrom(journalEntryJson),
+                MaterialQuantity = _GetMaterialQuantityFrom(journalEntryJson)
             };
 
-        private static DateTime _GetTimestampFrom(JObject jsonLogEntry)
-            => jsonLogEntry.GetValue("timestamp", StringComparison.OrdinalIgnoreCase).Value<DateTime>();
+        private static DateTime _GetTimestampFrom(JObject journalEntryJson)
+            => journalEntryJson.GetValue("timestamp", StringComparison.OrdinalIgnoreCase).Value<DateTime>();
 
         private static MaterialQuantity _GetMaterialQuantityFrom(JObject materialQuantityJson)
         {

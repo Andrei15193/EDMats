@@ -21,29 +21,29 @@ namespace EDMats.Services.Implementations
 
         public async Task<JournalCommanderInformation> ImportJournalAsync(TextReader journalFileReader, CancellationToken cancellationToken)
         {
-            var logs = await _journalReaderService.ReadAsync(journalFileReader, cancellationToken).ConfigureAwait(false);
+            var journalEntries = await _journalReaderService.ReadAsync(journalFileReader, cancellationToken).ConfigureAwait(false);
 
             var materials = new Dictionary<Material, int>();
-            foreach (var log in logs)
+            foreach (var journalEntry in journalEntries)
             {
-                switch (log)
+                switch (journalEntry)
                 {
-                    case MaterialsJournalEntry materialsLogEntry:
-                        materials = materialsLogEntry
+                    case MaterialsJournalEntry materialsJournalEntry:
+                        materials = materialsJournalEntry
                             .Raw
-                            .Concat(materialsLogEntry.Manufactured)
-                            .Concat(materialsLogEntry.Encoded)
+                            .Concat(materialsJournalEntry.Manufactured)
+                            .Concat(materialsJournalEntry.Encoded)
                             .ToDictionary(
                                 materialQuantity => materialQuantity.Material,
                                 materialQuantity => materialQuantity.Amount
                             );
                         break;
 
-                    case MaterialCollectedJournalEntry materialCollectedLogEntry:
-                        if (materials.TryGetValue(materialCollectedLogEntry.MaterialQuantity.Material, out var amount))
-                            materials[materialCollectedLogEntry.MaterialQuantity.Material] = amount + materialCollectedLogEntry.MaterialQuantity.Amount;
+                    case MaterialCollectedJournalEntry materialCollectedJournalEntry:
+                        if (materials.TryGetValue(materialCollectedJournalEntry.MaterialQuantity.Material, out var amount))
+                            materials[materialCollectedJournalEntry.MaterialQuantity.Material] = amount + materialCollectedJournalEntry.MaterialQuantity.Amount;
                         else
-                            materials.Add(materialCollectedLogEntry.MaterialQuantity.Material, materialCollectedLogEntry.MaterialQuantity.Amount);
+                            materials.Add(materialCollectedJournalEntry.MaterialQuantity.Material, materialCollectedJournalEntry.MaterialQuantity.Amount);
                         break;
                 }
             }
