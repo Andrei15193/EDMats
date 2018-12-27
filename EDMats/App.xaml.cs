@@ -11,8 +11,10 @@ namespace EDMats
 
         private static IUnityContainer _GetUnityContainer()
             => new UnityContainer()
-                .RegisterType<IInventoryService, InventoryService>()
-                .RegisterType<IJournalReaderService, JournalReaderService>();
+                .RegisterType<IFileSystemService, FileSystemService>()
+                .RegisterType<IJournalImportService, JournalImportService>()
+                .RegisterType<IJournalReaderService, JournalReaderService>()
+                .RegisterType<IJournalFileImportService, JournalFileImportService>();
 
         internal static T EnsureDependencies<T>(T instance)
             => _container.BuildUp(instance);

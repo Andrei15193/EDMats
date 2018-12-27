@@ -8,7 +8,7 @@ namespace EDMats.Tests.Services
     [TestClass]
     public class MaterialTraderServiceTests
     {
-        private readonly MaterialTraderService _materialTraderService = new MaterialTraderService();
+        private MaterialTraderService _MaterialTraderService { get; } = new MaterialTraderService();
 
         [TestMethod]
         public void TradeGrade1InSameCategory()
@@ -145,40 +145,40 @@ namespace EDMats.Tests.Services
         [TestMethod]
         public void TradingNullDemandThrowsException()
         {
-            var exception = Assert.ThrowsException<ArgumentNullException>(() => _materialTraderService.GetTradeRate(null, Materials.Iron));
+            var exception = Assert.ThrowsException<ArgumentNullException>(() => _MaterialTraderService.GetTradeRate(null, Materials.Iron));
             Assert.AreEqual(new ArgumentNullException("demand").Message, exception.Message);
         }
 
         [TestMethod]
         public void TradingNullOfferThrowsException()
         {
-            var exception = Assert.ThrowsException<ArgumentNullException>(() => _materialTraderService.GetTradeRate(Materials.Iron, null));
+            var exception = Assert.ThrowsException<ArgumentNullException>(() => _MaterialTraderService.GetTradeRate(Materials.Iron, null));
             Assert.AreEqual(new ArgumentNullException("offer").Message, exception.Message);
         }
 
         [TestMethod]
         public void TradingZeroTimesThrowsException()
         {
-            var exception = Assert.ThrowsException<ArgumentException>(() => _materialTraderService.GetTradeRate(0, Materials.Sulphur, Materials.Iron));
+            var exception = Assert.ThrowsException<ArgumentException>(() => _MaterialTraderService.GetTradeRate(0, Materials.Sulphur, Materials.Iron));
             Assert.AreEqual(new ArgumentException("Trade times must be greater than 0 (zero), '0' provided.", "times").Message, exception.Message);
         }
 
         [TestMethod]
         public void TradingNegativeTimesThrowsException()
         {
-            var exception = Assert.ThrowsException<ArgumentException>(() => _materialTraderService.GetTradeRate(-20, Materials.Sulphur, Materials.Iron));
+            var exception = Assert.ThrowsException<ArgumentException>(() => _MaterialTraderService.GetTradeRate(-20, Materials.Sulphur, Materials.Iron));
             Assert.AreEqual(new ArgumentException("Trade times must be greater than 0 (zero), '-20' provided.", "times").Message, exception.Message);
         }
 
         private void _AssertTradeRate(TradeRate expectedTradeRate, Material target, Material source)
         {
-            var actualTradeRate = _materialTraderService.GetTradeRate(target, source);
+            var actualTradeRate = _MaterialTraderService.GetTradeRate(target, source);
             Assert.AreEqual(expectedTradeRate, actualTradeRate);
         }
 
         private void _AssertTradeRate(TradeRate expectedTradeRate, int times, Material target, Material source)
         {
-            var actualTradeRate = _materialTraderService.GetTradeRate(times, target, source);
+            var actualTradeRate = _MaterialTraderService.GetTradeRate(times, target, source);
             Assert.AreEqual(expectedTradeRate, actualTradeRate);
         }
     }

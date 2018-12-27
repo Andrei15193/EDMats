@@ -7,9 +7,9 @@ namespace EDMats.Actions
 {
     public class SettingsActions : ActionSet
     {
-        private readonly IInventoryService _inventoryService;
+        private readonly IJournalFileImportService _inventoryService;
 
-        public SettingsActions(IInventoryService inventoryService)
+        public SettingsActions(IJournalFileImportService inventoryService)
         {
             _inventoryService = inventoryService;
         }

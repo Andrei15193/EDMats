@@ -13,7 +13,7 @@ namespace EDMats.Tests.Services
     [TestClass]
     public class JournalReaderServiceTests
     {
-        private readonly IJournalReaderService _journalReaderService = new JournalReaderService();
+        private IJournalReaderService _JournalReaderService { get; } = new JournalReaderService();
 
         [TestMethod]
         public async Task ReadingEmptyStringReturnsEmptyLogsCollection()
@@ -21,7 +21,7 @@ namespace EDMats.Tests.Services
             IReadOnlyList<LogEntry> logs;
 
             using (var stringReader = new StringReader(""))
-                logs = await _journalReaderService.ReadAsync(stringReader);
+                logs = await _JournalReaderService.ReadAsync(stringReader);
 
             Assert.AreEqual(0, logs.Count);
         }
@@ -32,7 +32,7 @@ namespace EDMats.Tests.Services
             IReadOnlyList<LogEntry> logs;
 
             using (var stringReader = new StringReader(@"{ ""timestamp"":""2018-12-23T17:44:26Z"", ""event"":""Materials"", ""Raw"":[ { ""Name"":""carbon"", ""Count"":21 }, { ""Name"":""manganese"", ""Count"":11 }, { ""Name"":""nickel"", ""Count"":33 } ], ""Manufactured"":[ { ""Name"":""focuscrystals"", ""Count"":4 }, { ""Name"":""exquisitefocuscrystals"", ""Count"":7 }, { ""Name"":""mechanicalscrap"", ""Count"":2 } ], ""Encoded"":[ { ""Name"":""shieldcyclerecordings"", ""Count"":9 }, { ""Name"":""shieldsoakanalysis"", ""Count"":3 }, { ""Name"":""bulkscandata"", ""Count"":45 } ] }"))
-                logs = await _journalReaderService.ReadAsync(stringReader);
+                logs = await _JournalReaderService.ReadAsync(stringReader);
 
             Assert.AreEqual(1, logs.Count);
             var materialsLogEntry = (MaterialsLogEntry)logs.Single();
@@ -109,7 +109,7 @@ namespace EDMats.Tests.Services
             IReadOnlyList<LogEntry> logs;
 
             using (var stringReader = new StringReader(@"{ ""timestamp"":""2018-12-23T17:44:26Z"", ""event"":""Materials"" }"))
-                logs = await _journalReaderService.ReadAsync(stringReader);
+                logs = await _JournalReaderService.ReadAsync(stringReader);
 
             Assert.AreEqual(1, logs.Count);
             var materialsLogEntry = (MaterialsLogEntry)logs.Single();
@@ -125,7 +125,7 @@ namespace EDMats.Tests.Services
             IReadOnlyList<LogEntry> logs;
 
             using (var stringReader = new StringReader(@"{ ""timestamp"":""2018-12-23T18:25:17Z"", ""event"":""MaterialCollected"", ""Name"":""bulkscandata"", ""Count"":3 }"))
-                logs = await _journalReaderService.ReadAsync(stringReader);
+                logs = await _JournalReaderService.ReadAsync(stringReader);
 
             Assert.AreEqual(1, logs.Count);
             var materialCollectedLogEntry = (MaterialCollectedLogEntry)logs.Single();

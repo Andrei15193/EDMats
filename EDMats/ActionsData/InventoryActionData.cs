@@ -4,11 +4,11 @@ namespace EDMats.ActionsData
 {
     public class InventoryActionData : NotificationActionData
     {
-        public InventoryActionData(CommanderInventory inventory)
+        public InventoryActionData(JournalCommanderInformation inventory)
         {
             Inventory = inventory;
         }
 
-        public CommanderInventory Inventory { get; }
+        public JournalCommanderInformation Inventory { get; }
     }
 }
