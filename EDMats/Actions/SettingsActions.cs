@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using EDMats.ActionsData;
 using EDMats.Services;
@@ -20,9 +19,15 @@ namespace EDMats.Actions
 
         public async Task LoadJournalFileAsync(string journalFilePath, CancellationToken cancellationToken)
         {
-            Dispatch(new OpeningJournalFileActionData(journalFilePath));
+            Dispatch(new OpeningJournalFileActionData(journalFilePath)
+            {
+                NotificationText = $"Loading journal file \"{journalFilePath}\""
+            });
             var inventory = await _inventoryService.GetInventoryAsync(journalFilePath, cancellationToken);
-            Dispatch(new InventoryActionData(inventory));
+            Dispatch(new InventoryActionData(inventory)
+            {
+                NotificationText = "Journal file loaded"
+            });
         }
 
         public void FilterMaterials(string filterText)

@@ -49,6 +49,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionsData\NotificationActionDataTests.cs" />
+    <Compile Include="Converters\StringConverterTests.cs" />
     <Compile Include="DispatcherTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\JournalReaderServiceTests.cs" />

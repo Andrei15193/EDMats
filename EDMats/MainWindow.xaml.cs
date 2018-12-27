@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using EDMats.Actions;
+using EDMats.Stores;
 using Microsoft.Win32;
 using Unity.Attributes;
 
@@ -9,13 +11,13 @@ namespace EDMats
 {
     public partial class MainWindow : Window
     {
-        [Dependency]
-        public SettingsActions SettingsActions { get; set; }
-
         public MainWindow()
         {
             InitializeComponent();
         }
+
+        [Dependency]
+        public SettingsActions SettingsActions { get; set; }
 
         private async void _BrowseJournalFile(object sender, RoutedEventArgs e)
         {

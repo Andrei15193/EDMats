@@ -101,12 +101,18 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ActionData.cs" />
+    <Compile Include="ActionsData\DismissNotificationActionData.cs" />
     <Compile Include="ActionsData\FilterMaterialsActionData.cs" />
     <Compile Include="ActionsData\InventoryActionData.cs" />
+    <Compile Include="ActionsData\NotificationActionData.cs" />
     <Compile Include="ActionSet.cs" />
     <Compile Include="ActionState.cs" />
     <Compile Include="ActionsData\OpeningJournalFileActionData.cs" />
+    <Compile Include="Actions\NotificationActions.cs" />
     <Compile Include="Actions\SettingsActions.cs" />
+    <Compile Include="Controls\Notifications.xaml.cs">
+      <DependentUpon>Notifications.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dispatcher.cs" />
     <Compile Include="ReflectionServiceRegistry.cs" />
     <Compile Include="ServiceRegistry.cs" />
@@ -129,7 +135,14 @@
     <Compile Include="Services\TradeRate.cs" />
     <Compile Include="Store.cs" />
     <Compile Include="Stores\InventoryStore.cs" />
+    <Compile Include="Stores\Notification.cs" />
+    <Compile Include="Stores\NotificationsStore.cs" />
     <Compile Include="Stores\StoredMaterial.cs" />
+    <Compile Include="Converters\StringConverter.cs" />
+    <Page Include="Controls\Notifications.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -142,6 +155,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

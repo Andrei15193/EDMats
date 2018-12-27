@@ -2,7 +2,7 @@
 
 namespace EDMats.ActionsData
 {
-    public class InventoryActionData : ActionData
+    public class InventoryActionData : NotificationActionData
     {
         public InventoryActionData(CommanderInventory inventory)
         {

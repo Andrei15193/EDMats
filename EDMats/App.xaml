@@ -2,8 +2,16 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Startup="Application_Startup"
-             xmlns:stores="clr-namespace:EDMats.Stores">
+             xmlns:stores="clr-namespace:EDMats.Stores"
+             xmlns:converters="clr-namespace:EDMats.Converters">
     <Application.Resources>
-        <stores:InventoryStore x:Key="SettingStore" />
+        <ResourceDictionary>
+            <stores:InventoryStore x:Key="SettingStore" />
+            <stores:NotificationsStore x:Key="NotificationsStore" />
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source=".\Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
