@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -25,9 +26,6 @@ namespace EDMats.Tests.Services
         {
             _journalEntries = new List<JournalEntry>();
             _JournalReaderService = new Mock<IJournalReaderService>();
-            _JournalReaderService
-                .Setup(journalReaderService => journalReaderService.ReadAsync(It.IsAny<TextReader>()))
-                .ReturnsAsync(_journalEntries);
             _JournalReaderService
                 .Setup(journalReaderService => journalReaderService.ReadAsync(It.IsAny<TextReader>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(_journalEntries);
@@ -71,9 +69,9 @@ namespace EDMats.Tests.Services
                 }
             );
 
-            var commanderData = await _JournalImportService.ImportJournalAsync(null);
+            var commanderInformation = await _JournalImportService.ImportJournalAsync(null);
 
-            _AssertAreEqual(expectedMaterials, commanderData.Materials);
+            _AssertAreEqual(expectedMaterials, commanderInformation.Materials);
         }
 
         [TestMethod]
@@ -127,9 +125,9 @@ namespace EDMats.Tests.Services
                 }
             );
 
-            var commanderData = await _JournalImportService.ImportJournalAsync(null);
+            var commanderInformation = await _JournalImportService.ImportJournalAsync(null);
 
-            _AssertAreEqual(expectedMaterials, commanderData.Materials);
+            _AssertAreEqual(expectedMaterials, commanderInformation.Materials);
         }
 
         [TestMethod]
@@ -179,9 +177,9 @@ namespace EDMats.Tests.Services
             );
             _journalEntries.Add(_journalEntries[0]);
 
-            var commanderData = await _JournalImportService.ImportJournalAsync(null);
+            var commanderInformation = await _JournalImportService.ImportJournalAsync(null);
 
-            _AssertAreEqual(expectedMaterials, commanderData.Materials);
+            _AssertAreEqual(expectedMaterials, commanderInformation.Materials);
         }
 
         [TestMethod]
@@ -228,9 +226,105 @@ namespace EDMats.Tests.Services
                 }
             );
 
-            var commanderData = await _JournalImportService.ImportJournalAsync(null);
+            var commanderInformation = await _JournalImportService.ImportJournalAsync(null);
 
-            _AssertAreEqual(expectedMaterials, commanderData.Materials);
+            _AssertAreEqual(expectedMaterials, commanderInformation.Materials);
+        }
+
+        [TestMethod]
+        public async Task LogsAreProcessedInOrderBasedOnTimestamp()
+        {
+            var expectedMaterials = new[]
+            {
+                new MaterialQuantity
+                {
+                    Material = Materials.Iron,
+                    Amount = 3
+                },
+                new MaterialQuantity
+                {
+                    Material = Materials.CrystalShards,
+                    Amount = 6
+                },
+                new MaterialQuantity
+                {
+                    Material = Materials.DataminedWakeExceptions,
+                    Amount = 9
+                }
+            };
+            _journalEntries.Add(
+                new MaterialsJournalEntry
+                {
+                    Timestamp = DateTime.UtcNow.AddDays(1),
+                    Encoded = expectedMaterials
+                        .Where(materialQuantity => materialQuantity.Material.Type == Materials.Encoded)
+                        .ToList(),
+                    Manufactured = expectedMaterials
+                        .Where(materialQuantity => materialQuantity.Material.Type == Materials.Manufactured)
+                        .ToList(),
+                    Raw = expectedMaterials
+                        .Where(materialQuantity => materialQuantity.Material.Type == Materials.Raw)
+                        .ToList(),
+                }
+            );
+            _journalEntries.Add(
+                new MaterialCollectedJournalEntry
+                {
+                    Timestamp = DateTime.UtcNow,
+                    MaterialQuantity = new MaterialQuantity
+                    {
+                        Material = Materials.Iron,
+                        Amount = 1
+                    }
+                }
+            );
+
+            var commanderInformation = await _JournalImportService.ImportJournalAsync(null);
+
+            _AssertAreEqual(expectedMaterials, commanderInformation.Materials);
+        }
+
+        [TestMethod]
+        public async Task LatestTimestampIsReturned()
+        {
+            var utcNow = DateTime.UtcNow;
+
+            _journalEntries.Add(
+                new MaterialCollectedJournalEntry
+                {
+                    Timestamp = utcNow.AddDays(1),
+                    MaterialQuantity = new MaterialQuantity
+                    {
+                        Material = Materials.Iron,
+                        Amount = 1
+                    }
+                }
+            );
+            _journalEntries.Add(
+                new MaterialCollectedJournalEntry
+                {
+                    Timestamp = utcNow,
+                    MaterialQuantity = new MaterialQuantity
+                    {
+                        Material = Materials.Carbon,
+                        Amount = 1
+                    }
+                }
+            );
+
+            var commanderInformation = await _JournalImportService.ImportJournalAsync(null);
+
+            Assert.AreEqual(utcNow.AddDays(1), commanderInformation.LatestUpdate);
+        }
+
+        [TestMethod]
+        public async Task EarliestUtcDateTimeIsReturnedWhenThereAreNoLogs()
+        {
+            var expected = DateTime.MinValue.ToUniversalTime();
+
+            var commanderInformation = await _JournalImportService.ImportJournalAsync(null);
+
+            Assert.AreEqual(expected, commanderInformation.LatestUpdate);
         }
 
         private static void _AssertAreEqual(IEnumerable<MaterialQuantity> expected, IReadOnlyDictionary<Material, int> actual)

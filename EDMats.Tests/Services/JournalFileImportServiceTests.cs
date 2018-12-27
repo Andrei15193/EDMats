@@ -35,14 +35,8 @@ namespace EDMats.Tests.Services
                 _FileSystemService
                     .Setup(fileSystemService => fileSystemService.OpenRead(fileName))
                     .Returns(textReader);
-                _FileSystemService
-                    .Setup(fileSystemService => fileSystemService.OpenRead(fileName))
-                    .Returns(textReader);
 
                 var journalCommanderInformation = new JournalCommanderInformation();
-                _JournalImportService
-                    .Setup(journalImportService => journalImportService.ImportJournalAsync(textReader))
-                    .ReturnsAsync(journalCommanderInformation);
                 _JournalImportService
                     .Setup(journalImportService => journalImportService.ImportJournalAsync(textReader, It.IsAny<CancellationToken>()))
                     .ReturnsAsync(journalCommanderInformation);

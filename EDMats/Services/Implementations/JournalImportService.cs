@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -23,9 +24,11 @@ namespace EDMats.Services.Implementations
         {
             var journalEntries = await _journalReaderService.ReadAsync(journalFileReader, cancellationToken).ConfigureAwait(false);
 
+            var latestJournalEntryTimestamp = DateTime.MinValue.ToUniversalTime();
             var materials = new Dictionary<Material, int>();
-            foreach (var journalEntry in journalEntries)
+            foreach (var journalEntry in journalEntries.OrderBy(journalEntry => journalEntry.Timestamp))
             {
+                latestJournalEntryTimestamp = journalEntry.Timestamp;
                 switch (journalEntry)
                 {
                     case MaterialsJournalEntry materialsJournalEntry:
@@ -50,6 +53,7 @@ namespace EDMats.Services.Implementations
 
             return new JournalCommanderInformation
             {
+                LatestUpdate = latestJournalEntryTimestamp,
                 Materials = materials
             };
         }

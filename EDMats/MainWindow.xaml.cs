@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using EDMats.Actions;
-using EDMats.Stores;
 using Microsoft.Win32;
 using Unity.Attributes;
 
