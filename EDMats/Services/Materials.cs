@@ -675,7 +675,7 @@ namespace EDMats.Services
                         AnomalousFsdTelemetry = new Material("fsdtelemetry", "Anomalous FSD Telemetry", MaterialGrade.Common, WakeScans, 250)
                     );
                     materials.Add(
-                        StrangeWakeSolutions = new Material("strangewakesolutions", "Strange Wake Solutions", MaterialGrade.Standard, WakeScans, 200)
+                        StrangeWakeSolutions = new Material("wakesolutions", "Strange Wake Solutions", MaterialGrade.Standard, WakeScans, 200)
                     );
                     materials.Add(
                         EccentricHyperspaceTrajectories = new Material("hyperspacetrajectories", "Eccentric Hyperspace Trajectories", MaterialGrade.Rare, WakeScans, 150)

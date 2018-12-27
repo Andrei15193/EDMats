@@ -5,13 +5,13 @@ using EDMats.Services;
 
 namespace EDMats.Actions
 {
-    public class SettingsActions : ActionSet
+    public class JournalImportActions : ActionSet
     {
-        private readonly IJournalFileImportService _inventoryService;
+        private readonly IJournalFileImportService _journalFileImportService;
 
-        public SettingsActions(IJournalFileImportService inventoryService)
+        public JournalImportActions(IJournalFileImportService journalFileImportService)
         {
-            _inventoryService = inventoryService;
+            _journalFileImportService = journalFileImportService;
         }
 
         public Task LoadJournalFileAsync(string journalFilePath)
@@ -23,10 +23,10 @@ namespace EDMats.Actions
             {
                 NotificationText = $"Loading journal file \"{journalFilePath}\""
             });
-            var inventory = await _inventoryService.GetInventoryAsync(journalFilePath, cancellationToken);
-            Dispatch(new InventoryActionData(inventory)
+            var commanderInformation = await _journalFileImportService.ImportAsync(journalFilePath, cancellationToken);
+            Dispatch(new JournalImportedActionData(commanderInformation)
             {
-                NotificationText = "Journal file loaded"
+                NotificationText = $"Journal file loaded, latest entry on {commanderInformation.LatestUpdate:f}"
             });
         }
 

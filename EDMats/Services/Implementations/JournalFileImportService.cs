@@ -17,9 +17,9 @@ namespace EDMats.Services.Implementations
         }
 
         public Task<JournalCommanderInformation> ImportAsync(string journalFilePath)
-            => GetInventoryAsync(journalFilePath, CancellationToken.None);
+            => ImportAsync(journalFilePath, CancellationToken.None);
 
-        public async Task<JournalCommanderInformation> GetInventoryAsync(string journalFilePath, CancellationToken cancellationToken)
+        public async Task<JournalCommanderInformation> ImportAsync(string journalFilePath, CancellationToken cancellationToken)
         {
             using (var fileReader = _fileSystemService.OpenRead(journalFilePath))
                 return await _journalImportService.ImportJournalAsync(fileReader, cancellationToken).ConfigureAwait(false);

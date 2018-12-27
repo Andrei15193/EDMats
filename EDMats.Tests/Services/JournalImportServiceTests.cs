@@ -327,7 +327,7 @@ namespace EDMats.Tests.Services
             Assert.AreEqual(expected, commanderInformation.LatestUpdate);
         }
 
-        private static void _AssertAreEqual(IEnumerable<MaterialQuantity> expected, IReadOnlyDictionary<Material, int> actual)
+        private static void _AssertAreEqual(IEnumerable<MaterialQuantity> expected, IEnumerable<MaterialQuantity> actual)
         {
             Assert.IsTrue(
                 expected
@@ -335,8 +335,8 @@ namespace EDMats.Tests.Services
                     .Select(materialQuantity => new { materialQuantity.Material, materialQuantity.Amount })
                     .SequenceEqual(
                         actual
-                            .OrderBy(materialQuantity => materialQuantity.Key.Id)
-                            .Select(materialQuantity => new { Material = materialQuantity.Key, Amount = materialQuantity.Value })
+                            .OrderBy(materialQuantity => materialQuantity.Material.Id)
+                            .Select(materialQuantity => new { Material = materialQuantity.Material, Amount = materialQuantity.Amount })
                     )
             );
         }

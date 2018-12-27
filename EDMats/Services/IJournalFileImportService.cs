@@ -7,6 +7,6 @@ namespace EDMats.Services
     {
         Task<JournalCommanderInformation> ImportAsync(string journalFilePath);
 
-        Task<JournalCommanderInformation> GetInventoryAsync(string journalFilePath, CancellationToken cancellationToken);
+        Task<JournalCommanderInformation> ImportAsync(string journalFilePath, CancellationToken cancellationToken);
     }
 }

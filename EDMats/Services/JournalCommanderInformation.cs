@@ -7,6 +7,6 @@ namespace EDMats.Services
     {
         public DateTime LatestUpdate { get; set; }
 
-        public IReadOnlyDictionary<Material, int> Materials { get; set; }
+        public IReadOnlyCollection<MaterialQuantity> Materials { get; set; }
     }
 }

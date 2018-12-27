@@ -6,8 +6,9 @@
              xmlns:converters="clr-namespace:EDMats.Converters">
     <Application.Resources>
         <ResourceDictionary>
-            <stores:InventoryStore x:Key="SettingStore" />
             <stores:NotificationsStore x:Key="NotificationsStore" />
+            <stores:CommanderInfoStore x:Key="CommanderInfoStore" />
+            <stores:MaterialsGoalStore x:Key="MaterialsGoalStore" />
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source=".\Styles.xaml" />

@@ -55,6 +55,14 @@ namespace EDMats.Services.Implementations
             {
                 LatestUpdate = latestJournalEntryTimestamp,
                 Materials = materials
+                    .Select(
+                        materialQuantity => new MaterialQuantity
+                        {
+                            Material = materialQuantity.Key,
+                            Amount = materialQuantity.Value
+                        }
+                    )
+                    .ToList()
             };
         }
     }

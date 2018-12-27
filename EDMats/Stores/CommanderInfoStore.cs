@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using EDMats.ActionsData;
 
 namespace EDMats.Stores
 {
-    public class InventoryStore : Store
+    public class CommanderInfoStore : Store
     {
-        private IReadOnlyList<StoredMaterial> _allStoredMaterials;
+        private IReadOnlyList<StoredMaterial> _storedMaterials;
         private readonly ObservableCollection<StoredMaterial> _filteredStoredMaterials;
 
-        public InventoryStore()
+        public CommanderInfoStore()
         {
+            _storedMaterials = new List<StoredMaterial>();
             _filteredStoredMaterials = new ObservableCollection<StoredMaterial>();
             FilteredStoredMaterials = new ReadOnlyObservableCollection<StoredMaterial>(_filteredStoredMaterials);
         }
@@ -32,15 +32,15 @@ namespace EDMats.Stores
                     SetProperty(() => JournalFilePath, openingJournalFile.FilePath);
                     break;
 
-                case InventoryActionData inventory:
-                    _allStoredMaterials = inventory
-                        .Inventory
+                case JournalImportedActionData commanderInfo:
+                    _storedMaterials = commanderInfo
+                        .CommanderInformation
                         .Materials
                         .Select(
                             material => new StoredMaterial
                             {
-                                Name = material.Key.Name,
-                                Amount = material.Value
+                                Name = material.Material.Name,
+                                Amount = material.Amount
                             }
                         )
                         .ToList();
@@ -56,19 +56,12 @@ namespace EDMats.Stores
 
         private void _FilterItems()
         {
-            if (string.IsNullOrWhiteSpace(FilterText))
+            var filteredStoredMaterials = _storedMaterials.ApplyFilter(FilterText);
+            if (_storedMaterials != filteredStoredMaterials)
             {
                 _filteredStoredMaterials.Clear();
-                foreach (var storedMaterial in _allStoredMaterials)
-                    _filteredStoredMaterials.Add(storedMaterial);
-            }
-            else
-            {
-                var searchItems = FilterText.Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries);
-                _filteredStoredMaterials.Clear();
-                foreach (var storedMaterial in _allStoredMaterials)
-                    if (searchItems.Any(searchItem => storedMaterial.Name.IndexOf(searchItem, StringComparison.OrdinalIgnoreCase) >= 0))
-                        _filteredStoredMaterials.Add(storedMaterial);
+                foreach (var filteredStoredMaterial in filteredStoredMaterials)
+                    _filteredStoredMaterials.Add(filteredStoredMaterial);
             }
         }
     }

@@ -15,7 +15,7 @@ namespace EDMats
         }
 
         [Dependency]
-        public SettingsActions SettingsActions { get; set; }
+        public JournalImportActions SettingsActions { get; set; }
 
         private async void _BrowseJournalFile(object sender, RoutedEventArgs e)
         {
@@ -33,7 +33,8 @@ namespace EDMats
 
         private void _FilterTextChanged(object sender, TextChangedEventArgs e)
         {
-            SettingsActions.FilterMaterials(_FilterTextBox.Text);
+            var filterTextBox = (TextBox)sender;
+            SettingsActions.FilterMaterials(filterTextBox.Text);
         }
     }
 }
