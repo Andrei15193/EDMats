@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using EDMats.Services.LogEntries;
+using EDMats.Services.JournalEntries;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -12,18 +12,18 @@ namespace EDMats.Services.Implementations
 {
     public class JournalReaderService : IJournalReaderService
     {
-        private readonly IReadOnlyDictionary<string, Func<JObject, LogEntry>> _logEntryFactories = new Dictionary<string, Func<JObject, LogEntry>>(StringComparer.OrdinalIgnoreCase)
+        private readonly IReadOnlyDictionary<string, Func<JObject, JournalEntry>> _logEntryFactories = new Dictionary<string, Func<JObject, JournalEntry>>(StringComparer.OrdinalIgnoreCase)
         {
             { "Materials", _GetMaterialsLogEntry },
             { "MaterialCollected", _GetMaterialCollectedLogEntry }
         };
 
-        public Task<IReadOnlyList<LogEntry>> ReadAsync(TextReader textReader)
+        public Task<IReadOnlyList<JournalEntry>> ReadAsync(TextReader textReader)
             => ReadAsync(textReader, CancellationToken.None);
 
-        public async Task<IReadOnlyList<LogEntry>> ReadAsync(TextReader textReader, CancellationToken cancellationToken)
+        public async Task<IReadOnlyList<JournalEntry>> ReadAsync(TextReader textReader, CancellationToken cancellationToken)
         {
-            var logEntries = new List<LogEntry>();
+            var logEntries = new List<JournalEntry>();
 
             var logEntryJsonText = await textReader.ReadLineAsync().ConfigureAwait(false);
             cancellationToken.ThrowIfCancellationRequested();
@@ -44,9 +44,9 @@ namespace EDMats.Services.Implementations
             return logEntries;
         }
 
-        private static LogEntry _GetMaterialsLogEntry(JObject jsonLogEntry)
+        private static JournalEntry _GetMaterialsLogEntry(JObject jsonLogEntry)
         {
-            return new MaterialsLogEntry
+            return new MaterialsJournalEntry
             {
                 Timestamp = _GetTimestampFrom(jsonLogEntry),
                 Encoded = _GetMaterialQuantities("Encoded"),
@@ -67,8 +67,8 @@ namespace EDMats.Services.Implementations
             }
         }
 
-        private static LogEntry _GetMaterialCollectedLogEntry(JObject jsonLogEntry)
-            => new MaterialCollectedLogEntry
+        private static JournalEntry _GetMaterialCollectedLogEntry(JObject jsonLogEntry)
+            => new MaterialCollectedJournalEntry
             {
                 Timestamp = _GetTimestampFrom(jsonLogEntry),
                 MaterialQuantity = _GetMaterialQuantityFrom(jsonLogEntry)

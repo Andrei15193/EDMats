@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EDMats.Services;
 using EDMats.Services.Implementations;
-using EDMats.Services.LogEntries;
+using EDMats.Services.JournalEntries;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EDMats.Tests.Services
@@ -18,7 +18,7 @@ namespace EDMats.Tests.Services
         [TestMethod]
         public async Task ReadingEmptyStringReturnsEmptyLogsCollection()
         {
-            IReadOnlyList<LogEntry> logs;
+            IReadOnlyList<JournalEntry> logs;
 
             using (var stringReader = new StringReader(""))
                 logs = await _JournalReaderService.ReadAsync(stringReader);
@@ -29,13 +29,13 @@ namespace EDMats.Tests.Services
         [TestMethod]
         public async Task ReadingMaterialsEntryReturnsListOfMaterials()
         {
-            IReadOnlyList<LogEntry> logs;
+            IReadOnlyList<JournalEntry> logs;
 
             using (var stringReader = new StringReader(@"{ ""timestamp"":""2018-12-23T17:44:26Z"", ""event"":""Materials"", ""Raw"":[ { ""Name"":""carbon"", ""Count"":21 }, { ""Name"":""manganese"", ""Count"":11 }, { ""Name"":""nickel"", ""Count"":33 } ], ""Manufactured"":[ { ""Name"":""focuscrystals"", ""Count"":4 }, { ""Name"":""exquisitefocuscrystals"", ""Count"":7 }, { ""Name"":""mechanicalscrap"", ""Count"":2 } ], ""Encoded"":[ { ""Name"":""shieldcyclerecordings"", ""Count"":9 }, { ""Name"":""shieldsoakanalysis"", ""Count"":3 }, { ""Name"":""bulkscandata"", ""Count"":45 } ] }"))
                 logs = await _JournalReaderService.ReadAsync(stringReader);
 
             Assert.AreEqual(1, logs.Count);
-            var materialsLogEntry = (MaterialsLogEntry)logs.Single();
+            var materialsLogEntry = (MaterialsJournalEntry)logs.Single();
             Assert.AreEqual(new DateTime(2018, 12, 23, 17, 44, 26, DateTimeKind.Utc), materialsLogEntry.Timestamp);
             _AssertCollectionsAreEqual(
                 new[]
@@ -106,13 +106,13 @@ namespace EDMats.Tests.Services
         [TestMethod]
         public async Task ReadingMaterialsEntryWithoutCorrespondingPropertiesReturnsEmptyCollections()
         {
-            IReadOnlyList<LogEntry> logs;
+            IReadOnlyList<JournalEntry> logs;
 
             using (var stringReader = new StringReader(@"{ ""timestamp"":""2018-12-23T17:44:26Z"", ""event"":""Materials"" }"))
                 logs = await _JournalReaderService.ReadAsync(stringReader);
 
             Assert.AreEqual(1, logs.Count);
-            var materialsLogEntry = (MaterialsLogEntry)logs.Single();
+            var materialsLogEntry = (MaterialsJournalEntry)logs.Single();
             Assert.AreEqual(new DateTime(2018, 12, 23, 17, 44, 26, DateTimeKind.Utc), materialsLogEntry.Timestamp);
             _AssertCollectionsAreEqual(Enumerable.Empty<MaterialQuantity>(), materialsLogEntry.Raw);
             _AssertCollectionsAreEqual(Enumerable.Empty<MaterialQuantity>(), materialsLogEntry.Manufactured);
@@ -122,13 +122,13 @@ namespace EDMats.Tests.Services
         [TestMethod]
         public async Task ReadingMaterialCollectedEntryReturnsCollectedMaterialQuantity()
         {
-            IReadOnlyList<LogEntry> logs;
+            IReadOnlyList<JournalEntry> logs;
 
             using (var stringReader = new StringReader(@"{ ""timestamp"":""2018-12-23T18:25:17Z"", ""event"":""MaterialCollected"", ""Name"":""bulkscandata"", ""Count"":3 }"))
                 logs = await _JournalReaderService.ReadAsync(stringReader);
 
             Assert.AreEqual(1, logs.Count);
-            var materialCollectedLogEntry = (MaterialCollectedLogEntry)logs.Single();
+            var materialCollectedLogEntry = (MaterialCollectedJournalEntry)logs.Single();
             Assert.AreEqual(new DateTime(2018, 12, 23, 18, 25, 17, DateTimeKind.Utc), materialCollectedLogEntry.Timestamp);
             Assert.AreEqual(Materials.AnomalousBulkScanData, materialCollectedLogEntry.MaterialQuantity.Material);
             Assert.AreEqual(3, materialCollectedLogEntry.MaterialQuantity.Amount);

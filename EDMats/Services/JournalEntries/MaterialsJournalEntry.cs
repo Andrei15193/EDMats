@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace EDMats.Services.LogEntries
+namespace EDMats.Services.JournalEntries
 {
-    public class MaterialsLogEntry : LogEntry
+    public class MaterialsJournalEntry : JournalEntry
     {
         public IReadOnlyCollection<MaterialQuantity> Raw { get; set; }
 

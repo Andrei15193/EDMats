@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using EDMats.Services.LogEntries;
+using EDMats.Services.JournalEntries;
 
 namespace EDMats.Services.Implementations
 {
@@ -28,7 +28,7 @@ namespace EDMats.Services.Implementations
             {
                 switch (log)
                 {
-                    case MaterialsLogEntry materialsLogEntry:
+                    case MaterialsJournalEntry materialsLogEntry:
                         materials = materialsLogEntry
                             .Raw
                             .Concat(materialsLogEntry.Manufactured)
@@ -39,7 +39,7 @@ namespace EDMats.Services.Implementations
                             );
                         break;
 
-                    case MaterialCollectedLogEntry materialCollectedLogEntry:
+                    case MaterialCollectedJournalEntry materialCollectedLogEntry:
                         if (materials.TryGetValue(materialCollectedLogEntry.MaterialQuantity.Material, out var amount))
                             materials[materialCollectedLogEntry.MaterialQuantity.Material] = amount + materialCollectedLogEntry.MaterialQuantity.Amount;
                         else

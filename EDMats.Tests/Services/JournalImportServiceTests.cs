@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using EDMats.Services;
 using EDMats.Services.Implementations;
-using EDMats.Services.LogEntries;
+using EDMats.Services.JournalEntries;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
@@ -14,7 +14,7 @@ namespace EDMats.Tests.Services
     [TestClass]
     public class JournalImportServiceTests
     {
-        private List<LogEntry> _logEntries = new List<LogEntry>();
+        private List<JournalEntry> _logEntries = new List<JournalEntry>();
 
         private Mock<IJournalReaderService> _JournalReaderService { get; set; }
 
@@ -23,7 +23,7 @@ namespace EDMats.Tests.Services
         [TestInitialize]
         public void TestInitialize()
         {
-            _logEntries = new List<LogEntry>();
+            _logEntries = new List<JournalEntry>();
             _JournalReaderService = new Mock<IJournalReaderService>();
             _JournalReaderService
                 .Setup(journalReaderService => journalReaderService.ReadAsync(It.IsAny<TextReader>()))
@@ -57,7 +57,7 @@ namespace EDMats.Tests.Services
                 }
             };
             _logEntries.Add(
-                new MaterialsLogEntry
+                new MaterialsJournalEntry
                 {
                     Encoded = expectedMaterials
                         .Where(materialQuantity => materialQuantity.Material.Type == Materials.Encoded)
@@ -98,7 +98,7 @@ namespace EDMats.Tests.Services
                 }
             };
             _logEntries.Add(
-                new MaterialsLogEntry
+                new MaterialsJournalEntry
                 {
                     Encoded = expectedMaterials
                         .Where(materialQuantity => materialQuantity.Material.Type == Materials.Encoded)
@@ -117,7 +117,7 @@ namespace EDMats.Tests.Services
                 }
             );
             _logEntries.Add(
-                new MaterialCollectedLogEntry
+                new MaterialCollectedJournalEntry
                 {
                     MaterialQuantity = new MaterialQuantity
                     {
@@ -154,7 +154,7 @@ namespace EDMats.Tests.Services
                 }
             };
             _logEntries.Add(
-                new MaterialsLogEntry
+                new MaterialsJournalEntry
                 {
                     Encoded = expectedMaterials
                         .Where(materialQuantity => materialQuantity.Material.Type == Materials.Encoded)
@@ -168,7 +168,7 @@ namespace EDMats.Tests.Services
                 }
             );
             _logEntries.Add(
-                new MaterialCollectedLogEntry
+                new MaterialCollectedJournalEntry
                 {
                     MaterialQuantity = new MaterialQuantity
                     {
@@ -206,7 +206,7 @@ namespace EDMats.Tests.Services
                 }
             };
             _logEntries.Add(
-                new MaterialsLogEntry
+                new MaterialsJournalEntry
                 {
                     Encoded = expectedMaterials
                         .Where(materialQuantity => materialQuantity.Material.Type == Materials.Encoded)
@@ -218,7 +218,7 @@ namespace EDMats.Tests.Services
                 }
             );
             _logEntries.Add(
-                new MaterialCollectedLogEntry
+                new MaterialCollectedJournalEntry
                 {
                     MaterialQuantity = new MaterialQuantity
                     {

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace EDMats.Services.LogEntries
+namespace EDMats.Services.JournalEntries
 {
-    public abstract class LogEntry
+    public abstract class JournalEntry
     {
         public DateTime Timestamp { get; set; }
     }

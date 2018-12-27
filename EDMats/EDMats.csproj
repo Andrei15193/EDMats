@@ -127,10 +127,10 @@
     <Compile Include="Services\Implementations\JournalImportService.cs" />
     <Compile Include="Services\Implementations\JournalReaderService.cs" />
     <Compile Include="Services\Implementations\MaterialTraderService.cs" />
-    <Compile Include="Services\LogEntries\LogEntry.cs" />
+    <Compile Include="Services\JournalEntries\JournalEntry.cs" />
     <Compile Include="Services\Material.cs" />
-    <Compile Include="Services\LogEntries\MaterialCollectedLogEntry.cs" />
-    <Compile Include="Services\LogEntries\MaterialsLogEntry.cs" />
+    <Compile Include="Services\JournalEntries\MaterialCollectedJournalEntry.cs" />
+    <Compile Include="Services\JournalEntries\MaterialsJournalEntry.cs" />
     <Compile Include="Services\MaterialType.cs" />
     <Compile Include="Services\MaterialGrade.cs" />
     <Compile Include="Services\Materials.cs" />

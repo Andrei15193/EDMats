@@ -2,14 +2,14 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using EDMats.Services.LogEntries;
+using EDMats.Services.JournalEntries;
 
 namespace EDMats.Services
 {
     public interface IJournalReaderService
     {
-        Task<IReadOnlyList<LogEntry>> ReadAsync(TextReader textReader);
+        Task<IReadOnlyList<JournalEntry>> ReadAsync(TextReader textReader);
 
-        Task<IReadOnlyList<LogEntry>> ReadAsync(TextReader textReader, CancellationToken cancellationToken);
+        Task<IReadOnlyList<JournalEntry>> ReadAsync(TextReader textReader, CancellationToken cancellationToken);
     }
 }
