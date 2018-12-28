@@ -6,12 +6,12 @@ using EDMats.Services;
 
 namespace EDMats.Stores
 {
-    public class MaterialsGoalStore : Store
+    public class GoalsStore : Store
     {
         private readonly IReadOnlyCollection<StoredMaterial> _materialsGoal;
         private readonly ObservableCollection<StoredMaterial> _filteredMaterialsGoal;
 
-        public MaterialsGoalStore()
+        public GoalsStore()
         {
             _materialsGoal = Materials
                 .Encoded
@@ -23,6 +23,7 @@ namespace EDMats.Stores
                 .Select(
                     material => new StoredMaterial
                     {
+                        Id = material.Id,
                         Name = material.Name,
                         Amount = 0
                     }
@@ -40,12 +41,24 @@ namespace EDMats.Stores
             {
                 case FilterMaterialsActionData filterMaterialsActionData:
                     var filteredStoredMaterials = _materialsGoal.ApplyFilter(filterMaterialsActionData.FilterText);
-                    if (_materialsGoal != filteredStoredMaterials)
+                    if (_materialsGoal != filteredStoredMaterials || _materialsGoal.Count != _filteredMaterialsGoal.Count)
                     {
                         _filteredMaterialsGoal.Clear();
                         foreach (var filteredStoredMaterial in filteredStoredMaterials)
                             _filteredMaterialsGoal.Add(filteredStoredMaterial);
                     }
+                    break;
+
+                case UpdateMaterialGoalActionData updateMaterialGoalActionData:
+                    var updatedMaterial = _materialsGoal
+                        .Single(storedMaterial => storedMaterial.Id == updateMaterialGoalActionData.MaterialId);
+                    updatedMaterial.Amount = updateMaterialGoalActionData.Amount;
+
+                    var filteredMaterialIndex = 0;
+                    while (filteredMaterialIndex < _filteredMaterialsGoal.Count && _filteredMaterialsGoal[filteredMaterialIndex].Id != updateMaterialGoalActionData.MaterialId)
+                        filteredMaterialIndex++;
+                    if (filteredMaterialIndex < _filteredMaterialsGoal.Count)
+                        _filteredMaterialsGoal[filteredMaterialIndex] = updatedMaterial;
                     break;
             }
         }

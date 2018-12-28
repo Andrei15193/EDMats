@@ -31,8 +31,6 @@ namespace EDMats.Actions
         }
 
         public void FilterMaterials(string filterText)
-        {
-            Dispatch(new FilterMaterialsActionData(filterText));
-        }
+            => Dispatch(new FilterMaterialsActionData(filterText));
     }
 }

@@ -8,7 +8,7 @@
         <ResourceDictionary>
             <stores:NotificationsStore x:Key="NotificationsStore" />
             <stores:CommanderInfoStore x:Key="CommanderInfoStore" />
-            <stores:MaterialsGoalStore x:Key="MaterialsGoalStore" />
+            <stores:GoalsStore x:Key="GoalsStore" />
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source=".\Styles.xaml" />

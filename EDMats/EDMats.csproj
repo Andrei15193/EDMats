@@ -105,9 +105,11 @@
     <Compile Include="ActionsData\FilterMaterialsActionData.cs" />
     <Compile Include="ActionsData\JournalImportedActionData.cs" />
     <Compile Include="ActionsData\NotificationActionData.cs" />
+    <Compile Include="ActionsData\UpdateMaterialGoalActionData.cs" />
     <Compile Include="ActionSet.cs" />
     <Compile Include="ActionState.cs" />
     <Compile Include="ActionsData\OpeningJournalFileActionData.cs" />
+    <Compile Include="Actions\GoalActions.cs" />
     <Compile Include="Actions\NotificationActions.cs" />
     <Compile Include="Actions\JournalImportActions.cs" />
     <Compile Include="Controls\Notifications.xaml.cs">
@@ -138,7 +140,7 @@
     <Compile Include="Store.cs" />
     <Compile Include="Stores\CommanderInfoStore.cs" />
     <Compile Include="Stores\Extensions.cs" />
-    <Compile Include="Stores\MaterialsGoalStore.cs" />
+    <Compile Include="Stores\GoalsStore.cs" />
     <Compile Include="Stores\Notification.cs" />
     <Compile Include="Stores\NotificationsStore.cs" />
     <Compile Include="Stores\StoredMaterial.cs" />

@@ -57,7 +57,7 @@ namespace EDMats.Stores
         private void _FilterItems()
         {
             var filteredStoredMaterials = _storedMaterials.ApplyFilter(FilterText);
-            if (_storedMaterials != filteredStoredMaterials)
+            if (_storedMaterials != filteredStoredMaterials || _storedMaterials.Count != _filteredStoredMaterials.Count)
             {
                 _filteredStoredMaterials.Clear();
                 foreach (var filteredStoredMaterial in filteredStoredMaterials)
