@@ -67,6 +67,8 @@
     <Compile Include="DispatcherTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\FileSystemServiceTests.cs" />
+    <Compile Include="Services\GoalsFileStorageServiceTests.cs" />
+    <Compile Include="Services\GoalsStorageServiceTests.cs" />
     <Compile Include="Services\JournalFileImportServiceTests.cs" />
     <Compile Include="Services\JournalImportServiceTests.cs" />
     <Compile Include="Services\JournalReaderServiceTests.cs" />

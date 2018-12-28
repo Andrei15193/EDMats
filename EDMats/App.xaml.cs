@@ -14,7 +14,9 @@ namespace EDMats
                 .RegisterType<IFileSystemService, FileSystemService>()
                 .RegisterType<IJournalImportService, JournalImportService>()
                 .RegisterType<IJournalReaderService, JournalReaderService>()
-                .RegisterType<IJournalFileImportService, JournalFileImportService>();
+                .RegisterType<IJournalFileImportService, JournalFileImportService>()
+                .RegisterType<IGoalsStorageService, GoalsStorageService>()
+                .RegisterType<IGoalsFileStorageService, GoalsFileStorageService>();
 
         internal static T EnsureDependencies<T>(T instance)
             => _container.BuildUp(instance);

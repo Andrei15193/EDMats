@@ -17,9 +17,10 @@
         <Menu Grid.Row="0">
             <MenuItem Header="File">
                 <MenuItem Header="Load goals"
-                          IsEnabled="False" />
+                          Click="_LoadCommanderGoals" />
                 <MenuItem Header="Save goals"
-                          IsEnabled="False" />
+                          DataContext="{StaticResource GoalsStore}"
+                          Click="_SaveCommanderGoals" />
             </MenuItem>
         </Menu>
 

@@ -7,5 +7,8 @@ namespace EDMats.Services.Implementations
     {
         public TextReader OpenRead(string fileName)
             => new StreamReader(fileName, Encoding.UTF8);
+
+        public TextWriter OpenWrite(string fileName)
+            => new StreamWriter(fileName, false, Encoding.UTF8);
     }
 }

@@ -101,10 +101,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ActionData.cs" />
+    <Compile Include="ActionsData\CommanderGoalsLoadedActionData.cs" />
     <Compile Include="ActionsData\DismissNotificationActionData.cs" />
     <Compile Include="ActionsData\FilterMaterialsActionData.cs" />
     <Compile Include="ActionsData\JournalImportedActionData.cs" />
+    <Compile Include="ActionsData\LoadingCommanderGoalsActionData.cs" />
     <Compile Include="ActionsData\NotificationActionData.cs" />
+    <Compile Include="ActionsData\SavingCommanderGoalsActionData.cs" />
     <Compile Include="ActionsData\UpdateMaterialGoalActionData.cs" />
     <Compile Include="ActionSet.cs" />
     <Compile Include="ActionState.cs" />
@@ -116,6 +119,11 @@
       <DependentUpon>Notifications.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dispatcher.cs" />
+    <Compile Include="Services\CommanderGoalsData.cs" />
+    <Compile Include="Services\IGoalsFileStorageService.cs" />
+    <Compile Include="Services\IGoalsStorageService.cs" />
+    <Compile Include="Services\Implementations\GoalsFileStorageService.cs" />
+    <Compile Include="Services\Implementations\GoalsStorageService.cs" />
     <Compile Include="Services\JournalCommanderInformation.cs" />
     <Compile Include="Services\IFileSystemService.cs" />
     <Compile Include="Services\IJournalFileImportService.cs" />
@@ -131,6 +139,7 @@
     <Compile Include="Services\Material.cs" />
     <Compile Include="Services\JournalEntries\MaterialCollectedJournalEntry.cs" />
     <Compile Include="Services\JournalEntries\MaterialsJournalEntry.cs" />
+    <Compile Include="Services\MaterialGoalData.cs" />
     <Compile Include="Services\MaterialType.cs" />
     <Compile Include="Services\MaterialGrade.cs" />
     <Compile Include="Services\Materials.cs" />

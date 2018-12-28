@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using EDMats.Actions;
+using EDMats.Services;
 using EDMats.Stores;
 using Microsoft.Win32;
 using Unity.Attributes;
@@ -26,7 +28,10 @@ namespace EDMats
         {
             try
             {
-                var openFileDialog = new OpenFileDialog();
+                var openFileDialog = new OpenFileDialog
+                {
+                    Filter = "Log Files (*.log)|*.log|All Files (*.*)|*.*"
+                };
                 if (openFileDialog.ShowDialog(this) ?? false)
                     await SettingsActions.LoadJournalFileAsync(openFileDialog.FileName);
             }
@@ -65,6 +70,59 @@ namespace EDMats
         {
             public override ValidationResult Validate(object value, CultureInfo cultureInfo)
                 => throw new NotImplementedException();
+        }
+
+        private async void _LoadCommanderGoals(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var fileDialog = new OpenFileDialog
+                {
+                    Filter = "JSON Files (*.json)|*.json|All Files (*.*)|*.*"
+                };
+                if (fileDialog.ShowDialog(this) ?? false)
+                    await GoalActions.LoadCommanderGoalsAsync(fileDialog.FileName);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(this, exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private async void _SaveCommanderGoals(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var fileDialog = new SaveFileDialog
+                {
+                    Filter = "JSON Files (*.json)|*.json|All Files (*.*)|*.*"
+                };
+                if (fileDialog.ShowDialog(this) ?? false)
+                {
+                    var menuItem = (MenuItem)sender;
+                    var goalsStore = (GoalsStore)menuItem.DataContext;
+
+                    var commanderGoals = new CommanderGoalsData
+                    {
+                        Materials = goalsStore
+                            .MaterialsGoal
+                            .Select(
+                                materialGoal => new MaterialGoalData
+                                {
+                                    MaterialId = materialGoal.Id,
+                                    Name = materialGoal.Name,
+                                    Amount = materialGoal.Amount
+                                }
+                            )
+                            .ToList()
+                    };
+                    await GoalActions.SaveCommanderGoalsAsync(fileDialog.FileName, commanderGoals);
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(this, exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
