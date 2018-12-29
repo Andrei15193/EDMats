@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EDMats.Tests
@@ -12,12 +11,41 @@ namespace EDMats.Tests
         [TestMethod]
         public void CreatingStoreRegistersToDispatcher()
         {
-            var invocationCount = 0;
+            var store = new MockStore();
 
-            var store = new MockStore(actionData => Interlocked.Increment(ref invocationCount));
             ActionSet.Dispatch(null);
 
-            Assert.AreEqual(1, invocationCount);
+            Assert.AreEqual(1, store.InvocationCount);
+        }
+
+        [TestMethod]
+        public void StoreWithMoreSpecificActionDataGetsNotifiedWhenMatchesExactly()
+        {
+            var store = new MockStore<SpecificActionData>();
+
+            ActionSet.Dispatch(new SpecificActionData());
+
+            Assert.AreEqual(1, store.InvocationCount);
+        }
+
+        [TestMethod]
+        public void StoreWithMoreSpecificActionDataDoesNotGetNotifiedWhenUsingBaseActionData()
+        {
+            var store = new MockStore<SpecificActionData>();
+
+            ActionSet.Dispatch(ActionData.Empty);
+
+            Assert.AreEqual(0, store.InvocationCount);
+        }
+
+        [TestMethod]
+        public void StoreWithBaseActionDataGetsNotifiedWhenUsingMoreSpecificActionData()
+        {
+            var store = new MockStore<ActionData>();
+
+            ActionSet.Dispatch(new SpecificActionData());
+
+            Assert.AreEqual(1, store.InvocationCount);
         }
 
         private sealed class MockActionSet : ActionSet
@@ -26,17 +54,27 @@ namespace EDMats.Tests
                 => base.Dispatch(actionData);
         }
 
-        private sealed class MockStore : Store
+        private class MockStore<TActionData> : Store
         {
-            private readonly Action<ActionData> _handler;
+            private int _invocationCount = 0;
 
-            public MockStore(Action<ActionData> handler)
+            public int InvocationCount
+                => _invocationCount;
+
+            public MockStore()
             {
-                _handler = handler;
             }
 
-            protected override void Handle(ActionData actionData)
-                => _handler?.Invoke(actionData);
+            private void _Handle(TActionData actionData)
+                => Interlocked.Increment(ref _invocationCount);
+        }
+
+        private sealed class MockStore : MockStore<ActionData>
+        {
+        }
+
+        private class SpecificActionData : ActionData
+        {
         }
     }
 }

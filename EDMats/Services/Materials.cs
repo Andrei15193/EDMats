@@ -8,6 +8,8 @@ namespace EDMats.Services
     {
         private static readonly IReadOnlyDictionary<string, Material> _materialsById;
 
+        public static IReadOnlyCollection<Material> All { get; }
+
         public static MaterialType Raw { get; }
 
         public static MaterialCategory RawMaterialsCategory1 { get; }
@@ -770,11 +772,14 @@ namespace EDMats.Services
                 }
             }
 
-            _materialsById = Raw
+            All = Raw
                 .Categories
                 .Concat(Manufactured.Categories)
                 .Concat(Encoded.Categories)
                 .SelectMany(category => category.Materials)
+                .OrderBy(material => material.Name)
+                .ToList();
+            _materialsById = All
                 .ToDictionary(material => material.Id, StringComparer.OrdinalIgnoreCase);
         }
     }

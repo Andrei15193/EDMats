@@ -14,7 +14,18 @@ namespace EDMats.Stores
 
         public GoalsStore()
         {
-            _materialsGoal = new ObservableCollection<StoredMaterial>(_AllStoredMaterials);
+            _materialsGoal = new ObservableCollection<StoredMaterial>(
+                Materials
+                    .All
+                    .Select(
+                        material => new StoredMaterial
+                        {
+                            Id = material.Id,
+                            Name = material.Name,
+                            Amount = 0
+                        }
+                    )
+            );
             MaterialsGoal = new ReadOnlyObservableCollection<StoredMaterial>(_materialsGoal);
             _filteredMaterialsGoal = new ObservableCollection<StoredMaterial>(_materialsGoal);
             FilteredMaterialsGoal = new ReadOnlyObservableCollection<StoredMaterial>(_filteredMaterialsGoal);
@@ -51,7 +62,15 @@ namespace EDMats.Stores
                     break;
 
                 case CommanderGoalsLoadedActionData commanderGoalsLoadedActionData:
-                    var storedMaterials = _AllStoredMaterials.ToDictionary(storedMaterial => storedMaterial.Id);
+                    var storedMaterials = Materials.All.ToDictionary(
+                        material => material.Id,
+                        material => new StoredMaterial
+                        {
+                            Id = material.Id,
+                            Name = material.Name,
+                            Amount = 0
+                        }
+                    );
                     foreach (var materialGoal in commanderGoalsLoadedActionData.CommanderGoals.Materials)
                         storedMaterials[materialGoal.MaterialId] = new StoredMaterial
                         {
@@ -79,12 +98,7 @@ namespace EDMats.Stores
 
         private static IEnumerable<StoredMaterial> _AllStoredMaterials
             => Materials
-                .Encoded
-                .Categories
-                .Concat(Materials.Manufactured.Categories)
-                .Concat(Materials.Raw.Categories)
-                .SelectMany(category => category.Materials)
-                .OrderBy(material => material.Name)
+                .All
                 .Select(
                     material => new StoredMaterial
                     {
