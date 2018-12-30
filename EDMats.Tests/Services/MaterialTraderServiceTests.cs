@@ -170,15 +170,15 @@ namespace EDMats.Tests.Services
             Assert.AreEqual(new ArgumentException("Trade times must be greater than 0 (zero), '-20' provided.", "times").Message, exception.Message);
         }
 
-        private void _AssertTradeRate(TradeRate expectedTradeRate, Material target, Material source)
+        private void _AssertTradeRate(TradeRate expectedTradeRate, Material demand, Material offer)
         {
-            var actualTradeRate = _MaterialTraderService.GetTradeRate(target, source);
+            var actualTradeRate = _MaterialTraderService.GetTradeRate(demand, offer);
             Assert.AreEqual(expectedTradeRate, actualTradeRate);
         }
 
-        private void _AssertTradeRate(TradeRate expectedTradeRate, int times, Material target, Material source)
+        private void _AssertTradeRate(TradeRate expectedTradeRate, int times, Material demand, Material offer)
         {
-            var actualTradeRate = _MaterialTraderService.GetTradeRate(times, target, source);
+            var actualTradeRate = _MaterialTraderService.GetTradeRate(times, demand, offer);
             Assert.AreEqual(expectedTradeRate, actualTradeRate);
         }
     }

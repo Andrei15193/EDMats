@@ -119,11 +119,15 @@
       <DependentUpon>Notifications.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dispatcher.cs" />
+    <Compile Include="Services\AllowedTrade.cs" />
+    <Compile Include="Services\AllowedTrades.cs" />
     <Compile Include="Services\CommanderGoalsData.cs" />
     <Compile Include="Services\IGoalsFileStorageService.cs" />
     <Compile Include="Services\IGoalsStorageService.cs" />
     <Compile Include="Services\Implementations\GoalsFileStorageService.cs" />
     <Compile Include="Services\Implementations\GoalsStorageService.cs" />
+    <Compile Include="Services\Implementations\TradeSolutionService.cs" />
+    <Compile Include="Services\ITradeSolutionService.cs" />
     <Compile Include="Services\JournalCommanderInformation.cs" />
     <Compile Include="Services\IFileSystemService.cs" />
     <Compile Include="Services\IJournalFileImportService.cs" />
@@ -145,7 +149,9 @@
     <Compile Include="Services\Materials.cs" />
     <Compile Include="Services\MaterialCategory.cs" />
     <Compile Include="Services\MaterialQuantity.cs" />
+    <Compile Include="Services\TradeEntry.cs" />
     <Compile Include="Services\TradeRate.cs" />
+    <Compile Include="Services\TradeSolution.cs" />
     <Compile Include="Store.cs" />
     <Compile Include="Stores\CommanderInfoStore.cs" />
     <Compile Include="Stores\Extensions.cs" />

@@ -66,6 +66,7 @@
     <Compile Include="Converters\StringConverterTests.cs" />
     <Compile Include="DispatcherTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AllowedTradesTests.cs" />
     <Compile Include="Services\FileSystemServiceTests.cs" />
     <Compile Include="Services\GoalsFileStorageServiceTests.cs" />
     <Compile Include="Services\GoalsStorageServiceTests.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Services\MaterialsTests.cs" />
     <Compile Include="Services\MaterialTraderServiceTests.cs" />
     <Compile Include="Services\TradeRateTests.cs" />
+    <Compile Include="Services\TradeSolutionServiceTests.cs" />
     <Compile Include="StoreTests.cs" />
   </ItemGroup>
   <ItemGroup>
