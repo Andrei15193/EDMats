@@ -1,17 +1,44 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using EDMats.ActionsData;
 using EDMats.Services;
+using EDMats.Stores;
 
 namespace EDMats.Actions
 {
     public class GoalActions : ActionSet
     {
+        private readonly ITradeSolutionService _tradeSolutionService;
         private readonly IGoalsFileStorageService _goalsFileStorageService;
 
-        public GoalActions(IGoalsFileStorageService goalsFileStorageService)
+        public GoalActions(ITradeSolutionService tradeSolutionService, IGoalsFileStorageService goalsFileStorageService)
         {
+            _tradeSolutionService = tradeSolutionService;
             _goalsFileStorageService = goalsFileStorageService;
+        }
+
+        public Task TryFindGoalTradeSolution(IEnumerable<StoredMaterial> desiredMaterials, IEnumerable<StoredMaterial> availableMaterials)
+            => TryFindGoalTradeSolution(desiredMaterials, availableMaterials, CancellationToken.None);
+
+        public async Task TryFindGoalTradeSolution(IEnumerable<StoredMaterial> desiredMaterials, IEnumerable<StoredMaterial> availableMaterials, CancellationToken cancellationToken)
+        {
+            Dispatch(new TradeSolutionSearchStartedActionData { NotificationText = "Searching for trade solution" });
+            var tradeSolution = await _tradeSolutionService.TryFindSolutionAsync(
+                desiredMaterials
+                    .Select(materialGoal => new MaterialQuantity(Materials.FindById(materialGoal.Id), materialGoal.Amount)),
+                availableMaterials
+                    .Select(storedMaterial => new MaterialQuantity(Materials.FindById(storedMaterial.Id), storedMaterial.Amount)),
+                AllowedTrades.All,
+                cancellationToken
+            );
+            Dispatch(
+                new TradeSolutionSearchCompletedActionData(tradeSolution)
+                {
+                    NotificationText = "Trade solution search completed"
+                }
+            );
         }
 
         public Task LoadCommanderGoalsAsync(string fileName)

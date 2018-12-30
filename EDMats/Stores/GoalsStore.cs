@@ -31,9 +31,13 @@ namespace EDMats.Stores
             FilteredMaterialsGoal = new ReadOnlyObservableCollection<StoredMaterial>(_filteredMaterialsGoal);
         }
 
+        public TradeSolutionSearchStatus SearchStatus { get; private set; } = TradeSolutionSearchStatus.Idle;
+
         public ReadOnlyObservableCollection<StoredMaterial> MaterialsGoal { get; }
 
         public ReadOnlyObservableCollection<StoredMaterial> FilteredMaterialsGoal { get; }
+
+        public IReadOnlyCollection<TradeEntry> TradeEntries { get; private set; } = new List<TradeEntry>();
 
         protected override void Handle(ActionData actionData)
         {
@@ -81,6 +85,22 @@ namespace EDMats.Stores
                     foreach (var storedMaterial in storedMaterials.Values.OrderBy(storedMaterial => storedMaterial.Name))
                         _materialsGoal.Add(storedMaterial);
                     _FilterMaterialsGoal();
+                    break;
+
+                case TradeSolutionSearchStartedActionData tradeSolutionSearchStartedAction:
+                    SetProperty(() => SearchStatus, TradeSolutionSearchStatus.Searching);
+                    break;
+
+                case TradeSolutionSearchCompletedActionData tradeSolutionSearchCompletedActionData:
+                    var tradeSolution = tradeSolutionSearchCompletedActionData.TradeSolution;
+                    if (tradeSolution == null)
+                        SetProperty(() => SearchStatus, TradeSolutionSearchStatus.SearchFailed);
+                    else
+                        SetProperty(() => SearchStatus, TradeSolutionSearchStatus.SearchSucceeded);
+                    SetProperty(
+                        () => TradeEntries,
+                        tradeSolution?.Trades.OrderBy(tradeEntry => tradeEntry.Demand.Material.Type.Name).ToList() ?? new List<TradeEntry>()
+                    );
                     break;
             }
         }

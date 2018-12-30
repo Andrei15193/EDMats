@@ -1,6 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using EDMats.Actions;
@@ -16,6 +19,15 @@ namespace EDMats
         public MainWindow()
         {
             InitializeComponent();
+            Loaded += delegate
+            {
+                App.GoalsStore.PropertyChanged += _GoalsStorePropertyChanged;
+            };
+            Unloaded += delegate
+            {
+                App.GoalsStore.PropertyChanged += _GoalsStorePropertyChanged;
+            };
+            _UpdateStatusPanel();
         }
 
         [Dependency]
@@ -24,7 +36,7 @@ namespace EDMats
         [Dependency]
         public GoalActions GoalActions { get; set; }
 
-        private async void _BrowseJournalFile(object sender, RoutedEventArgs e)
+        private async void _LoadJournalFileButtonClick(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -33,7 +45,10 @@ namespace EDMats
                     Filter = "Log Files (*.log)|*.log|All Files (*.*)|*.*"
                 };
                 if (openFileDialog.ShowDialog(this) ?? false)
+                {
                     await SettingsActions.LoadJournalFileAsync(openFileDialog.FileName);
+                    await _SearchForTradeSolutionAsync();
+                }
             }
             catch (Exception exception)
             {
@@ -41,13 +56,15 @@ namespace EDMats
             }
         }
 
+        private CancellationTokenSource _cancellationTokenSource = null;
+
         private void _FilterTextChanged(object sender, TextChangedEventArgs e)
         {
             var filterTextBox = (TextBox)sender;
             SettingsActions.FilterMaterials(filterTextBox.Text);
         }
 
-        private void _MaterialGoalTextChanged(object sender, TextChangedEventArgs e)
+        private async void _MaterialGoalTextChanged(object sender, TextChangedEventArgs e)
         {
             var materialGoalTextBox = (TextBox)sender;
             var bindingExpression = materialGoalTextBox.GetBindingExpression(TextBox.TextProperty);
@@ -59,6 +76,7 @@ namespace EDMats
                 var storedMaterial = (StoredMaterial)materialGoalTextBox.DataContext;
                 var amountGoal = int.Parse(materialGoalTextBox.Text);
                 GoalActions.UpdateMaterialAmountGoal(storedMaterial.Id, amountGoal);
+                await _SearchForTradeSolutionAsync();
             }
         }
 
@@ -72,7 +90,7 @@ namespace EDMats
                 => throw new NotImplementedException();
         }
 
-        private async void _LoadCommanderGoals(object sender, RoutedEventArgs e)
+        private async void _LoadCommanderGoalsButtonClick(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -81,7 +99,10 @@ namespace EDMats
                     Filter = "JSON Files (*.json)|*.json|All Files (*.*)|*.*"
                 };
                 if (fileDialog.ShowDialog(this) ?? false)
+                {
                     await GoalActions.LoadCommanderGoalsAsync(fileDialog.FileName);
+                    await _SearchForTradeSolutionAsync();
+                }
             }
             catch (Exception exception)
             {
@@ -89,7 +110,7 @@ namespace EDMats
             }
         }
 
-        private async void _SaveCommanderGoals(object sender, RoutedEventArgs e)
+        private async void _SaveCommanderGoalsButtonClick(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -122,6 +143,57 @@ namespace EDMats
             catch (Exception exception)
             {
                 MessageBox.Show(this, exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void _ViewTradeSolutionButtonClick(object sender, RoutedEventArgs e)
+            => new TradeSolutionWindow().ShowDialog();
+
+        private async Task _SearchForTradeSolutionAsync()
+        {
+            _cancellationTokenSource?.Cancel();
+            using (var cancellationTokenSource = new CancellationTokenSource())
+                try
+                {
+                    _cancellationTokenSource = cancellationTokenSource;
+                    await GoalActions.TryFindGoalTradeSolution(App.GoalsStore.MaterialsGoal, App.CommanderInfoStore.StoredMaterials, cancellationTokenSource.Token);
+                }
+                catch (OperationCanceledException operationCanceledException) when (operationCanceledException.CancellationToken == _cancellationTokenSource.Token)
+                {
+                }
+
+            _cancellationTokenSource = null;
+        }
+
+        private void _GoalsStorePropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName.Equals(nameof(GoalsStore.SearchStatus), StringComparison.OrdinalIgnoreCase))
+                _UpdateStatusPanel();
+        }
+
+        private void _UpdateStatusPanel()
+        {
+            switch (App.GoalsStore.SearchStatus)
+            {
+                case TradeSolutionSearchStatus.Idle:
+                    _StatusTextBlock.Text = "Idle";
+                    _ViewTradeSolutionButton.IsEnabled = false;
+                    break;
+
+                case TradeSolutionSearchStatus.Searching:
+                    _StatusTextBlock.Text = "Searching";
+                    _ViewTradeSolutionButton.IsEnabled = false;
+                    break;
+
+                case TradeSolutionSearchStatus.SearchSucceeded:
+                    _StatusTextBlock.Text = "Search succeeded";
+                    _ViewTradeSolutionButton.IsEnabled = true;
+                    break;
+
+                case TradeSolutionSearchStatus.SearchFailed:
+                    _StatusTextBlock.Text = "Search failed, not enough materials";
+                    _ViewTradeSolutionButton.IsEnabled = false;
+                    break;
             }
         }
     }

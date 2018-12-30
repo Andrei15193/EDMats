@@ -17,10 +17,10 @@
         <Menu Grid.Row="0">
             <MenuItem Header="File">
                 <MenuItem Header="Load goals"
-                          Click="_LoadCommanderGoals" />
+                          Click="_LoadCommanderGoalsButtonClick" />
                 <MenuItem Header="Save goals"
                           DataContext="{StaticResource GoalsStore}"
-                          Click="_SaveCommanderGoals" />
+                          Click="_SaveCommanderGoalsButtonClick" />
             </MenuItem>
         </Menu>
 
@@ -46,11 +46,12 @@
                          Margin="5"
                          DataContext="{StaticResource CommanderInfoStore}"
                          Text="{Binding JournalFilePath, Mode=OneWay}"
-                         VerticalAlignment="Center" />
+                         VerticalAlignment="Center"
+                         IsReadOnly="True" />
                 <Button Grid.Column="1"
                         Margin="5"
                         Content="Browse"
-                        Click="_BrowseJournalFile"
+                        Click="_LoadJournalFileButtonClick"
                         VerticalAlignment="Center" />
                 <CheckBox Grid.Column="2"
                           Margin="5"
@@ -65,13 +66,44 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <Border Grid.Row="0"
-                        Margin="5"
-                        Height="100"
-                        Background="Green" />
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Border Margin="5"
+                            Height="100"
+                            DataContext="{StaticResource GoalsStore}"
+                            xmlns:converters="clr-namespace:EDMats.Converters">
+                        <Border.Background>
+                            <Binding Path="SearchStatus"
+                                     Mode="OneWay">
+                                <Binding.Converter>
+                                    <converters:TradeSolutionSearchStatusBrushConverter IdleBrush="Gray"
+                                                                                        SearchingBrush="DarkGreen"
+                                                                                        SearchSucceededBrush="Green"
+                                                                                        SearchFailedBrush="DarkRed" />
+                                </Binding.Converter>
+                            </Binding>
+                        </Border.Background>
+                        <TextBlock x:Name="_StatusTextBlock"
+                                   x:FieldModifier="private"
+                                   Foreground="White"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   FontSize="30" />
+                    </Border>
+                    <Button Grid.Row="1"
+                            x:Name="_ViewTradeSolutionButton"
+                            x:FieldModifier="private"
+                            Style="{StaticResource Hyperlink}"
+                            Content="View solution"
+                            HorizontalAlignment="Center"
+                            Click="_ViewTradeSolutionButtonClick" />
+                </Grid>
                 <TextBlock Grid.Row="1"
                            Margin="5">
-                <Run Text="Notifications (" /><Run Text="{Binding Notifications.Count, Source={StaticResource NotificationsStore}, Mode=OneWay}" /><Run Text=")" />
+                    <Run Text="Notifications (" /><Run Text="{Binding Notifications.Count, Source={StaticResource NotificationsStore}, Mode=OneWay}" /><Run Text=")" />
                 </TextBlock>
                 <controls:Notifications Grid.Row="2"
                                         Margin="5" />

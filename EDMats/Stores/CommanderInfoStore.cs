@@ -1,18 +1,17 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.ObjectModel;
 using EDMats.ActionsData;
 
 namespace EDMats.Stores
 {
     public class CommanderInfoStore : Store
     {
-        private IReadOnlyList<StoredMaterial> _storedMaterials;
+        private readonly ObservableCollection<StoredMaterial> _storedMaterials;
         private readonly ObservableCollection<StoredMaterial> _filteredStoredMaterials;
 
         public CommanderInfoStore()
         {
-            _storedMaterials = new List<StoredMaterial>();
+            _storedMaterials = new ObservableCollection<StoredMaterial>();
+            StoredMaterials = new ReadOnlyCollection<StoredMaterial>(_storedMaterials);
             _filteredStoredMaterials = new ObservableCollection<StoredMaterial>();
             FilteredStoredMaterials = new ReadOnlyObservableCollection<StoredMaterial>(_filteredStoredMaterials);
         }
@@ -20,6 +19,8 @@ namespace EDMats.Stores
         public string JournalFilePath { get; private set; }
 
         public string FilterText { get; private set; }
+
+        public ReadOnlyCollection<StoredMaterial> StoredMaterials { get; }
 
         public ReadOnlyObservableCollection<StoredMaterial> FilteredStoredMaterials { get; }
 
@@ -33,17 +34,16 @@ namespace EDMats.Stores
                     break;
 
                 case JournalImportedActionData commanderInfo:
-                    _storedMaterials = commanderInfo
-                        .CommanderInformation
-                        .Materials
-                        .Select(
-                            material => new StoredMaterial
+                    _storedMaterials.Clear();
+                    foreach (var materialQuantity in commanderInfo.CommanderInformation.Materials)
+                        _storedMaterials.Add(
+                            new StoredMaterial
                             {
-                                Name = material.Material.Name,
-                                Amount = material.Amount
+                                Id = materialQuantity.Material.Id,
+                                Name = materialQuantity.Material.Name,
+                                Amount = materialQuantity.Amount
                             }
-                        )
-                        .ToList();
+                        );
                     _FilterItems();
                     break;
 

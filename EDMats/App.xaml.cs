@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using EDMats.Services;
 using EDMats.Services.Implementations;
+using EDMats.Stores;
 using Unity;
 
 namespace EDMats
@@ -16,7 +17,9 @@ namespace EDMats
                 .RegisterType<IJournalReaderService, JournalReaderService>()
                 .RegisterType<IJournalFileImportService, JournalFileImportService>()
                 .RegisterType<IGoalsStorageService, GoalsStorageService>()
-                .RegisterType<IGoalsFileStorageService, GoalsFileStorageService>();
+                .RegisterType<IGoalsFileStorageService, GoalsFileStorageService>()
+                .RegisterType<IMaterialTraderService, MaterialTraderService>()
+                .RegisterType<ITradeSolutionService, TradeSolutionService>();
 
         internal static T EnsureDependencies<T>(T instance)
             => _container.BuildUp(instance);
@@ -26,5 +29,14 @@ namespace EDMats
             MainWindow = EnsureDependencies(new MainWindow());
             MainWindow.Show();
         }
+
+        internal static CommanderInfoStore CommanderInfoStore
+            => (CommanderInfoStore)Current.FindResource(nameof(CommanderInfoStore));
+
+        internal static GoalsStore GoalsStore
+            => (GoalsStore)Current.FindResource(nameof(GoalsStore));
+
+        internal static NotificationsStore NotificationsStore
+            => (NotificationsStore)Current.FindResource(nameof(NotificationsStore));
     }
 }

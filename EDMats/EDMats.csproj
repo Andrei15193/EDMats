@@ -108,6 +108,8 @@
     <Compile Include="ActionsData\LoadingCommanderGoalsActionData.cs" />
     <Compile Include="ActionsData\NotificationActionData.cs" />
     <Compile Include="ActionsData\SavingCommanderGoalsActionData.cs" />
+    <Compile Include="ActionsData\TradeSolutionSearchStartedActionData.cs" />
+    <Compile Include="ActionsData\TradeSolutionSearchCompletedActionData.cs" />
     <Compile Include="ActionsData\UpdateMaterialGoalActionData.cs" />
     <Compile Include="ActionSet.cs" />
     <Compile Include="ActionState.cs" />
@@ -118,6 +120,7 @@
     <Compile Include="Controls\Notifications.xaml.cs">
       <DependentUpon>Notifications.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\TradeSolutionSearchStatusBrushConverter.cs" />
     <Compile Include="Dispatcher.cs" />
     <Compile Include="Services\AllowedTrade.cs" />
     <Compile Include="Services\AllowedTrades.cs" />
@@ -160,6 +163,10 @@
     <Compile Include="Stores\NotificationsStore.cs" />
     <Compile Include="Stores\StoredMaterial.cs" />
     <Compile Include="Converters\StringConverter.cs" />
+    <Compile Include="Stores\TradeSolutionSearchStatus.cs" />
+    <Compile Include="TradeSolutionWindow.xaml.cs">
+      <DependentUpon>TradeSolutionWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="Controls\Notifications.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -177,6 +184,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TradeSolutionWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
