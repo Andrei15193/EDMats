@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,6 +25,15 @@ namespace EDMats.Services.Implementations
         {
             using (var fileReader = _fileSystemService.OpenRead(journalFilePath))
                 return await _journalImportService.ImportJournalAsync(fileReader, cancellationToken).ConfigureAwait(false);
+        }
+
+        public Task<IReadOnlyList<JournalUpdate>> ImportLatestJournalUpdatesAsync(string journalFilePath, DateTime latestEntry)
+            => ImportLatestJournalUpdatesAsync(journalFilePath, latestEntry, CancellationToken.None);
+
+        public async Task<IReadOnlyList<JournalUpdate>> ImportLatestJournalUpdatesAsync(string journalFilePath, DateTime latestEntry, CancellationToken cancellationToken)
+        {
+            using (var fileReader = _fileSystemService.OpenRead(journalFilePath))
+                return await _journalImportService.ImportLatestJournalUpdatesAsync(fileReader, latestEntry, cancellationToken).ConfigureAwait(false);
         }
     }
 }

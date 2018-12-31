@@ -106,6 +106,7 @@
     <Compile Include="ActionsData\FilterMaterialsActionData.cs" />
     <Compile Include="ActionsData\JournalImportedActionData.cs" />
     <Compile Include="ActionsData\LoadingCommanderGoalsActionData.cs" />
+    <Compile Include="ActionsData\MaterialCollectedActionData.cs" />
     <Compile Include="ActionsData\NotificationActionData.cs" />
     <Compile Include="ActionsData\SavingCommanderGoalsActionData.cs" />
     <Compile Include="ActionsData\TradeSolutionSearchStartedActionData.cs" />
@@ -143,6 +144,8 @@
     <Compile Include="Services\Implementations\JournalReaderService.cs" />
     <Compile Include="Services\Implementations\MaterialTraderService.cs" />
     <Compile Include="Services\JournalEntries\JournalEntry.cs" />
+    <Compile Include="Services\MaterialCollectedJournalUpdate.cs" />
+    <Compile Include="Services\JournalUpdate.cs" />
     <Compile Include="Services\Material.cs" />
     <Compile Include="Services\JournalEntries\MaterialCollectedJournalEntry.cs" />
     <Compile Include="Services\JournalEntries\MaterialsJournalEntry.cs" />

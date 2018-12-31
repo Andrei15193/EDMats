@@ -16,6 +16,9 @@ namespace EDMats
 {
     public partial class MainWindow : Window
     {
+        private Task _autoUpdateTask = Task.CompletedTask;
+        private readonly TimeSpan _autoUpdateDelay = TimeSpan.FromSeconds(5);
+
         public MainWindow()
         {
             InitializeComponent();
@@ -49,10 +52,33 @@ namespace EDMats
                     await SettingsActions.LoadJournalFileAsync(openFileDialog.FileName);
                     await _SearchForTradeSolutionAsync();
                 }
+
+                if (_autoUpdateTask.IsCompleted)
+                    _autoUpdateTask = _AutoUpdateJournalEntries();
             }
             catch (Exception exception)
             {
                 MessageBox.Show(this, exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void _AutoUpdateCheckBoxChecked(object sender, RoutedEventArgs e)
+        {
+            if (_autoUpdateTask.IsCompleted)
+                _autoUpdateTask = _AutoUpdateJournalEntries();
+        }
+
+        private async Task _AutoUpdateJournalEntries()
+        {
+            if (!string.IsNullOrWhiteSpace(App.CommanderInfoStore.JournalFilePath))
+            {
+                await Task.Delay(_autoUpdateDelay);
+                while (_AutoUpdateCheckBox.IsChecked ?? false)
+                {
+                    await SettingsActions.LoadJournalFileAsync(App.CommanderInfoStore.JournalFilePath, App.CommanderInfoStore.LatestUpdate);
+                    await _SearchForTradeSolutionAsync();
+                    await Task.Delay(_autoUpdateDelay);
+                }
             }
         }
 

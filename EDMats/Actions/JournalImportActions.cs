@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using EDMats.ActionsData;
 using EDMats.Services;
@@ -28,6 +30,21 @@ namespace EDMats.Actions
             {
                 NotificationText = $"Journal file loaded, latest entry on {commanderInformation.LatestUpdate:f}"
             });
+        }
+
+        public Task LoadJournalFileAsync(string journalFilePath, DateTime latestUpdate)
+            => LoadJournalFileAsync(journalFilePath, latestUpdate, CancellationToken.None);
+
+        public async Task LoadJournalFileAsync(string journalFilePath, DateTime latestUpdate, CancellationToken cancellationToken)
+        {
+            var updates = await _journalFileImportService.ImportLatestJournalUpdatesAsync(journalFilePath, latestUpdate, cancellationToken);
+            foreach (var update in updates.OfType<MaterialCollectedJournalUpdate>())
+                Dispatch(
+                    new MaterialCollectedActionData(update.Timestamp, update.CollectedMaterial)
+                    {
+                        NotificationText = $"Collected {update.CollectedMaterial.Amount} of {update.CollectedMaterial.Material.Name}"
+                    }
+                );
         }
 
         public void FilterMaterials(string filterText)

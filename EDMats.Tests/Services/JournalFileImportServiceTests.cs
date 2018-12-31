@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -43,6 +44,27 @@ namespace EDMats.Tests.Services
 
                 var actualJournalCommanderInformation = await _JournalFileImportService.ImportAsync(fileName);
                 Assert.AreSame(journalCommanderInformation, actualJournalCommanderInformation);
+            }
+        }
+
+        [TestMethod]
+        public async Task ImportJournalLatestUpdatesFromFile()
+        {
+            using (var textReader = new StringReader(string.Empty))
+            {
+                var fileName = Guid.NewGuid().ToString();
+                var latestEntry = DateTime.UtcNow;
+                _FileSystemService
+                    .Setup(fileSystemService => fileSystemService.OpenRead(fileName))
+                    .Returns(textReader);
+
+                var journalUpdates = new List<JournalUpdate>();
+                _JournalImportService
+                    .Setup(journalImportService => journalImportService.ImportLatestJournalUpdatesAsync(textReader, latestEntry, It.IsAny<CancellationToken>()))
+                    .ReturnsAsync(journalUpdates);
+
+                var actualJournalUpdates = await _JournalFileImportService.ImportLatestJournalUpdatesAsync(fileName, latestEntry);
+                Assert.AreSame(journalUpdates, actualJournalUpdates);
             }
         }
     }

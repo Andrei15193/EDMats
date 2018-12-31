@@ -54,10 +54,13 @@
                         Click="_LoadJournalFileButtonClick"
                         VerticalAlignment="Center" />
                 <CheckBox Grid.Column="2"
+                          x:Name="_AutoUpdateCheckBox"
+                          x:FieldModifier="private"
                           Margin="5"
                           IsChecked="True"
                           Content="Auto update"
-                          VerticalAlignment="Center" />
+                          VerticalAlignment="Center"
+                          Checked="_AutoUpdateCheckBoxChecked"/>
             </Grid>
             <Grid Grid.Column="0"
                   Grid.Row="1">

@@ -65,5 +65,32 @@ namespace EDMats.Services.Implementations
                     .ToList()
             };
         }
+
+        public Task<IReadOnlyList<JournalUpdate>> ImportLatestJournalUpdatesAsync(TextReader journalFileReader, DateTime latestJournalEntryTimestamp)
+            => ImportLatestJournalUpdatesAsync(journalFileReader, latestJournalEntryTimestamp, CancellationToken.None);
+
+        public async Task<IReadOnlyList<JournalUpdate>> ImportLatestJournalUpdatesAsync(TextReader journalFileReader, DateTime latestJournalEntryTimestamp, CancellationToken cancellationToken)
+        {
+            var journalEntries = await _journalReaderService.ReadAsync(journalFileReader, cancellationToken).ConfigureAwait(false);
+
+            var journalUpdates = new List<JournalUpdate>();
+            foreach (var journalEntry in journalEntries
+                .OrderBy(journalEntry => journalEntry.Timestamp)
+                .SkipWhile(journalEntry => journalEntry.Timestamp <= latestJournalEntryTimestamp))
+                switch (journalEntry)
+                {
+                    case MaterialCollectedJournalEntry materialCollectedJournalEntry:
+                        journalUpdates.Add(
+                            new MaterialCollectedJournalUpdate
+                            {
+                                Timestamp = journalEntry.Timestamp,
+                                CollectedMaterial = materialCollectedJournalEntry.MaterialQuantity
+                            }
+                        );
+                        break;
+                }
+
+            return journalUpdates;
+        }
     }
 }

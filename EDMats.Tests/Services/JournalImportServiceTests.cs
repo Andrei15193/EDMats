@@ -327,6 +327,43 @@ namespace EDMats.Tests.Services
             Assert.AreEqual(expected, commanderInformation.LatestUpdate);
         }
 
+        [TestMethod]
+        public async Task ImportingLatestUpdatesSkipsProcessedJournalEntries()
+        {
+            var utcNow = DateTime.UtcNow;
+            var collectedMaterial = new MaterialQuantity
+            {
+                Material = Materials.Carbon,
+                Amount = 1
+            };
+
+            _journalEntries.Add(
+                new MaterialCollectedJournalEntry
+                {
+                    Timestamp = utcNow,
+                    MaterialQuantity = new MaterialQuantity
+                    {
+                        Material = Materials.Iron,
+                        Amount = 1
+                    }
+                }
+            );
+            _journalEntries.Add(
+                new MaterialCollectedJournalEntry
+                {
+                    Timestamp = utcNow.AddDays(1),
+                    MaterialQuantity = collectedMaterial
+                }
+            );
+
+            var updates = await _JournalImportService.ImportLatestJournalUpdatesAsync(null, utcNow);
+
+            Assert.AreEqual(1, updates.Count);
+            var update = (MaterialCollectedJournalUpdate)updates.Single();
+            Assert.AreEqual(utcNow.AddDays(1), update.Timestamp);
+            Assert.AreSame(update.CollectedMaterial, collectedMaterial);
+        }
+
         private static void _AssertAreEqual(IEnumerable<MaterialQuantity> expected, IEnumerable<MaterialQuantity> actual)
         {
             Assert.IsTrue(
