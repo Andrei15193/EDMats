@@ -30,7 +30,7 @@ namespace EDMats.Actions
                     .Select(materialGoal => new MaterialQuantity(Materials.FindById(materialGoal.Id), materialGoal.Amount)),
                 availableMaterials
                     .Select(storedMaterial => new MaterialQuantity(Materials.FindById(storedMaterial.Id), storedMaterial.Amount)),
-                AllowedTrades.All,
+                _GetAllowedTrades(),
                 cancellationToken
             );
             Dispatch(
@@ -78,5 +78,20 @@ namespace EDMats.Actions
 
         public void UpdateMaterialAmountGoal(string materialId, int amountGoal)
             => Dispatch(new UpdateMaterialGoalActionData(materialId, amountGoal));
+
+        private IEnumerable<AllowedTrade> _GetAllowedTrades()
+            => _NoGrade3To5DowngradesTrades(Materials.Encoded)
+                .Concat(_NoGrade3To5DowngradesTrades(Materials.Manufactured))
+                .Concat(_NoGrade3To5DowngradesTrades(Materials.Raw));
+
+        private IEnumerable<AllowedTrade> _NoGrade3To5DowngradesTrades(MaterialType materialType)
+        {
+            var materials = materialType.Categories.SelectMany(category => category.Materials);
+            foreach (var offer in materials)
+                foreach (var demand in materials)
+                    if (demand != offer)
+                        if (demand.Grade > offer.Grade || (demand.Grade <= MaterialGrade.Common && offer.Grade <= MaterialGrade.Common))
+                            yield return new AllowedTrade(demand, offer);
+        }
     }
 }

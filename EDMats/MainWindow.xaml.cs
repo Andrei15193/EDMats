@@ -17,6 +17,7 @@ namespace EDMats
     public partial class MainWindow : Window
     {
         private Task _autoUpdateTask = Task.CompletedTask;
+        private CancellationTokenSource _cancellationTokenSource = null;
         private readonly TimeSpan _autoUpdateDelay = TimeSpan.FromSeconds(5);
 
         public MainWindow()
@@ -74,8 +75,6 @@ namespace EDMats
                 }
             }
         }
-
-        private CancellationTokenSource _cancellationTokenSource = null;
 
         private void _FilterTextChanged(object sender, TextChangedEventArgs e)
         {
