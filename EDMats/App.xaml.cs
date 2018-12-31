@@ -36,7 +36,7 @@ namespace EDMats
 
         private void _UnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            e.Handled = true;
+            e.Handled = MainWindow.IsVisible;
             MessageBox.Show(e.Exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
