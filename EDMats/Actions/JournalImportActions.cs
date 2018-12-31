@@ -32,10 +32,10 @@ namespace EDMats.Actions
             });
         }
 
-        public Task LoadJournalFileAsync(string journalFilePath, DateTime latestUpdate)
+        public Task<bool> LoadJournalFileAsync(string journalFilePath, DateTime latestUpdate)
             => LoadJournalFileAsync(journalFilePath, latestUpdate, CancellationToken.None);
 
-        public async Task LoadJournalFileAsync(string journalFilePath, DateTime latestUpdate, CancellationToken cancellationToken)
+        public async Task<bool> LoadJournalFileAsync(string journalFilePath, DateTime latestUpdate, CancellationToken cancellationToken)
         {
             var updates = await _journalFileImportService.ImportLatestJournalUpdatesAsync(journalFilePath, latestUpdate, cancellationToken);
             foreach (var update in updates.OfType<MaterialCollectedJournalUpdate>())
@@ -45,6 +45,7 @@ namespace EDMats.Actions
                         NotificationText = $"Collected {update.CollectedMaterial.Amount} of {update.CollectedMaterial.Material.Name}"
                     }
                 );
+            return updates.Any();
         }
 
         public void FilterMaterials(string filterText)

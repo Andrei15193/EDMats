@@ -41,25 +41,18 @@ namespace EDMats
 
         private async void _LoadJournalFileButtonClick(object sender, RoutedEventArgs e)
         {
-            try
+            var openFileDialog = new OpenFileDialog
             {
-                var openFileDialog = new OpenFileDialog
-                {
-                    Filter = "Log Files (*.log)|*.log|All Files (*.*)|*.*"
-                };
-                if (openFileDialog.ShowDialog(this) ?? false)
-                {
-                    await SettingsActions.LoadJournalFileAsync(openFileDialog.FileName);
-                    await _SearchForTradeSolutionAsync();
-                }
+                Filter = "Log Files (*.log)|*.log|All Files (*.*)|*.*"
+            };
+            if (openFileDialog.ShowDialog(this) ?? false)
+            {
+                await SettingsActions.LoadJournalFileAsync(openFileDialog.FileName);
+                await _SearchForTradeSolutionAsync();
+            }
 
-                if (_autoUpdateTask.IsCompleted)
-                    _autoUpdateTask = _AutoUpdateJournalEntries();
-            }
-            catch (Exception exception)
-            {
-                MessageBox.Show(this, exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            if (_autoUpdateTask.IsCompleted)
+                _autoUpdateTask = _AutoUpdateJournalEntries();
         }
 
         private void _AutoUpdateCheckBoxChecked(object sender, RoutedEventArgs e)
@@ -75,8 +68,8 @@ namespace EDMats
                 await Task.Delay(_autoUpdateDelay);
                 while (_AutoUpdateCheckBox.IsChecked ?? false)
                 {
-                    await SettingsActions.LoadJournalFileAsync(App.CommanderInfoStore.JournalFilePath, App.CommanderInfoStore.LatestUpdate);
-                    await _SearchForTradeSolutionAsync();
+                    if (await SettingsActions.LoadJournalFileAsync(App.CommanderInfoStore.JournalFilePath, App.CommanderInfoStore.LatestUpdate))
+                        await _SearchForTradeSolutionAsync();
                     await Task.Delay(_autoUpdateDelay);
                 }
             }

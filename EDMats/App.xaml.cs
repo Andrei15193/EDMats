@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
+using System.Windows.Threading;
 using EDMats.Services;
 using EDMats.Services.Implementations;
 using EDMats.Stores;
@@ -26,8 +28,16 @@ namespace EDMats
 
         private void Application_Startup(object sender, StartupEventArgs e)
         {
+            DispatcherUnhandledException += _UnhandledException;
+
             MainWindow = EnsureDependencies(new MainWindow());
             MainWindow.Show();
+        }
+
+        private void _UnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+            MessageBox.Show(e.Exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         internal static CommanderInfoStore CommanderInfoStore
