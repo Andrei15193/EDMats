@@ -92,7 +92,7 @@ namespace EDMats
             => (
                 from storeType in _GetTypesUntilStoreBaseType()
                 from method in storeType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)
-                where method.DeclaringType != typeof(Store)
+                where method.DeclaringType != typeof(Store) && method.ReturnType == typeof(void)
                 let parameters = method.GetParameters()
                 where parameters.Length == 1
                 let actionDataType = parameters.Single().ParameterType

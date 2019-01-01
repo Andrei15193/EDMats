@@ -39,70 +39,70 @@ namespace EDMats.Stores
 
         public IReadOnlyCollection<TradeEntry> TradeEntries { get; private set; } = new List<TradeEntry>();
 
-        protected override void Handle(ActionData actionData)
+        private void _Handle(FilterMaterialsActionData filterMaterialsActionData)
         {
-            switch (actionData)
-            {
-                case FilterMaterialsActionData filterMaterialsActionData:
-                    _filterText = filterMaterialsActionData.FilterText;
-                    _FilterMaterialsGoal();
-                    break;
+            _filterText = filterMaterialsActionData.FilterText;
+            _FilterMaterialsGoal();
+        }
 
-                case UpdateMaterialGoalActionData updateMaterialGoalActionData:
-                    var updatedMaterial = _materialsGoal
-                        .Single(storedMaterial => storedMaterial.Id == updateMaterialGoalActionData.MaterialId);
-                    updatedMaterial.Amount = updateMaterialGoalActionData.Amount;
+        private void _Handle(UpdateMaterialGoalActionData updateMaterialGoalActionData)
+        {
+            var updatedMaterial = _materialsGoal
+                .Single(storedMaterial => storedMaterial.Id == updateMaterialGoalActionData.MaterialId);
+            updatedMaterial.Amount = updateMaterialGoalActionData.Amount;
 
-                    var filteredMaterialIndex = 0;
-                    while (filteredMaterialIndex < _filteredMaterialsGoal.Count && _filteredMaterialsGoal[filteredMaterialIndex].Id != updateMaterialGoalActionData.MaterialId)
-                        filteredMaterialIndex++;
-                    if (filteredMaterialIndex < _filteredMaterialsGoal.Count)
-                        _filteredMaterialsGoal[filteredMaterialIndex] = updatedMaterial;
-                    break;
+            var filteredMaterialIndex = 0;
+            while (filteredMaterialIndex < _filteredMaterialsGoal.Count && _filteredMaterialsGoal[filteredMaterialIndex].Id != updateMaterialGoalActionData.MaterialId)
+                filteredMaterialIndex++;
+            if (filteredMaterialIndex < _filteredMaterialsGoal.Count)
+                _filteredMaterialsGoal[filteredMaterialIndex] = updatedMaterial;
+        }
 
-                case LoadingCommanderGoalsActionData loadingCommanderGoalsActionData:
-                    _materialsGoal.Clear();
-                    _filteredMaterialsGoal.Clear();
-                    break;
+        private void _Handle(LoadingCommanderGoalsActionData loadingCommanderGoalsActionData)
+        {
+            _materialsGoal.Clear();
+            _filteredMaterialsGoal.Clear();
+        }
 
-                case CommanderGoalsLoadedActionData commanderGoalsLoadedActionData:
-                    var storedMaterials = Materials.All.ToDictionary(
-                        material => material.Id,
-                        material => new StoredMaterial
-                        {
-                            Id = material.Id,
-                            Name = material.Name,
-                            Amount = 0
-                        }
-                    );
-                    foreach (var materialGoal in commanderGoalsLoadedActionData.CommanderGoals.Materials)
-                        storedMaterials[materialGoal.MaterialId] = new StoredMaterial
-                        {
-                            Id = materialGoal.MaterialId,
-                            Name = materialGoal.Name,
-                            Amount = materialGoal.Amount
-                        };
-                    foreach (var storedMaterial in storedMaterials.Values.OrderBy(storedMaterial => storedMaterial.Name))
-                        _materialsGoal.Add(storedMaterial);
-                    _FilterMaterialsGoal();
-                    break;
+        private void _Handle(CommanderGoalsLoadedActionData commanderGoalsLoadedActionData)
+        {
+            var storedMaterials = Materials.All.ToDictionary(
+                material => material.Id,
+                material => new StoredMaterial
+                {
+                    Id = material.Id,
+                    Name = material.Name,
+                    Amount = 0
+                }
+            );
+            foreach (var materialGoal in commanderGoalsLoadedActionData.CommanderGoals.Materials)
+                storedMaterials[materialGoal.MaterialId] = new StoredMaterial
+                {
+                    Id = materialGoal.MaterialId,
+                    Name = materialGoal.Name,
+                    Amount = materialGoal.Amount
+                };
+            foreach (var storedMaterial in storedMaterials.Values.OrderBy(storedMaterial => storedMaterial.Name))
+                _materialsGoal.Add(storedMaterial);
+            _FilterMaterialsGoal();
+        }
 
-                case TradeSolutionSearchStartedActionData tradeSolutionSearchStartedAction:
-                    SetProperty(() => SearchStatus, TradeSolutionSearchStatus.Searching);
-                    break;
+        private void _Handle(TradeSolutionSearchStartedActionData tradeSolutionSearchStartedAction)
+        {
+            SetProperty(() => SearchStatus, TradeSolutionSearchStatus.Searching);
+        }
 
-                case TradeSolutionSearchCompletedActionData tradeSolutionSearchCompletedActionData:
-                    var tradeSolution = tradeSolutionSearchCompletedActionData.TradeSolution;
-                    if (tradeSolution == null)
-                        SetProperty(() => SearchStatus, TradeSolutionSearchStatus.SearchFailed);
-                    else
-                        SetProperty(() => SearchStatus, TradeSolutionSearchStatus.SearchSucceeded);
-                    SetProperty(
-                        () => TradeEntries,
-                        tradeSolution?.Trades.OrderBy(tradeEntry => tradeEntry.Demand.Material.Type.Name).ToList() ?? new List<TradeEntry>()
-                    );
-                    break;
-            }
+        private void _Handle(TradeSolutionSearchCompletedActionData tradeSolutionSearchCompletedActionData)
+        {
+            var tradeSolution = tradeSolutionSearchCompletedActionData.TradeSolution;
+            if (tradeSolution == null)
+                SetProperty(() => SearchStatus, TradeSolutionSearchStatus.SearchFailed);
+            else
+                SetProperty(() => SearchStatus, TradeSolutionSearchStatus.SearchSucceeded);
+            SetProperty(
+                () => TradeEntries,
+                tradeSolution?.Trades.OrderBy(tradeEntry => tradeEntry.Demand.Material.Type.Name).ToList() ?? new List<TradeEntry>()
+            );
         }
 
         private void _FilterMaterialsGoal()

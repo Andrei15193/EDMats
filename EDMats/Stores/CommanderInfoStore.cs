@@ -28,56 +28,54 @@ namespace EDMats.Stores
 
         public ReadOnlyObservableCollection<StoredMaterial> FilteredStoredMaterials { get; }
 
-        protected override void Handle(ActionData actionData)
+        private void _Handle(OpeningJournalFileActionData openingJournalFileActionData)
         {
-            switch (actionData)
-            {
-                case OpeningJournalFileActionData openingJournalFile:
-                    _filteredStoredMaterials.Clear();
-                    SetProperty(() => JournalFilePath, openingJournalFile.FilePath);
-                    break;
+            _filteredStoredMaterials.Clear();
+            SetProperty(() => JournalFilePath, openingJournalFileActionData.FilePath);
+        }
 
-                case JournalImportedActionData commanderInfo:
-                    _storedMaterials.Clear();
-                    foreach (var materialQuantity in commanderInfo.CommanderInformation.Materials.OrderBy(materialQuantity => materialQuantity.Material.Name))
-                        _storedMaterials.Add(
-                            new StoredMaterial
-                            {
-                                Id = materialQuantity.Material.Id,
-                                Name = materialQuantity.Material.Name,
-                                Amount = materialQuantity.Amount
-                            }
-                        );
-                    _FilterItems();
-                    SetProperty(() => LatestUpdate, commanderInfo.CommanderInformation.LatestUpdate);
-                    break;
-
-                case FilterMaterialsActionData filterMaterials:
-                    SetProperty(() => FilterText, filterMaterials.FilterText);
-                    _FilterItems();
-                    break;
-
-                case MaterialCollectedActionData materialCollectedActionData:
-                    var index = 0;
-                    var collectedMaterial = new StoredMaterial
+        private void _Handle(JournalImportedActionData journalImportedActionData)
+        {
+            _storedMaterials.Clear();
+            foreach (var materialQuantity in journalImportedActionData.CommanderInformation.Materials.OrderBy(materialQuantity => materialQuantity.Material.Name))
+                _storedMaterials.Add(
+                    new StoredMaterial
                     {
-                        Id = materialCollectedActionData.CollectedMaterial.Material.Id,
-                        Name = materialCollectedActionData.CollectedMaterial.Material.Name,
-                        Amount = materialCollectedActionData.CollectedMaterial.Amount
-                    };
-                    while (index < _storedMaterials.Count && string.Compare(_storedMaterials[index].Name, collectedMaterial.Name) <= 0)
-                        index++;
-                    if (index < _storedMaterials.Count && _storedMaterials[index].Name == collectedMaterial.Name)
-                    {
-                        collectedMaterial.Amount += _storedMaterials[index].Amount;
-                        _storedMaterials[index] = collectedMaterial;
+                        Id = materialQuantity.Material.Id,
+                        Name = materialQuantity.Material.Name,
+                        Amount = materialQuantity.Amount
                     }
-                    else
-                        _storedMaterials.Insert(index, collectedMaterial);
-                    _FilterItems();
-                    SetProperty(() => LatestUpdate, materialCollectedActionData.LatestUpdate);
-                    break;
+                );
+            _FilterItems();
+            SetProperty(() => LatestUpdate, journalImportedActionData.CommanderInformation.LatestUpdate);
+        }
+
+        private void _Handle(FilterMaterialsActionData filterMaterials)
+        {
+            SetProperty(() => FilterText, filterMaterials.FilterText);
+            _FilterItems();
+        }
+
+        private void _Handle(MaterialCollectedActionData materialCollectedActionData)
+        {
+            var index = 0;
+            var collectedMaterial = new StoredMaterial
+            {
+                Id = materialCollectedActionData.CollectedMaterial.Material.Id,
+                Name = materialCollectedActionData.CollectedMaterial.Material.Name,
+                Amount = materialCollectedActionData.CollectedMaterial.Amount
+            };
+            while (index < _storedMaterials.Count && string.Compare(_storedMaterials[index].Name, collectedMaterial.Name) <= 0)
+                index++;
+            if (index < _storedMaterials.Count && _storedMaterials[index].Name == collectedMaterial.Name)
+            {
+                collectedMaterial.Amount += _storedMaterials[index].Amount;
+                _storedMaterials[index] = collectedMaterial;
             }
+            else
+                _storedMaterials.Insert(index, collectedMaterial);
+            _FilterItems();
+            SetProperty(() => LatestUpdate, materialCollectedActionData.LatestUpdate);
         }
 
         private void _FilterItems()
