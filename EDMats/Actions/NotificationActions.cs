@@ -7,5 +7,8 @@ namespace EDMats.Actions
     {
         public void DismissNotification(Guid id)
             => Dispatch(new DismissNotificationActionData(id));
+
+        public void DismissAllNotifications()
+            => Dispatch(new DismissAllNotificationsActionData());
     }
 }

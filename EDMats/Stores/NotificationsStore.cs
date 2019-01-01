@@ -31,6 +31,10 @@ namespace EDMats.Stores
                     if (index >= 0)
                         _notifications.RemoveAt(index);
                     break;
+
+                case DismissAllNotificationsActionData dismissAllNotificationsActionData:
+                    _notifications.Clear();
+                    break;
             }
         }
     }

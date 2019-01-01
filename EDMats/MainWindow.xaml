@@ -60,7 +60,7 @@
                           IsChecked="True"
                           Content="Auto update"
                           VerticalAlignment="Center"
-                          Checked="_AutoUpdateCheckBoxChecked"/>
+                          Checked="_AutoUpdateCheckBoxChecked" />
             </Grid>
             <Grid Grid.Column="0"
                   Grid.Row="1">
@@ -104,10 +104,20 @@
                             HorizontalAlignment="Center"
                             Click="_ViewTradeSolutionButtonClick" />
                 </Grid>
-                <TextBlock Grid.Row="1"
-                           Margin="5">
-                    <Run Text="Notifications (" /><Run Text="{Binding Notifications.Count, Source={StaticResource NotificationsStore}, Mode=OneWay}" /><Run Text=")" />
-                </TextBlock>
+                <Grid Grid.Row="1"
+                      Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0">
+                        <Run Text="Notifications (" /><Run Text="{Binding Notifications.Count, Source={StaticResource NotificationsStore}, Mode=OneWay}" /><Run Text=")" />
+                    </TextBlock>
+                    <Button Grid.Column="1"
+                            Style="{StaticResource Hyperlink}"
+                            Content="dismiss all"
+                            Click="_DismissAllNotificationsButtonClick"/>
+                </Grid>
                 <controls:Notifications Grid.Row="2"
                                         Margin="5" />
             </Grid>

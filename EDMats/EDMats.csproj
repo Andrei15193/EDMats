@@ -102,6 +102,7 @@
     </ApplicationDefinition>
     <Compile Include="ActionData.cs" />
     <Compile Include="ActionsData\CommanderGoalsLoadedActionData.cs" />
+    <Compile Include="ActionsData\DismissAllNotificationsActionData.cs" />
     <Compile Include="ActionsData\DismissNotificationActionData.cs" />
     <Compile Include="ActionsData\FilterMaterialsActionData.cs" />
     <Compile Include="ActionsData\JournalImportedActionData.cs" />

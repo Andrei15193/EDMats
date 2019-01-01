@@ -40,6 +40,9 @@ namespace EDMats
         [Dependency]
         public GoalActions GoalActions { get; set; }
 
+        [Dependency]
+        public NotificationActions NotificationActions { get; set; }
+
         private async void _LoadJournalFileButtonClick(object sender, RoutedEventArgs e)
         {
             var openFileDialog = new OpenFileDialog
@@ -214,5 +217,8 @@ namespace EDMats
                     break;
             }
         }
+
+        private void _DismissAllNotificationsButtonClick(object sender, RoutedEventArgs e)
+            => NotificationActions.DismissAllNotifications();
     }
 }
