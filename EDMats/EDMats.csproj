@@ -100,7 +100,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ActionData.cs" />
     <Compile Include="ActionsData\CommanderGoalsLoadedActionData.cs" />
     <Compile Include="ActionsData\DismissAllNotificationsActionData.cs" />
     <Compile Include="ActionsData\DismissNotificationActionData.cs" />
@@ -113,8 +112,6 @@
     <Compile Include="ActionsData\TradeSolutionSearchStartedActionData.cs" />
     <Compile Include="ActionsData\TradeSolutionSearchCompletedActionData.cs" />
     <Compile Include="ActionsData\UpdateMaterialGoalActionData.cs" />
-    <Compile Include="ActionSet.cs" />
-    <Compile Include="ActionState.cs" />
     <Compile Include="ActionsData\OpeningJournalFileActionData.cs" />
     <Compile Include="Actions\GoalActions.cs" />
     <Compile Include="Actions\NotificationActions.cs" />
@@ -123,7 +120,6 @@
       <DependentUpon>Notifications.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\TradeSolutionSearchStatusBrushConverter.cs" />
-    <Compile Include="Dispatcher.cs" />
     <Compile Include="Services\AllowedTrade.cs" />
     <Compile Include="Services\AllowedTrades.cs" />
     <Compile Include="Services\CommanderGoalsData.cs" />
@@ -159,7 +155,6 @@
     <Compile Include="Services\TradeEntry.cs" />
     <Compile Include="Services\TradeRate.cs" />
     <Compile Include="Services\TradeSolution.cs" />
-    <Compile Include="Store.cs" />
     <Compile Include="Stores\CommanderInfoStore.cs" />
     <Compile Include="Stores\Extensions.cs" />
     <Compile Include="Stores\GoalsStore.cs" />
@@ -223,6 +218,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Flux\Flux.csproj">
+      <Project>{560ede1f-a331-4065-8ca8-824f8493ea65}</Project>
+      <Name>Flux</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

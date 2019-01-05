@@ -1,4 +1,4 @@
-﻿namespace EDMats
+﻿namespace Flux
 {
     public class ActionData
     {
@@ -7,7 +7,5 @@
         protected ActionData()
         {
         }
-
-        public ActionState State { get; set; } = ActionState.Completed;
     }
 }

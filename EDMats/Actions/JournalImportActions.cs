@@ -7,7 +7,7 @@ using EDMats.Services;
 
 namespace EDMats.Actions
 {
-    public class JournalImportActions : ActionSet
+    public class JournalImportActions : Flux.Actions
     {
         private readonly IJournalFileImportService _journalFileImportService;
 

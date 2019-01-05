@@ -1,21 +1,13 @@
-﻿using System;
-using System.Threading;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Threading;
+using Xunit;
 
-namespace EDMats.Tests
+namespace Flux.Tests
 {
-    [TestClass]
     public class DispatcherTests
     {
-        private Dispatcher _Dispatcher { get; set; }
+        private Dispatcher _Dispatcher { get; } = new MockDispatcher();
 
-        [TestInitialize]
-        public void TestInitialize()
-        {
-            _Dispatcher = new TestDispatcher();
-        }
-
-        [TestMethod]
+        [Fact]
         public void RegisteringToDispatcherInvokesCallback()
         {
             var invocationCount = 0;
@@ -23,10 +15,10 @@ namespace EDMats.Tests
             _Dispatcher.Register(actionData => Interlocked.Increment(ref invocationCount));
             _Dispatcher.Dispatch(null);
 
-            Assert.AreEqual(1, invocationCount);
+            Assert.Equal(1, invocationCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void RegisteringToDispatcherTwiceInvokesCallbackOnce()
         {
             var invocationCount = 0;
@@ -37,10 +29,10 @@ namespace EDMats.Tests
             _Dispatcher.Register(Callback);
             _Dispatcher.Dispatch(null);
 
-            Assert.AreEqual(1, invocationCount);
+            Assert.Equal(1, invocationCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void DispatchingNullPassesActionDataEmpty()
         {
             ActionData actualActionData = null;
@@ -48,26 +40,26 @@ namespace EDMats.Tests
             _Dispatcher.Register(actionData => Interlocked.Exchange(ref actualActionData, actionData));
             _Dispatcher.Dispatch(null);
 
-            Assert.AreSame(ActionData.Empty, actualActionData);
+            Assert.Same(ActionData.Empty, actualActionData);
         }
 
-        [TestMethod]
+        [Fact]
         public void DispatchPassesSameActionData()
         {
-            var expectedActionData = new TestActionData();
+            var expectedActionData = new MockActionData();
             ActionData actualActionData = null;
 
             _Dispatcher.Register(actionData => Interlocked.Exchange(ref actualActionData, actionData));
             _Dispatcher.Dispatch(expectedActionData);
 
-            Assert.AreSame(expectedActionData, actualActionData);
+            Assert.Same(expectedActionData, actualActionData);
         }
 
-        private sealed class TestDispatcher : Dispatcher
+        private sealed class MockDispatcher : Dispatcher
         {
         }
 
-        private sealed class TestActionData :ActionData
+        private sealed class MockActionData : ActionData
         {
         }
     }

@@ -8,7 +8,7 @@ using EDMats.Stores;
 
 namespace EDMats.Actions
 {
-    public class GoalActions : ActionSet
+    public class GoalActions : Flux.Actions
     {
         private readonly ITradeSolutionService _tradeSolutionService;
         private readonly IGoalsFileStorageService _goalsFileStorageService;

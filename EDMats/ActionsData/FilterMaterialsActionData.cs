@@ -1,4 +1,6 @@
-﻿namespace EDMats.ActionsData
+﻿using Flux;
+
+namespace EDMats.ActionsData
 {
     public class FilterMaterialsActionData : ActionData
     {

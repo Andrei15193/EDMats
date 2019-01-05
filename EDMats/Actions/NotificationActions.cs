@@ -3,7 +3,7 @@ using EDMats.ActionsData;
 
 namespace EDMats.Actions
 {
-    public class NotificationActions : ActionSet
+    public class NotificationActions : Flux.Actions
     {
         public void DismissNotification(Guid id)
             => Dispatch(new DismissNotificationActionData(id));
