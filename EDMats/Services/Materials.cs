@@ -591,7 +591,7 @@ namespace EDMats.Services
                         HighDensityComposites = new Material("highdensitycomposites", "High Density Composites", MaterialGrade.Standard, Composite, 200)
                     );
                     materials.Add(
-                        ProprietaryComposites = new Material("proprietarycomposites", "Proprietary Composites", MaterialGrade.Rare, Composite, 150)
+                        ProprietaryComposites = new Material("fedproprietarycomposites", "Proprietary Composites", MaterialGrade.Rare, Composite, 150)
                     );
                     materials.Add(
                         CoreDynamicsComposites = new Material("coredynamicscomposites", "Core Dynamics Composites", MaterialGrade.VeryRare, Composite, 100)
