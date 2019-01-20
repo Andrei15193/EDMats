@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using EDMats.ActionsData;
-using Flux;
+using FluxBase;
 
 namespace EDMats.Stores
 {

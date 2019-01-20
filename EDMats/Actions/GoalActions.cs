@@ -5,16 +5,19 @@ using System.Threading.Tasks;
 using EDMats.ActionsData;
 using EDMats.Services;
 using EDMats.Stores;
+using FluxBase;
 
 namespace EDMats.Actions
 {
-    public class GoalActions : Flux.Actions
+    public class GoalActions
     {
+        private readonly Dispatcher _dispatcher;
         private readonly ITradeSolutionService _tradeSolutionService;
         private readonly IGoalsFileStorageService _goalsFileStorageService;
 
-        public GoalActions(ITradeSolutionService tradeSolutionService, IGoalsFileStorageService goalsFileStorageService)
+        public GoalActions(Dispatcher dispatcher, ITradeSolutionService tradeSolutionService, IGoalsFileStorageService goalsFileStorageService)
         {
+            _dispatcher = dispatcher;
             _tradeSolutionService = tradeSolutionService;
             _goalsFileStorageService = goalsFileStorageService;
         }
@@ -24,7 +27,7 @@ namespace EDMats.Actions
 
         public async Task TryFindGoalTradeSolution(IEnumerable<StoredMaterial> desiredMaterials, IEnumerable<StoredMaterial> availableMaterials, CancellationToken cancellationToken)
         {
-            Dispatch(new TradeSolutionSearchStartedActionData { NotificationText = "Searching for trade solution" });
+            _dispatcher.Dispatch(new TradeSolutionSearchStartedActionData { NotificationText = "Searching for trade solution" });
             var tradeSolution = await _tradeSolutionService.TryFindSolutionAsync(
                 desiredMaterials
                     .Select(materialGoal => new MaterialQuantity(Materials.FindById(materialGoal.Id), materialGoal.Amount)),
@@ -33,7 +36,7 @@ namespace EDMats.Actions
                 _GetAllowedTrades(),
                 cancellationToken
             );
-            Dispatch(
+            _dispatcher.Dispatch(
                 new TradeSolutionSearchCompletedActionData(tradeSolution)
                 {
                     NotificationText = "Trade solution search completed"
@@ -46,14 +49,14 @@ namespace EDMats.Actions
 
         public async Task LoadCommanderGoalsAsync(string fileName, CancellationToken cancellationToken)
         {
-            Dispatch(
+            _dispatcher.Dispatch(
                 new LoadingCommanderGoalsActionData(fileName)
                 {
                     NotificationText = $"Loading commander goals from \"{fileName}\""
                 }
             );
             var commanderGoals = await _goalsFileStorageService.ReadGoalsAsync(fileName, cancellationToken);
-            Dispatch(
+            _dispatcher.Dispatch(
                 new CommanderGoalsLoadedActionData(commanderGoals)
                 {
                     NotificationText = $"Commander goals loaded"
@@ -66,18 +69,18 @@ namespace EDMats.Actions
 
         public async Task SaveCommanderGoalsAsync(string fileName, CommanderGoalsData commanderGoalsData, CancellationToken cancellationToken)
         {
-            Dispatch(
+            _dispatcher.Dispatch(
                 new SavingCommanderGoalsActionData(fileName)
                 {
                     NotificationText = $"Saving commander goals to \"{fileName}\""
                 }
             );
             await _goalsFileStorageService.WriteGoalsAsync(fileName, commanderGoalsData, cancellationToken);
-            Dispatch(new NotificationActionData("Commander goals saved"));
+            _dispatcher.Dispatch(new NotificationActionData("Commander goals saved"));
         }
 
         public void UpdateMaterialAmountGoal(string materialId, int amountGoal)
-            => Dispatch(new UpdateMaterialGoalActionData(materialId, amountGoal));
+            => _dispatcher.Dispatch(new UpdateMaterialGoalActionData(materialId, amountGoal));
 
         private IEnumerable<AllowedTrade> _GetAllowedTrades()
             => _NoGrade3To5DowngradesTrades(Materials.Encoded)

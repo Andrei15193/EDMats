@@ -7,10 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EDMats", "EDMats\EDMats.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EDMats.Tests", "EDMats.Tests\EDMats.Tests.csproj", "{6E1CAF22-A087-4838-BCCA-7543C8FAA674}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flux", "Flux\Flux.csproj", "{560EDE1F-A331-4065-8CA8-824F8493EA65}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flux.Tests", "Flux.Tests\Flux.Tests.csproj", "{C648F6B7-8815-4D3B-BADD-3B1AF01988D8}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,14 +21,6 @@ Global
 		{6E1CAF22-A087-4838-BCCA-7543C8FAA674}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E1CAF22-A087-4838-BCCA-7543C8FAA674}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E1CAF22-A087-4838-BCCA-7543C8FAA674}.Release|Any CPU.Build.0 = Release|Any CPU
-		{560EDE1F-A331-4065-8CA8-824F8493EA65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{560EDE1F-A331-4065-8CA8-824F8493EA65}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{560EDE1F-A331-4065-8CA8-824F8493EA65}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{560EDE1F-A331-4065-8CA8-824F8493EA65}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C648F6B7-8815-4D3B-BADD-3B1AF01988D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C648F6B7-8815-4D3B-BADD-3B1AF01988D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C648F6B7-8815-4D3B-BADD-3B1AF01988D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C648F6B7-8815-4D3B-BADD-3B1AF01988D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

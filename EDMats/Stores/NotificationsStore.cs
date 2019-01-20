@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using EDMats.ActionsData;
-using Flux;
+using FluxBase;
 
 namespace EDMats.Stores
 {

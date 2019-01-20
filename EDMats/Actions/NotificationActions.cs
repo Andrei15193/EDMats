@@ -1,14 +1,22 @@
 ﻿using System;
 using EDMats.ActionsData;
+using FluxBase;
 
 namespace EDMats.Actions
 {
-    public class NotificationActions : Flux.Actions
+    public class NotificationActions
     {
+        private readonly Dispatcher _dispatcher;
+
+        public NotificationActions(Dispatcher dispatcher)
+        {
+            _dispatcher = dispatcher;
+        }
+
         public void DismissNotification(Guid id)
-            => Dispatch(new DismissNotificationActionData(id));
+            => _dispatcher.Dispatch(new DismissNotificationActionData(id));
 
         public void DismissAllNotifications()
-            => Dispatch(new DismissAllNotificationsActionData());
+            => _dispatcher.Dispatch(new DismissAllNotificationsActionData());
     }
 }

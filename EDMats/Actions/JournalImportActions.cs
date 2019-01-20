@@ -4,15 +4,18 @@ using System.Threading;
 using System.Threading.Tasks;
 using EDMats.ActionsData;
 using EDMats.Services;
+using FluxBase;
 
 namespace EDMats.Actions
 {
-    public class JournalImportActions : Flux.Actions
+    public class JournalImportActions
     {
+        private readonly Dispatcher _dispatcher;
         private readonly IJournalFileImportService _journalFileImportService;
 
-        public JournalImportActions(IJournalFileImportService journalFileImportService)
+        public JournalImportActions(Dispatcher dispatcher, IJournalFileImportService journalFileImportService)
         {
+            _dispatcher = dispatcher;
             _journalFileImportService = journalFileImportService;
         }
 
@@ -21,12 +24,12 @@ namespace EDMats.Actions
 
         public async Task LoadJournalFileAsync(string journalFilePath, CancellationToken cancellationToken)
         {
-            Dispatch(new OpeningJournalFileActionData(journalFilePath)
+            _dispatcher.Dispatch(new OpeningJournalFileActionData(journalFilePath)
             {
                 NotificationText = $"Loading journal file \"{journalFilePath}\""
             });
             var commanderInformation = await _journalFileImportService.ImportAsync(journalFilePath, cancellationToken);
-            Dispatch(new JournalImportedActionData(commanderInformation)
+            _dispatcher.Dispatch(new JournalImportedActionData(commanderInformation)
             {
                 NotificationText = $"Journal file loaded, latest entry on {commanderInformation.LatestUpdate:f}"
             });
@@ -39,7 +42,7 @@ namespace EDMats.Actions
         {
             var updates = await _journalFileImportService.ImportLatestJournalUpdatesAsync(journalFilePath, latestUpdate, cancellationToken);
             foreach (var update in updates.OfType<MaterialCollectedJournalUpdate>())
-                Dispatch(
+                _dispatcher.Dispatch(
                     new MaterialCollectedActionData(update.Timestamp, update.CollectedMaterial)
                     {
                         NotificationText = $"Collected {update.CollectedMaterial.Amount} of {update.CollectedMaterial.Material.Name}"
@@ -49,6 +52,6 @@ namespace EDMats.Actions
         }
 
         public void FilterMaterials(string filterText)
-            => Dispatch(new FilterMaterialsActionData(filterText));
+            => _dispatcher.Dispatch(new FilterMaterialsActionData(filterText));
     }
 }

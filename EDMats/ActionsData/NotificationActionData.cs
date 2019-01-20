@@ -1,5 +1,5 @@
 ﻿using System;
-using Flux;
+using FluxBase;
 
 namespace EDMats.ActionsData
 {

@@ -1,8 +1,10 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using System.Windows.Threading;
 using EDMats.Services;
 using EDMats.Services.Implementations;
 using EDMats.Stores;
+using FluxBase;
 using Unity;
 
 namespace EDMats
@@ -13,6 +15,7 @@ namespace EDMats
 
         private static IUnityContainer _GetUnityContainer()
             => new UnityContainer()
+                .RegisterSingleton<FluxBase.Dispatcher>()
                 .RegisterType<IFileSystemService, FileSystemService>()
                 .RegisterType<IJournalImportService, JournalImportService>()
                 .RegisterType<IJournalReaderService, JournalReaderService>()
@@ -28,6 +31,10 @@ namespace EDMats
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             DispatcherUnhandledException += _UnhandledException;
+
+            var dispatcher = _container.Resolve<FluxBase.Dispatcher>();
+            foreach (var store in Resources.Values.OfType<Store>())
+                dispatcher.Register(store);
 
             MainWindow = EnsureDependencies(new MainWindow());
             MainWindow.Show();
