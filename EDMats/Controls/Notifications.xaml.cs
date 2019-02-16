@@ -1,7 +1,7 @@
 ﻿using System.Windows.Controls;
 using EDMats.Actions;
 using EDMats.Stores;
-using Unity.Attributes;
+using Unity;
 
 namespace EDMats.Controls
 {

@@ -1,4 +1,8 @@
-﻿using System;
+﻿using EDMats.Actions;
+using EDMats.Services;
+using EDMats.Stores;
+using Microsoft.Win32;
+using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -6,11 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using EDMats.Actions;
-using EDMats.Services;
-using EDMats.Stores;
-using Microsoft.Win32;
-using Unity.Attributes;
+using Unity;
 
 namespace EDMats
 {
