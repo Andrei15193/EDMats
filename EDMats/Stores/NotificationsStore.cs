@@ -17,13 +17,13 @@ namespace EDMats.Stores
 
         public ReadOnlyObservableCollection<Notification> Notifications { get; }
 
-        private void _Handle(NotificationActionData notificationActionData)
+        public void Handle(NotificationActionData notificationActionData)
         {
             if (notificationActionData.NotificationId != default(Guid))
                 _notifications.Insert(0, new Notification(notificationActionData.NotificationId, notificationActionData.NotificationText));
         }
 
-        private void _Handle(DismissNotificationActionData dismissNotificationActionData)
+        public void Handle(DismissNotificationActionData dismissNotificationActionData)
         {
             var index = _notifications.Count - 1;
             while (index >= 0 && _notifications[index].Id != dismissNotificationActionData.Id)
@@ -32,7 +32,7 @@ namespace EDMats.Stores
                 _notifications.RemoveAt(index);
         }
 
-        private void _Handle(DismissAllNotificationsActionData dismissAllNotificationsActionData)
+        public void Handle(DismissAllNotificationsActionData dismissAllNotificationsActionData)
         {
             _notifications.Clear();
         }

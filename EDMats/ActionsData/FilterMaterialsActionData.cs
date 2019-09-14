@@ -2,7 +2,7 @@
 
 namespace EDMats.ActionsData
 {
-    public class FilterMaterialsActionData : ActionData
+    public class FilterMaterialsActionData
     {
         public FilterMaterialsActionData(string filterText)
         {

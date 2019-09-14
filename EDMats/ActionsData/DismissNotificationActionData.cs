@@ -3,7 +3,7 @@ using FluxBase;
 
 namespace EDMats.ActionsData
 {
-    public class DismissNotificationActionData : ActionData
+    public class DismissNotificationActionData
     {
         public DismissNotificationActionData(Guid id)
         {

@@ -2,7 +2,7 @@
 
 namespace EDMats.ActionsData
 {
-    public class UpdateMaterialGoalActionData : ActionData
+    public class UpdateMaterialGoalActionData
     {
         public UpdateMaterialGoalActionData(string materialId, int amount)
         {

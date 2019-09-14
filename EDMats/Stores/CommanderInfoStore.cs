@@ -29,13 +29,13 @@ namespace EDMats.Stores
 
         public ReadOnlyObservableCollection<StoredMaterial> FilteredStoredMaterials { get; }
 
-        private void _Handle(OpeningJournalFileActionData openingJournalFileActionData)
+        public void Handle(OpeningJournalFileActionData openingJournalFileActionData)
         {
             _filteredStoredMaterials.Clear();
             SetProperty(() => JournalFilePath, openingJournalFileActionData.FilePath);
         }
 
-        private void _Handle(JournalImportedActionData journalImportedActionData)
+        void Handle(JournalImportedActionData journalImportedActionData)
         {
             _storedMaterials.Clear();
             foreach (var materialQuantity in journalImportedActionData.CommanderInformation.Materials.OrderBy(materialQuantity => materialQuantity.Material.Name))
@@ -51,13 +51,13 @@ namespace EDMats.Stores
             SetProperty(() => LatestUpdate, journalImportedActionData.CommanderInformation.LatestUpdate);
         }
 
-        private void _Handle(FilterMaterialsActionData filterMaterials)
+        public void Handle(FilterMaterialsActionData filterMaterials)
         {
             SetProperty(() => FilterText, filterMaterials.FilterText);
             _FilterItems();
         }
 
-        private void _Handle(MaterialCollectedActionData materialCollectedActionData)
+        public void Handle(MaterialCollectedActionData materialCollectedActionData)
         {
             var index = 0;
             var collectedMaterial = new StoredMaterial

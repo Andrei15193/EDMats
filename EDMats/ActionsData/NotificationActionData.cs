@@ -3,7 +3,7 @@ using FluxBase;
 
 namespace EDMats.ActionsData
 {
-    public class NotificationActionData : ActionData
+    public class NotificationActionData
     {
         private readonly Guid _id = Guid.NewGuid();
         private string _text;

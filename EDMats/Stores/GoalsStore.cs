@@ -40,13 +40,13 @@ namespace EDMats.Stores
 
         public IReadOnlyCollection<TradeEntry> TradeEntries { get; private set; } = new List<TradeEntry>();
 
-        private void _Handle(FilterMaterialsActionData filterMaterialsActionData)
+        public void Handle(FilterMaterialsActionData filterMaterialsActionData)
         {
             _filterText = filterMaterialsActionData.FilterText;
             _FilterMaterialsGoal();
         }
 
-        private void _Handle(UpdateMaterialGoalActionData updateMaterialGoalActionData)
+        public void Handle(UpdateMaterialGoalActionData updateMaterialGoalActionData)
         {
             var updatedMaterial = _materialsGoal
                 .Single(storedMaterial => storedMaterial.Id == updateMaterialGoalActionData.MaterialId);
@@ -59,13 +59,13 @@ namespace EDMats.Stores
                 _filteredMaterialsGoal[filteredMaterialIndex] = updatedMaterial;
         }
 
-        private void _Handle(LoadingCommanderGoalsActionData loadingCommanderGoalsActionData)
+        public void Handle(LoadingCommanderGoalsActionData loadingCommanderGoalsActionData)
         {
             _materialsGoal.Clear();
             _filteredMaterialsGoal.Clear();
         }
 
-        private void _Handle(CommanderGoalsLoadedActionData commanderGoalsLoadedActionData)
+        public void Handle(CommanderGoalsLoadedActionData commanderGoalsLoadedActionData)
         {
             var storedMaterials = Materials.All.ToDictionary(
                 material => material.Id,
@@ -88,12 +88,12 @@ namespace EDMats.Stores
             _FilterMaterialsGoal();
         }
 
-        private void _Handle(TradeSolutionSearchStartedActionData tradeSolutionSearchStartedAction)
+        public void Handle(TradeSolutionSearchStartedActionData tradeSolutionSearchStartedAction)
         {
             SetProperty(() => SearchStatus, TradeSolutionSearchStatus.Searching);
         }
 
-        private void _Handle(TradeSolutionSearchCompletedActionData tradeSolutionSearchCompletedActionData)
+        public void Handle(TradeSolutionSearchCompletedActionData tradeSolutionSearchCompletedActionData)
         {
             var tradeSolution = tradeSolutionSearchCompletedActionData.TradeSolution;
             if (tradeSolution == null)
