@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using EDMats.Services.JournalEntries;
+using EDMats.Data.JournalEntries;
 
 namespace EDMats.Services
 {

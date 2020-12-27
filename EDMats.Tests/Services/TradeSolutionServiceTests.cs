@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EDMats.Data.Materials;
 using EDMats.Services;
 using EDMats.Services.Implementations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -26,12 +27,12 @@ namespace EDMats.Tests.Services
         public async Task Trade6For1()
         {
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Iron))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
-                new[] { new MaterialQuantity(Materials.Zinc, 1) },
-                new[] { new MaterialQuantity(Materials.Iron, 6) },
+                new[] { new MaterialQuantity(Material.Zinc, 1) },
+                new[] { new MaterialQuantity(Material.Iron, 6) },
                 AllowedTrades.All
             );
 
@@ -39,8 +40,8 @@ namespace EDMats.Tests.Services
                 new[]
                 {
                     new TradeEntry(
-                        new MaterialQuantity(Materials.Zinc, 1),
-                        new MaterialQuantity(Materials.Iron, 6)
+                        new MaterialQuantity(Material.Zinc, 1),
+                        new MaterialQuantity(Material.Iron, 6)
                     )
                 },
                 tradeSolution.Trades
@@ -51,12 +52,12 @@ namespace EDMats.Tests.Services
         public async Task Trade12For2()
         {
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Iron))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
-                new[] { new MaterialQuantity(Materials.Zinc, 2) },
-                new[] { new MaterialQuantity(Materials.Iron, 12) },
+                new[] { new MaterialQuantity(Material.Zinc, 2) },
+                new[] { new MaterialQuantity(Material.Iron, 12) },
                 AllowedTrades.All
             );
 
@@ -64,8 +65,8 @@ namespace EDMats.Tests.Services
                 new[]
                 {
                     new TradeEntry(
-                        new MaterialQuantity(Materials.Zinc, 2),
-                        new MaterialQuantity(Materials.Iron, 12)
+                        new MaterialQuantity(Material.Zinc, 2),
+                        new MaterialQuantity(Material.Iron, 12)
                     )
                 },
                 tradeSolution.Trades
@@ -76,12 +77,12 @@ namespace EDMats.Tests.Services
         public async Task Trade6For1Having9Available()
         {
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Iron))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
-                new[] { new MaterialQuantity(Materials.Zinc, 1) },
-                new[] { new MaterialQuantity(Materials.Iron, 9) },
+                new[] { new MaterialQuantity(Material.Zinc, 1) },
+                new[] { new MaterialQuantity(Material.Iron, 9) },
                 AllowedTrades.All
             );
 
@@ -89,8 +90,8 @@ namespace EDMats.Tests.Services
                 new[]
                 {
                     new TradeEntry(
-                        new MaterialQuantity(Materials.Zinc, 1),
-                        new MaterialQuantity(Materials.Iron, 6)
+                        new MaterialQuantity(Material.Zinc, 1),
+                        new MaterialQuantity(Material.Iron, 6)
                     )
                 },
                 tradeSolution.Trades
@@ -101,18 +102,18 @@ namespace EDMats.Tests.Services
         public async Task Trade6For1HavingMoreDifferentMaterialsAvailable()
         {
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Iron))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
                 .Returns(new TradeRate(1, 6));
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Germanium))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Germanium))
                 .Returns(new TradeRate(1, 6));
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Manganese))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Manganese))
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
-                new[] { new MaterialQuantity(Materials.Zinc, 1) },
-                new[] { new MaterialQuantity(Materials.Iron, 9), new MaterialQuantity(Materials.Germanium, 9), new MaterialQuantity(Materials.Manganese, 9) },
+                new[] { new MaterialQuantity(Material.Zinc, 1) },
+                new[] { new MaterialQuantity(Material.Iron, 9), new MaterialQuantity(Material.Germanium, 9), new MaterialQuantity(Material.Manganese, 9) },
                 AllowedTrades.All
             );
 
@@ -120,8 +121,8 @@ namespace EDMats.Tests.Services
                 new[]
                 {
                     new TradeEntry(
-                        new MaterialQuantity(Materials.Zinc, 1),
-                        new MaterialQuantity(Materials.Iron, 6)
+                        new MaterialQuantity(Material.Zinc, 1),
+                        new MaterialQuantity(Material.Iron, 6)
                     )
                 },
                 tradeSolution.Trades
@@ -132,15 +133,15 @@ namespace EDMats.Tests.Services
         public async Task TradingPrioritizesLowerGradeSameCategoryOverDifferentCategory()
         {
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Iron))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
                 .Returns(new TradeRate(1, 6));
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Germanium))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Germanium))
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
-                new[] { new MaterialQuantity(Materials.Zinc, 1) },
-                new[] { new MaterialQuantity(Materials.Germanium, 9), new MaterialQuantity(Materials.Iron, 12) },
+                new[] { new MaterialQuantity(Material.Zinc, 1) },
+                new[] { new MaterialQuantity(Material.Germanium, 9), new MaterialQuantity(Material.Iron, 12) },
                 AllowedTrades.All
             );
 
@@ -148,8 +149,8 @@ namespace EDMats.Tests.Services
                 new[]
                 {
                     new TradeEntry(
-                        new MaterialQuantity(Materials.Zinc, 1),
-                        new MaterialQuantity(Materials.Iron, 6)
+                        new MaterialQuantity(Material.Zinc, 1),
+                        new MaterialQuantity(Material.Iron, 6)
                     )
                 },
                 tradeSolution.Trades
@@ -160,15 +161,15 @@ namespace EDMats.Tests.Services
         public async Task TradingPrioritizesLowerGradeFromDifferentCategoryOverDowngradingFromSameCategory()
         {
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Nickel))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Nickel))
                 .Returns(new TradeRate(1, 36));
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Tin))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Tin))
                 .Returns(new TradeRate(3, 1));
 
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
-                new[] { new MaterialQuantity(Materials.Zinc, 3) },
-                new[] { new MaterialQuantity(Materials.Tin, 6), new MaterialQuantity(Materials.Nickel, 108) },
+                new[] { new MaterialQuantity(Material.Zinc, 3) },
+                new[] { new MaterialQuantity(Material.Tin, 6), new MaterialQuantity(Material.Nickel, 108) },
                 AllowedTrades.All
             );
 
@@ -176,8 +177,8 @@ namespace EDMats.Tests.Services
                 new[]
                 {
                     new TradeEntry(
-                        new MaterialQuantity(Materials.Zinc, 3),
-                        new MaterialQuantity(Materials.Nickel, 108)
+                        new MaterialQuantity(Material.Zinc, 3),
+                        new MaterialQuantity(Material.Nickel, 108)
                     )
                 },
                 tradeSolution.Trades
@@ -188,15 +189,15 @@ namespace EDMats.Tests.Services
         public async Task TradingPrioritizesSameGradeFromDifferentCategoryOverDowngradingFromSameCategory()
         {
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Germanium))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Germanium))
                 .Returns(new TradeRate(1, 6));
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Tin))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Tin))
                 .Returns(new TradeRate(3, 1));
 
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
-                new[] { new MaterialQuantity(Materials.Zinc, 3) },
-                new[] { new MaterialQuantity(Materials.Tin, 6), new MaterialQuantity(Materials.Germanium, 18) },
+                new[] { new MaterialQuantity(Material.Zinc, 3) },
+                new[] { new MaterialQuantity(Material.Tin, 6), new MaterialQuantity(Material.Germanium, 18) },
                 AllowedTrades.All
             );
 
@@ -204,8 +205,8 @@ namespace EDMats.Tests.Services
                 new[]
                 {
                     new TradeEntry(
-                        new MaterialQuantity(Materials.Zinc, 3),
-                        new MaterialQuantity(Materials.Germanium, 18)
+                        new MaterialQuantity(Material.Zinc, 3),
+                        new MaterialQuantity(Material.Germanium, 18)
                     )
                 },
                 tradeSolution.Trades
@@ -216,15 +217,15 @@ namespace EDMats.Tests.Services
         public async Task TradingPrioritizesDowngradeFromSameCategoryOverDowngradeFromDifferentCategory()
         {
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Tungsten))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Tungsten))
                 .Returns(new TradeRate(2, 1));
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Tin))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Tin))
                 .Returns(new TradeRate(3, 1));
 
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
-                new[] { new MaterialQuantity(Materials.Zinc, 6) },
-                new[] { new MaterialQuantity(Materials.Tungsten, 3), new MaterialQuantity(Materials.Tin, 2) },
+                new[] { new MaterialQuantity(Material.Zinc, 6) },
+                new[] { new MaterialQuantity(Material.Tungsten, 3), new MaterialQuantity(Material.Tin, 2) },
                 AllowedTrades.All
             );
 
@@ -232,8 +233,8 @@ namespace EDMats.Tests.Services
                 new[]
                 {
                     new TradeEntry(
-                        new MaterialQuantity(Materials.Zinc, 6),
-                        new MaterialQuantity(Materials.Tin, 2)
+                        new MaterialQuantity(Material.Zinc, 6),
+                        new MaterialQuantity(Material.Tin, 2)
                     )
                 },
                 tradeSolution.Trades
@@ -244,15 +245,15 @@ namespace EDMats.Tests.Services
         public async Task Trade2DifferentMaterialsForSameOne()
         {
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Iron))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
                 .Returns(new TradeRate(1, 6));
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Germanium))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Germanium))
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
-                new[] { new MaterialQuantity(Materials.Zinc, 2) },
-                new[] { new MaterialQuantity(Materials.Iron, 6), new MaterialQuantity(Materials.Germanium, 6) },
+                new[] { new MaterialQuantity(Material.Zinc, 2) },
+                new[] { new MaterialQuantity(Material.Iron, 6), new MaterialQuantity(Material.Germanium, 6) },
                 AllowedTrades.All
             );
 
@@ -260,12 +261,12 @@ namespace EDMats.Tests.Services
                 new[]
                 {
                     new TradeEntry(
-                        new MaterialQuantity(Materials.Zinc, 1),
-                        new MaterialQuantity(Materials.Iron, 6)
+                        new MaterialQuantity(Material.Zinc, 1),
+                        new MaterialQuantity(Material.Iron, 6)
                     ),
                     new TradeEntry(
-                        new MaterialQuantity(Materials.Zinc, 1),
-                        new MaterialQuantity(Materials.Germanium, 6)
+                        new MaterialQuantity(Material.Zinc, 1),
+                        new MaterialQuantity(Material.Germanium, 6)
                     )
                 },
                 tradeSolution.Trades
@@ -276,12 +277,12 @@ namespace EDMats.Tests.Services
         public async Task DowngradingMaterialsMakesAsFewTradesAsPossible()
         {
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Tin))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Tin))
                 .Returns(new TradeRate(3, 1));
 
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
-                new[] { new MaterialQuantity(Materials.Zinc, 1) },
-                new[] { new MaterialQuantity(Materials.Tin, 2) },
+                new[] { new MaterialQuantity(Material.Zinc, 1) },
+                new[] { new MaterialQuantity(Material.Tin, 2) },
                 AllowedTrades.All
             );
 
@@ -289,8 +290,8 @@ namespace EDMats.Tests.Services
                 new[]
                 {
                     new TradeEntry(
-                        new MaterialQuantity(Materials.Zinc, 3),
-                        new MaterialQuantity(Materials.Tin, 1)
+                        new MaterialQuantity(Material.Zinc, 3),
+                        new MaterialQuantity(Material.Tin, 1)
                     )
                 },
                 tradeSolution.Trades
@@ -301,24 +302,24 @@ namespace EDMats.Tests.Services
         public async Task TradingMaterialsConsidersAllowedTrades()
         {
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Iron))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
                 .Returns(new TradeRate(1, 6));
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Germanium))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Germanium))
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
-                new[] { new MaterialQuantity(Materials.Zinc, 1) },
-                new[] { new MaterialQuantity(Materials.Germanium, 9), new MaterialQuantity(Materials.Iron, 12) },
-                new[] { new AllowedTrade(Materials.Zinc, Materials.Germanium) }
+                new[] { new MaterialQuantity(Material.Zinc, 1) },
+                new[] { new MaterialQuantity(Material.Germanium, 9), new MaterialQuantity(Material.Iron, 12) },
+                new[] { new AllowedTrade(Material.Zinc, Material.Germanium) }
             );
 
             _AssertAreEqual(
                 new[]
                 {
                     new TradeEntry(
-                        new MaterialQuantity(Materials.Zinc, 1),
-                        new MaterialQuantity(Materials.Germanium, 6)
+                        new MaterialQuantity(Material.Zinc, 1),
+                        new MaterialQuantity(Material.Germanium, 6)
                     )
                 },
                 tradeSolution.Trades
@@ -329,15 +330,15 @@ namespace EDMats.Tests.Services
         public async Task TradeSolutionIsNullWhenItCannotBeFound()
         {
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Iron))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
                 .Returns(new TradeRate(1, 6));
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Germanium))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Germanium))
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
-                new[] { new MaterialQuantity(Materials.Zinc, 1) },
-                new[] { new MaterialQuantity(Materials.Germanium, 5), new MaterialQuantity(Materials.Iron, 5) },
+                new[] { new MaterialQuantity(Material.Zinc, 1) },
+                new[] { new MaterialQuantity(Material.Germanium, 5), new MaterialQuantity(Material.Iron, 5) },
                 AllowedTrades.All
             );
 
@@ -348,15 +349,15 @@ namespace EDMats.Tests.Services
         public async Task TradeSolutionReturnsEmptyTradeEntriesWhenThereAreNoDesiredMaterials()
         {
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Iron))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
                 .Returns(new TradeRate(1, 6));
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Germanium))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Germanium))
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
                 Enumerable.Empty<MaterialQuantity>(),
-                new[] { new MaterialQuantity(Materials.Germanium, 5), new MaterialQuantity(Materials.Iron, 5) },
+                new[] { new MaterialQuantity(Material.Germanium, 5), new MaterialQuantity(Material.Iron, 5) },
                 AllowedTrades.All
             );
 
@@ -367,14 +368,14 @@ namespace EDMats.Tests.Services
         public async Task TradeSolutionIsNullWhenThereAreNoAvailableMaterials()
         {
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Iron))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
                 .Returns(new TradeRate(1, 6));
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Germanium))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Germanium))
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
-                new[] { new MaterialQuantity(Materials.Zinc, 1) },
+                new[] { new MaterialQuantity(Material.Zinc, 1) },
                 Enumerable.Empty<MaterialQuantity>(),
                 AllowedTrades.All
             );
@@ -386,15 +387,15 @@ namespace EDMats.Tests.Services
         public async Task TradeSolutionIsNullWhenThereAreNoAlloedTrades()
         {
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Iron))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
                 .Returns(new TradeRate(1, 6));
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Germanium))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Germanium))
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
-                new[] { new MaterialQuantity(Materials.Zinc, 1) },
-                new[] { new MaterialQuantity(Materials.Germanium, 5), new MaterialQuantity(Materials.Iron, 5) },
+                new[] { new MaterialQuantity(Material.Zinc, 1) },
+                new[] { new MaterialQuantity(Material.Germanium, 5), new MaterialQuantity(Material.Iron, 5) },
                 Enumerable.Empty<AllowedTrade>()
             );
 
@@ -405,15 +406,15 @@ namespace EDMats.Tests.Services
         public async Task TradeSolutionHasEmptyTradeListIfTheDesiredMaterialsAreAlreadyAvailable()
         {
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Iron))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
                 .Returns(new TradeRate(1, 6));
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Germanium))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Germanium))
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
-                new[] { new MaterialQuantity(Materials.Zinc, 1) },
-                new[] { new MaterialQuantity(Materials.Germanium, 9), new MaterialQuantity(Materials.Iron, 12), new MaterialQuantity(Materials.Zinc, 1) },
+                new[] { new MaterialQuantity(Material.Zinc, 1) },
+                new[] { new MaterialQuantity(Material.Germanium, 9), new MaterialQuantity(Material.Iron, 12), new MaterialQuantity(Material.Zinc, 1) },
                 AllowedTrades.All
             );
 
@@ -424,15 +425,15 @@ namespace EDMats.Tests.Services
         public async Task TradeSolutionDoesNotTradeDesiredMaterials()
         {
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Iron))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
                 .Returns(new TradeRate(1, 6));
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Germanium))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Germanium))
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
-                new[] { new MaterialQuantity(Materials.Zinc, 1), new MaterialQuantity(Materials.Iron, 6) },
-                new[] { new MaterialQuantity(Materials.Germanium, 9), new MaterialQuantity(Materials.Iron, 11) },
+                new[] { new MaterialQuantity(Material.Zinc, 1), new MaterialQuantity(Material.Iron, 6) },
+                new[] { new MaterialQuantity(Material.Germanium, 9), new MaterialQuantity(Material.Iron, 11) },
                 AllowedTrades.All
             );
 
@@ -440,8 +441,8 @@ namespace EDMats.Tests.Services
                 new[]
                 {
                     new TradeEntry(
-                        new MaterialQuantity(Materials.Zinc, 1),
-                        new MaterialQuantity(Materials.Germanium, 6)
+                        new MaterialQuantity(Material.Zinc, 1),
+                        new MaterialQuantity(Material.Germanium, 6)
                     )
                 },
                 tradeSolution.Trades
@@ -452,18 +453,18 @@ namespace EDMats.Tests.Services
         public async Task TradeSameMaterialForMultiple()
         {
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Zinc, Materials.Iron))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
                 .Returns(new TradeRate(1, 6));
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Germanium, Materials.Iron))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Germanium, Material.Iron))
                 .Returns(new TradeRate(1, 6));
             _MaterialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Materials.Manganese, Materials.Iron))
+                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Manganese, Material.Iron))
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
-                new[] { new MaterialQuantity(Materials.Zinc, 1), new MaterialQuantity(Materials.Germanium, 1), new MaterialQuantity(Materials.Manganese, 1) },
-                new[] { new MaterialQuantity(Materials.Iron, 18) },
+                new[] { new MaterialQuantity(Material.Zinc, 1), new MaterialQuantity(Material.Germanium, 1), new MaterialQuantity(Material.Manganese, 1) },
+                new[] { new MaterialQuantity(Material.Iron, 18) },
                 AllowedTrades.All
             );
 
@@ -471,16 +472,16 @@ namespace EDMats.Tests.Services
                 new[]
                 {
                     new TradeEntry(
-                        new MaterialQuantity(Materials.Zinc, 1),
-                        new MaterialQuantity(Materials.Iron, 6)
+                        new MaterialQuantity(Material.Zinc, 1),
+                        new MaterialQuantity(Material.Iron, 6)
                     ),
                     new TradeEntry(
-                        new MaterialQuantity(Materials.Germanium, 1),
-                        new MaterialQuantity(Materials.Iron, 6)
+                        new MaterialQuantity(Material.Germanium, 1),
+                        new MaterialQuantity(Material.Iron, 6)
                     ),
                     new TradeEntry(
-                        new MaterialQuantity(Materials.Manganese, 1),
-                        new MaterialQuantity(Materials.Iron, 6)
+                        new MaterialQuantity(Material.Manganese, 1),
+                        new MaterialQuantity(Material.Iron, 6)
                     )
                 },
                 tradeSolution.Trades

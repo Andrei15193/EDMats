@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using EDMats.Data.Materials;
 
 namespace EDMats.Services.Implementations
 {
@@ -21,21 +22,21 @@ namespace EDMats.Services.Implementations
         public async Task<TradeSolution> TryFindSolutionAsync(IEnumerable<MaterialQuantity> desiredMaterialQuantities, IEnumerable<MaterialQuantity> availableMaterialQuantities, IEnumerable<AllowedTrade> allowedTrades, CancellationToken cancellationToken)
         {
             var availableMaterialQuantitiesCollection = availableMaterialQuantities as IReadOnlyCollection<MaterialQuantity>
-                ?? availableMaterialQuantities?.ToList()
+                ?? availableMaterialQuantities?.ToArray()
                 ?? throw new ArgumentNullException(nameof(availableMaterialQuantities));
             var desiredMaterialQuantitiesCollection =
                 desiredMaterialQuantities as IReadOnlyCollection<MaterialQuantity>
-                ?? desiredMaterialQuantities?.ToList()
+                ?? desiredMaterialQuantities?.ToArray()
                 ?? throw new ArgumentNullException(nameof(desiredMaterialQuantities));
             var allowedTradesList = allowedTrades
                 ?? throw new ArgumentNullException(nameof(allowedTrades));
 
-            var desiredMaterialQuantitiesList = _SubtractFromMatchingWithPositiveAmounts(desiredMaterialQuantitiesCollection, availableMaterialQuantitiesCollection).ToList();
-            var availableMaterialQuantitiesList = _SubtractFromMatchingWithPositiveAmounts(availableMaterialQuantitiesCollection, desiredMaterialQuantitiesCollection).ToList();
+            var desiredMaterialQuantitiesList = _SubtractFromMatchingWithPositiveAmounts(desiredMaterialQuantitiesCollection, availableMaterialQuantitiesCollection).ToArray();
+            var availableMaterialQuantitiesList = _SubtractFromMatchingWithPositiveAmounts(availableMaterialQuantitiesCollection, desiredMaterialQuantitiesCollection).ToArray();
 
-            if (desiredMaterialQuantitiesList.Count == 0)
+            if (desiredMaterialQuantitiesList.Length == 0)
                 return new TradeSolution(Enumerable.Empty<TradeEntry>());
-            else if (availableMaterialQuantitiesList.Count == 0)
+            else if (availableMaterialQuantitiesList.Length == 0)
                 return null;
 
             await Task.Yield();
@@ -68,7 +69,7 @@ namespace EDMats.Services.Implementations
                     {
                         var currentDesiredMaterialData = searchState.RemainingDesiredMaterialsData.FirstOrDefault();
                         if (currentDesiredMaterialData == null)
-                            tradeEntries = searchStates.SelectMany(validSearchState => validSearchState.TradePossibilities.Current).ToList();
+                            tradeEntries = searchStates.SelectMany(validSearchState => validSearchState.TradePossibilities.Current).ToArray();
                         else
                         {
                             await Task.Yield();
@@ -136,17 +137,16 @@ namespace EDMats.Services.Implementations
                 using (var tradeOption = tradeOptions.GetEnumerator())
                     while (tradeOption.MoveNext() && remaningDesiredAmount > 0)
                     {
-                        var tradeEntry =
-                            new TradeEntry(
-                                new MaterialQuantity(
-                                    desiredMaterialsData.DesiredMaterialQuantity.Material,
-                                    tradeOption.Current.TradeRate.Demand * tradeOption.Current.TradeTimes
-                                ),
-                                new MaterialQuantity(
-                                    tradeOption.Current.AvailableQuantity.Material,
-                                    tradeOption.Current.TradeRate.Offer * tradeOption.Current.TradeTimes
-                                )
-                            );
+                        var tradeEntry = new TradeEntry(
+                            new MaterialQuantity(
+                                desiredMaterialsData.DesiredMaterialQuantity.Material,
+                                tradeOption.Current.TradeRate.Demand * tradeOption.Current.TradeTimes
+                            ),
+                            new MaterialQuantity(
+                                tradeOption.Current.AvailableQuantity.Material,
+                                tradeOption.Current.TradeRate.Offer * tradeOption.Current.TradeTimes
+                            )
+                        );
                         remaningDesiredAmount -= tradeEntry.Demand.Amount;
                         tradeEntries.Add(tradeEntry);
                     }
@@ -189,7 +189,7 @@ namespace EDMats.Services.Implementations
                                                  select availableMaterialQuantity
                 select new DesiredMaterialInfo(desiredMaterialQuantity, tradableMaterialQuantities)
             )
-            .ToList();
+            .ToArray();
 
         private static IEnumerable<MaterialQuantity> _SubtractFromMatchingWithPositiveAmounts(IReadOnlyCollection<MaterialQuantity> materialQuantities, IReadOnlyCollection<MaterialQuantity> materialQuantitiesToSubtract)
             => from materialQuantity in materialQuantities
@@ -220,7 +220,7 @@ namespace EDMats.Services.Implementations
             public DesiredMaterialInfo(MaterialQuantity desiredMaterialQuantity, IEnumerable<MaterialQuantity> availableMaterialQuantities)
             {
                 DesiredMaterialQuantity = desiredMaterialQuantity;
-                AvailableMaterialQuantities = availableMaterialQuantities as IReadOnlyCollection<MaterialQuantity> ?? availableMaterialQuantities.ToList();
+                AvailableMaterialQuantities = availableMaterialQuantities as IReadOnlyCollection<MaterialQuantity> ?? availableMaterialQuantities.ToArray();
             }
 
             public MaterialQuantity DesiredMaterialQuantity { get; }

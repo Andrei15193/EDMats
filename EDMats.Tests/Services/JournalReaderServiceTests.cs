@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using EDMats.Data.JournalEntries;
+using EDMats.Data.Materials;
 using EDMats.Services;
 using EDMats.Services.Implementations;
-using EDMats.Services.JournalEntries;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EDMats.Tests.Services
@@ -40,21 +41,9 @@ namespace EDMats.Tests.Services
             _AssertCollectionsAreEqual(
                 new[]
                 {
-                    new MaterialQuantity
-                    {
-                        Material = Materials.Carbon,
-                        Amount = 21
-                    },
-                    new MaterialQuantity
-                    {
-                        Material = Materials.Manganese,
-                        Amount = 11
-                    },
-                    new MaterialQuantity
-                    {
-                        Material = Materials.Nickel,
-                        Amount = 33
-                    }
+                    new MaterialQuantity(Material.Carbon, 21),
+                    new MaterialQuantity(Material.Manganese, 11),
+                    new MaterialQuantity(Material.Nickel, 33)
                 },
                 materialsJournalEntry.Raw
             );
@@ -62,42 +51,18 @@ namespace EDMats.Tests.Services
             _AssertCollectionsAreEqual(
                 new[]
                 {
-                    new MaterialQuantity
-                    {
-                        Material = Materials.FocusCrystals,
-                        Amount = 4
-                    },
-                    new MaterialQuantity
-                    {
-                        Material = Materials.ExquisiteFocusCrystals,
-                        Amount = 7
-                    },
-                    new MaterialQuantity
-                    {
-                        Material = Materials.MechanicalScrap,
-                        Amount = 2
-                    }
+                    new MaterialQuantity(Material.FocusCrystals, 4),
+                    new MaterialQuantity(Material.ExquisiteFocusCrystals, 7),
+                    new MaterialQuantity(Material.MechanicalScrap, 2)
                 },
                 materialsJournalEntry.Manufactured
             );
 
             _AssertCollectionsAreEqual(new[]
                 {
-                    new MaterialQuantity
-                    {
-                        Material = Materials.DistortedShieldCycleRecordings,
-                        Amount = 9
-                    },
-                    new MaterialQuantity
-                    {
-                        Material = Materials.InconsistentShieldSoakAnalysis,
-                        Amount = 3
-                    },
-                    new MaterialQuantity
-                    {
-                        Material = Materials.AnomalousBulkScanData,
-                        Amount = 45
-                    }
+                    new MaterialQuantity(Material.DistortedShieldCycleRecordings, 9),
+                    new MaterialQuantity(Material.InconsistentShieldSoakAnalysis, 3),
+                    new MaterialQuantity(Material.AnomalousBulkScanData, 45)
                 },
                 materialsJournalEntry.Encoded
             );
@@ -130,7 +95,7 @@ namespace EDMats.Tests.Services
             Assert.AreEqual(1, journalEntries.Count);
             var materialCollectedJournalEntry = (MaterialCollectedJournalEntry)journalEntries.Single();
             Assert.AreEqual(new DateTime(2018, 12, 23, 18, 25, 17, DateTimeKind.Utc), materialCollectedJournalEntry.Timestamp);
-            Assert.AreEqual(Materials.AnomalousBulkScanData, materialCollectedJournalEntry.MaterialQuantity.Material);
+            Assert.AreEqual(Material.AnomalousBulkScanData, materialCollectedJournalEntry.MaterialQuantity.Material);
             Assert.AreEqual(3, materialCollectedJournalEntry.MaterialQuantity.Amount);
         }
 

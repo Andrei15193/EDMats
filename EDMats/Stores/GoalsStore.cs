@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using EDMats.ActionsData;
+using EDMats.Data.Materials;
 using EDMats.Services;
 using FluxBase;
 
@@ -16,7 +18,7 @@ namespace EDMats.Stores
         public GoalsStore()
         {
             _materialsGoal = new ObservableCollection<StoredMaterial>(
-                Materials
+                Material
                     .All
                     .Select(
                         material => new StoredMaterial
@@ -38,7 +40,7 @@ namespace EDMats.Stores
 
         public ReadOnlyObservableCollection<StoredMaterial> FilteredMaterialsGoal { get; }
 
-        public IReadOnlyCollection<TradeEntry> TradeEntries { get; private set; } = new List<TradeEntry>();
+        public IReadOnlyCollection<TradeEntry> TradeEntries { get; private set; } = Array.Empty<TradeEntry>();
 
         public void Handle(FilterMaterialsActionData filterMaterialsActionData)
         {
@@ -67,7 +69,7 @@ namespace EDMats.Stores
 
         public void Handle(CommanderGoalsLoadedActionData commanderGoalsLoadedActionData)
         {
-            var storedMaterials = Materials.All.ToDictionary(
+            var storedMaterials = Material.All.ToDictionary(
                 material => material.Id,
                 material => new StoredMaterial
                 {
@@ -102,7 +104,7 @@ namespace EDMats.Stores
                 SetProperty(() => SearchStatus, TradeSolutionSearchStatus.SearchSucceeded);
             SetProperty(
                 () => TradeEntries,
-                tradeSolution?.Trades.OrderBy(tradeEntry => tradeEntry.Demand.Material.Type.Name).ToList() ?? new List<TradeEntry>()
+                tradeSolution?.Trades.OrderBy(tradeEntry => tradeEntry.Demand.Material.Type.Name).ToArray() ?? Array.Empty<TradeEntry>() as IReadOnlyCollection<TradeEntry>
             );
         }
 
@@ -118,7 +120,7 @@ namespace EDMats.Stores
         }
 
         private static IEnumerable<StoredMaterial> _AllStoredMaterials
-            => Materials
+            => Material
                 .All
                 .Select(
                     material => new StoredMaterial

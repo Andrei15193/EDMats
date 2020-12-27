@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using EDMats.Data.Materials;
 using Newtonsoft.Json;
 
 namespace EDMats.Services.Implementations
@@ -51,7 +52,7 @@ namespace EDMats.Services.Implementations
 
             return new CommanderGoalsData
             {
-                Materials = materialsGoal ?? new List<MaterialGoalData>()
+                Materials = materialsGoal ?? Array.Empty<MaterialGoalData>()
             };
         }
 
@@ -85,7 +86,7 @@ namespace EDMats.Services.Implementations
                 {
                     case "name":
                         materialGoalData.MaterialId = await jsonTextReader.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                        materialGoalData.Name = Materials.FindById(materialGoalData.MaterialId).Name;
+                        materialGoalData.Name = Material.FindById(materialGoalData.MaterialId).Name;
                         await jsonTextReader.ReadAsync(cancellationToken).ConfigureAwait(false);
                         break;
 

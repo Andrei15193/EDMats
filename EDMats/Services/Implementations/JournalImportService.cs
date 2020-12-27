@@ -4,7 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using EDMats.Services.JournalEntries;
+using EDMats.Data.JournalEntries;
+using EDMats.Data.Materials;
 
 namespace EDMats.Services.Implementations
 {
@@ -55,14 +56,8 @@ namespace EDMats.Services.Implementations
             {
                 LatestUpdate = latestJournalEntryTimestamp,
                 Materials = materials
-                    .Select(
-                        materialQuantity => new MaterialQuantity
-                        {
-                            Material = materialQuantity.Key,
-                            Amount = materialQuantity.Value
-                        }
-                    )
-                    .ToList()
+                    .Select(materialQuantity => new MaterialQuantity(materialQuantity.Key, materialQuantity.Value))
+                    .ToArray()
             };
         }
 

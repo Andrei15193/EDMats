@@ -1,4 +1,5 @@
 ﻿using System;
+using EDMats.Data.Materials;
 
 namespace EDMats.Services.Implementations
 {
@@ -6,7 +7,7 @@ namespace EDMats.Services.Implementations
     {
         public TradeRate GetTradeRate(Material demand, Material offer)
             => GetTradeRate(1, demand, offer);
-        
+
         public TradeRate GetTradeRate(int times, Material demand, Material offer)
         {
             if (demand == null)

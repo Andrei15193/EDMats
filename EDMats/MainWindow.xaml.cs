@@ -1,15 +1,16 @@
-﻿using EDMats.Actions;
-using EDMats.Services;
-using EDMats.Stores;
-using Microsoft.Win32;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using EDMats.Actions;
+using EDMats.Services;
+using EDMats.Stores;
+using Microsoft.Win32;
 using Unity;
 
 namespace EDMats
@@ -49,6 +50,11 @@ namespace EDMats
             {
                 Filter = "Log Files (*.log)|*.log|All Files (*.*)|*.*"
             };
+
+            var logsDirectory = new DirectoryInfo($@"{Environment.GetEnvironmentVariable("userprofile")}\Saved Games\Frontier Developments\Elite Dangerous");
+            if (logsDirectory.Exists)
+                openFileDialog.InitialDirectory = logsDirectory.FullName;
+
             if (openFileDialog.ShowDialog(this) ?? false)
             {
                 await SettingsActions.LoadJournalFileAsync(openFileDialog.FileName);

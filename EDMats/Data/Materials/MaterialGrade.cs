@@ -1,4 +1,4 @@
-﻿namespace EDMats.Services
+﻿namespace EDMats.Data.Materials
 {
     public enum MaterialGrade
     {

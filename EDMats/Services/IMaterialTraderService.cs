@@ -1,4 +1,6 @@
-﻿namespace EDMats.Services
+﻿using EDMats.Data.Materials;
+
+namespace EDMats.Services
 {
     public interface IMaterialTraderService
     {

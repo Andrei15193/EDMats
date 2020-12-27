@@ -1,5 +1,5 @@
 ﻿using System;
-using EDMats.Services;
+using EDMats.Data.Materials;
 
 namespace EDMats.ActionsData
 {

@@ -7,7 +7,7 @@ namespace EDMats.Services
     {
         public TradeSolution(IEnumerable<TradeEntry> trades)
         {
-            Trades = trades as IReadOnlyList<TradeEntry> ?? trades.ToList();
+            Trades = trades as IReadOnlyList<TradeEntry> ?? trades.ToArray();
         }
 
         public IReadOnlyList<TradeEntry> Trades { get; }

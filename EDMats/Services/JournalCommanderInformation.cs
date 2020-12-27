@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using EDMats.Data.Materials;
 
 namespace EDMats.Services
 {

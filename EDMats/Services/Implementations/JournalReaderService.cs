@@ -4,7 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using EDMats.Services.JournalEntries;
+using EDMats.Data.JournalEntries;
+using EDMats.Data.Materials;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -46,13 +47,12 @@ namespace EDMats.Services.Implementations
 
         private static JournalEntry _GetMaterialsJournalEntry(JObject journalEntryJson)
         {
-            return new MaterialsJournalEntry
-            {
-                Timestamp = _GetTimestampFrom(journalEntryJson),
-                Encoded = _GetMaterialQuantities("Encoded"),
-                Manufactured = _GetMaterialQuantities("Manufactured"),
-                Raw = _GetMaterialQuantities("Raw")
-            };
+            return new MaterialsJournalEntry(
+                _GetTimestampFrom(journalEntryJson),
+                _GetMaterialQuantities("Raw"),
+                _GetMaterialQuantities("Manufactured"),
+                _GetMaterialQuantities("Encoded")
+            );
 
             IReadOnlyCollection<MaterialQuantity> _GetMaterialQuantities(string propertyName)
             {
@@ -63,27 +63,22 @@ namespace EDMats.Services.Implementations
                     ? ((JArray)materialQuantitiesJson).OfType<JObject>().Select(_GetMaterialQuantityFrom)
                     : Enumerable.Empty<MaterialQuantity>();
 
-                return materialQuantities as IReadOnlyCollection<MaterialQuantity> ?? materialQuantities.ToList();
+                return materialQuantities as IReadOnlyCollection<MaterialQuantity> ?? materialQuantities.ToArray();
             }
         }
 
         private static JournalEntry _GetMaterialCollectedJournalEntry(JObject journalEntryJson)
-            => new MaterialCollectedJournalEntry
-            {
-                Timestamp = _GetTimestampFrom(journalEntryJson),
-                MaterialQuantity = _GetMaterialQuantityFrom(journalEntryJson)
-            };
+            => new MaterialCollectedJournalEntry(_GetTimestampFrom(journalEntryJson), _GetMaterialQuantityFrom(journalEntryJson));
 
         private static DateTime _GetTimestampFrom(JObject journalEntryJson)
             => journalEntryJson.GetValue("timestamp", StringComparison.OrdinalIgnoreCase).Value<DateTime>();
 
         private static MaterialQuantity _GetMaterialQuantityFrom(JObject materialQuantityJson)
         {
-            var materialQuantity = new MaterialQuantity
-            {
-                Material = Materials.FindById(materialQuantityJson.GetValue("Name", StringComparison.OrdinalIgnoreCase).Value<string>()),
-                Amount = materialQuantityJson.GetValue("Count", StringComparison.OrdinalIgnoreCase).Value<int>()
-            };
+            var materialQuantity = new MaterialQuantity(
+                Material.FindById(materialQuantityJson.GetValue("Name", StringComparison.OrdinalIgnoreCase).Value<string>()),
+                materialQuantityJson.GetValue("Count", StringComparison.OrdinalIgnoreCase).Value<int>()
+            );
 
 #warning Remove when all materials have been tested
             if (materialQuantityJson.TryGetValue("Name_Localised", StringComparison.OrdinalIgnoreCase, out var localisedName)

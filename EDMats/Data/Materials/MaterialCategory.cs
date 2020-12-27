@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace EDMats.Services
+namespace EDMats.Data.Materials
 {
-    public class MaterialCategory
+    public sealed class MaterialCategory
     {
         internal MaterialCategory(string name, MaterialType type, IReadOnlyList<Material> materials)
         {

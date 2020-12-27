@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -58,7 +57,7 @@ namespace EDMats.Tests.Services
                     .Setup(fileSystemService => fileSystemService.OpenRead(fileName))
                     .Returns(textReader);
 
-                var journalUpdates = new List<JournalUpdate>();
+                var journalUpdates = Array.Empty<JournalUpdate>();
                 _JournalImportService
                     .Setup(journalImportService => journalImportService.ImportLatestJournalUpdatesAsync(textReader, latestEntry, It.IsAny<CancellationToken>()))
                     .ReturnsAsync(journalUpdates);

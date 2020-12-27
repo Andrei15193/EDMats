@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using EDMats.Data.Materials;
 
 namespace EDMats.Services
 {
@@ -11,7 +12,7 @@ namespace EDMats.Services
             {
                 var allowedTrades = new List<AllowedTrade>();
 
-                foreach (var materialsByType in Materials.All.GroupBy(material => material.Type))
+                foreach (var materialsByType in Material.All.GroupBy(material => material.Type))
                     foreach (var offeredMaterial in materialsByType)
                         foreach (var demandedMaterial in materialsByType)
                             if (offeredMaterial != demandedMaterial)

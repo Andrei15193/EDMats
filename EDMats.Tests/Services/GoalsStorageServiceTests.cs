@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -20,27 +19,27 @@ namespace EDMats.Tests.Services
         {
             var expectedCommanderGoals = new CommanderGoalsData
             {
-                Materials = new List<MaterialGoalData>
+                Materials = new[]
+                {
+                    new MaterialGoalData
                     {
-                        new MaterialGoalData
-                        {
-                            MaterialId = "carbon",
-                            Name = "Carbon",
-                            Amount = 3
-                        },
-                        new MaterialGoalData
-                        {
-                            MaterialId = "focuscrystals",
-                            Name = "Focus Crystals",
-                            Amount = 6
-                        },
-                        new MaterialGoalData
-                        {
-                            MaterialId = "sulphur",
-                            Name = "Sulphur",
-                            Amount = 9
-                        }
+                        MaterialId = "carbon",
+                        Name = "Carbon",
+                        Amount = 3
+                    },
+                    new MaterialGoalData
+                    {
+                        MaterialId = "focuscrystals",
+                        Name = "Focus Crystals",
+                        Amount = 6
+                    },
+                    new MaterialGoalData
+                    {
+                        MaterialId = "sulphur",
+                        Name = "Sulphur",
+                        Amount = 9
                     }
+                }
             };
             CommanderGoalsData actualCommanderGoals;
 
@@ -87,7 +86,7 @@ namespace EDMats.Tests.Services
             _AssertAreEqual(
                 new CommanderGoalsData
                 {
-                    Materials = new List<MaterialGoalData>
+                    Materials = new[]
                     {
                         new MaterialGoalData
                         {
@@ -142,7 +141,7 @@ namespace EDMats.Tests.Services
             _AssertAreEqual(
                 new CommanderGoalsData
                 {
-                    Materials = new List<MaterialGoalData>
+                    Materials = new MaterialGoalData[]
                     {
                         new MaterialGoalData
                         {
@@ -170,7 +169,7 @@ namespace EDMats.Tests.Services
             _AssertAreEqual(
                 new CommanderGoalsData
                 {
-                    Materials = new List<MaterialGoalData>()
+                    Materials = Array.Empty<MaterialGoalData>()
                 },
                 commanderGoals
             );
@@ -186,7 +185,7 @@ namespace EDMats.Tests.Services
             _AssertAreEqual(
                 new CommanderGoalsData
                 {
-                    Materials = new List<MaterialGoalData>()
+                    Materials = Array.Empty<MaterialGoalData>()
                 },
                 commanderGoals
             );
@@ -205,27 +204,27 @@ namespace EDMats.Tests.Services
             string json;
             var commanderGoals = new CommanderGoalsData
             {
-                Materials = new List<MaterialGoalData>
+                Materials = new[]
+                {
+                    new MaterialGoalData
                     {
-                        new MaterialGoalData
-                        {
-                            MaterialId = "carbon",
-                            Name = "Carbon",
-                            Amount = 3
-                        },
-                        new MaterialGoalData
-                        {
-                            MaterialId = "focuscrystals",
-                            Name = "Focus Crystals",
-                            Amount = 6
-                        },
-                        new MaterialGoalData
-                        {
-                            MaterialId = "sulphur",
-                            Name = "Sulphur",
-                            Amount = 9
-                        }
+                        MaterialId = "carbon",
+                        Name = "Carbon",
+                        Amount = 3
+                    },
+                    new MaterialGoalData
+                    {
+                        MaterialId = "focuscrystals",
+                        Name = "Focus Crystals",
+                        Amount = 6
+                    },
+                    new MaterialGoalData
+                    {
+                        MaterialId = "sulphur",
+                        Name = "Sulphur",
+                        Amount = 9
                     }
+                }
             };
             using (var stringWriter = new StringWriter())
             {
@@ -264,27 +263,27 @@ namespace EDMats.Tests.Services
             string json;
             var commanderGoals = new CommanderGoalsData
             {
-                Materials = new List<MaterialGoalData>
+                Materials = new[]
+                {
+                    new MaterialGoalData
                     {
-                        new MaterialGoalData
-                        {
-                            MaterialId = "carbon",
-                            Name = "Carbon",
-                            Amount = 3
-                        },
-                        new MaterialGoalData
-                        {
-                            MaterialId = "focuscrystals",
-                            Name = "Focus Crystals",
-                            Amount = 0
-                        },
-                        new MaterialGoalData
-                        {
-                            MaterialId = "sulphur",
-                            Name = "Sulphur",
-                            Amount = 9
-                        }
+                        MaterialId = "carbon",
+                        Name = "Carbon",
+                        Amount = 3
+                    },
+                    new MaterialGoalData
+                    {
+                        MaterialId = "focuscrystals",
+                        Name = "Focus Crystals",
+                        Amount = 0
+                    },
+                    new MaterialGoalData
+                    {
+                        MaterialId = "sulphur",
+                        Name = "Sulphur",
+                        Amount = 9
                     }
+                }
             };
             using (var stringWriter = new StringWriter())
             {
@@ -319,7 +318,7 @@ namespace EDMats.Tests.Services
             string json;
             var commanderGoals = new CommanderGoalsData
             {
-                Materials = new List<MaterialGoalData>()
+                Materials = Array.Empty<MaterialGoalData>()
             };
             using (var stringWriter = new StringWriter())
             {

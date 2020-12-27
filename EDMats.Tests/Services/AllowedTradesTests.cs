@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using EDMats.Data.Materials;
 using EDMats.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -13,9 +14,9 @@ namespace EDMats.Tests.Services
             var expectedAllowedTrades =
                 from materialsByType in new[]
                                         {
-                                            Materials.Encoded.Categories.SelectMany(category => category.Materials),
-                                            Materials.Manufactured.Categories.SelectMany(category => category.Materials),
-                                            Materials.Raw.Categories.SelectMany(category => category.Materials)
+                                            Material.Encoded.Categories.SelectMany(category => category.Materials),
+                                            Material.Manufactured.Categories.SelectMany(category => category.Materials),
+                                            Material.Raw.Categories.SelectMany(category => category.Materials)
                                         }
                 from offeredEncodedMaterial in materialsByType
                 from demandedEncodedMaterial in materialsByType

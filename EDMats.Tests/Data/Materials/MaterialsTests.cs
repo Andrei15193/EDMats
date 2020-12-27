@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using EDMats.Services;
+using EDMats.Data.Materials;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace EDMats.Tests.Services
+namespace EDMats.Tests.Data.Materials
 {
     [TestClass]
     public class MaterialsTests
@@ -57,9 +57,9 @@ namespace EDMats.Tests.Services
                     }
                 };
 
-            _AssertMaterialType(expected, Materials.Raw);
-            _AssertReflection(Materials.Raw);
-            _AssertFindById(Materials.Raw);
+            _AssertMaterialType(expected, Material.Raw);
+            _AssertReflection(Material.Raw);
+            _AssertFindById(Material.Raw);
         }
 
         [TestMethod]
@@ -124,9 +124,9 @@ namespace EDMats.Tests.Services
                     }
                 };
 
-            _AssertMaterialType(expected, Materials.Manufactured);
-            _AssertReflection(Materials.Manufactured);
-            _AssertFindById(Materials.Manufactured);
+            _AssertMaterialType(expected, Material.Manufactured);
+            _AssertReflection(Material.Manufactured);
+            _AssertFindById(Material.Manufactured);
         }
 
         [TestMethod]
@@ -171,15 +171,15 @@ namespace EDMats.Tests.Services
                     }
                 };
 
-            _AssertMaterialType(expected, Materials.Encoded);
-            _AssertReflection(Materials.Encoded);
-            _AssertFindById(Materials.Encoded);
+            _AssertMaterialType(expected, Material.Encoded);
+            _AssertReflection(Material.Encoded);
+            _AssertFindById(Material.Encoded);
         }
 
         [TestMethod]
         public void GettingMaterialByNullIdThrowsException()
         {
-            var exception = Assert.ThrowsException<ArgumentNullException>(() => Materials.FindById(null));
+            var exception = Assert.ThrowsException<ArgumentNullException>(() => Material.FindById(null));
             Assert.AreEqual(new ArgumentNullException("id").Message, exception.Message);
         }
 
@@ -187,7 +187,7 @@ namespace EDMats.Tests.Services
         public void GettingMaterialByIdThatDoesNotExistThrowsException()
         {
             var invalidId = "does not exist";
-            var exception = Assert.ThrowsException<ArgumentException>(() => Materials.FindById(invalidId));
+            var exception = Assert.ThrowsException<ArgumentException>(() => Material.FindById(invalidId));
             Assert.AreEqual(new ArgumentException($"Material with id '{invalidId}' does not exist.", "id").Message, exception.Message);
         }
 
@@ -219,7 +219,7 @@ namespace EDMats.Tests.Services
             for (var index = 0; index < expected.Materials.Count; index++)
             {
                 var grade = (MaterialGrade)(index + 1);
-                var maximumCapacity =  300 - 50 * index;
+                var maximumCapacity = 300 - 50 * index;
                 Assert.AreEqual(expected.Materials[index], actual.Materials[index].Name);
                 Assert.AreEqual(grade, actual.Materials[index].Grade);
                 Assert.AreSame(actual, actual.Materials[index].Category);
@@ -230,7 +230,7 @@ namespace EDMats.Tests.Services
 
         private static void _AssertReflection(MaterialType expected)
         {
-            var actual = typeof(Materials)
+            var actual = typeof(Material)
                 .GetProperty(
                     expected.Name,
                     BindingFlags.Public | BindingFlags.Static | BindingFlags.GetProperty | BindingFlags.IgnoreCase
@@ -244,7 +244,7 @@ namespace EDMats.Tests.Services
 
         private static void _AssertReflection(MaterialCategory expected)
         {
-            var actual = typeof(Materials)
+            var actual = typeof(Material)
                 .GetProperty(
                     expected
                         .Name
@@ -262,7 +262,7 @@ namespace EDMats.Tests.Services
 
         private static void _AssertReflection(Material expected)
         {
-            var actual = typeof(Materials)
+            var actual = typeof(Material)
                 .GetProperty(
                     expected.Name.Replace(" ", string.Empty),
                     BindingFlags.Public | BindingFlags.Static | BindingFlags.GetProperty | BindingFlags.IgnoreCase
@@ -275,7 +275,7 @@ namespace EDMats.Tests.Services
         {
             foreach (var expectedMaterial in expected.Categories.SelectMany(category => category.Materials))
             {
-                var actualMaterial = Materials.FindById(expectedMaterial.Id.ToUpperInvariant());
+                var actualMaterial = Material.FindById(expectedMaterial.Id.ToUpperInvariant());
                 Assert.AreSame(expectedMaterial, actualMaterial);
             }
         }

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using EDMats.ActionsData;
+using EDMats.Data.Materials;
 using EDMats.Services;
 using EDMats.Stores;
 using FluxBase;
@@ -30,9 +31,9 @@ namespace EDMats.Actions
             _dispatcher.Dispatch(new TradeSolutionSearchStartedActionData { NotificationText = "Searching for trade solution" });
             var tradeSolution = await _tradeSolutionService.TryFindSolutionAsync(
                 desiredMaterials
-                    .Select(materialGoal => new MaterialQuantity(Materials.FindById(materialGoal.Id), materialGoal.Amount)),
+                    .Select(materialGoal => new MaterialQuantity(Material.FindById(materialGoal.Id), materialGoal.Amount)),
                 availableMaterials
-                    .Select(storedMaterial => new MaterialQuantity(Materials.FindById(storedMaterial.Id), storedMaterial.Amount)),
+                    .Select(storedMaterial => new MaterialQuantity(Material.FindById(storedMaterial.Id), storedMaterial.Amount)),
                 _GetAllowedTrades(),
                 cancellationToken
             );
@@ -83,9 +84,9 @@ namespace EDMats.Actions
             => _dispatcher.Dispatch(new UpdateMaterialGoalActionData(materialId, amountGoal));
 
         private IEnumerable<AllowedTrade> _GetAllowedTrades()
-            => _NoGrade3To5DowngradesTrades(Materials.Encoded)
-                .Concat(_NoGrade3To5DowngradesTrades(Materials.Manufactured))
-                .Concat(_NoGrade3To5DowngradesTrades(Materials.Raw));
+            => _NoGrade3To5DowngradesTrades(Material.Encoded)
+                .Concat(_NoGrade3To5DowngradesTrades(Material.Manufactured))
+                .Concat(_NoGrade3To5DowngradesTrades(Material.Raw));
 
         private IEnumerable<AllowedTrade> _NoGrade3To5DowngradesTrades(MaterialType materialType)
         {

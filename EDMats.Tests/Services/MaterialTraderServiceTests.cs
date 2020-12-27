@@ -1,4 +1,5 @@
 ﻿using System;
+using EDMats.Data.Materials;
 using EDMats.Services;
 using EDMats.Services.Implementations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -13,160 +14,160 @@ namespace EDMats.Tests.Services
         [TestMethod]
         public void TradeGrade1InSameCategory()
         {
-            _AssertTradeRate(TradeRate.Invalid, Materials.CrystalShards, Materials.CrystalShards);
-            _AssertTradeRate(new TradeRate(1, 6), Materials.FlawedFocusCrystals, Materials.CrystalShards);
-            _AssertTradeRate(new TradeRate(1, 36), Materials.FocusCrystals, Materials.CrystalShards);
-            _AssertTradeRate(new TradeRate(1, 216), Materials.RefinedFocusCrystals, Materials.CrystalShards);
-            _AssertTradeRate(TradeRate.Invalid, Materials.ExquisiteFocusCrystals, Materials.CrystalShards);
+            _AssertTradeRate(TradeRate.Invalid, Material.CrystalShards, Material.CrystalShards);
+            _AssertTradeRate(new TradeRate(1, 6), Material.FlawedFocusCrystals, Material.CrystalShards);
+            _AssertTradeRate(new TradeRate(1, 36), Material.FocusCrystals, Material.CrystalShards);
+            _AssertTradeRate(new TradeRate(1, 216), Material.RefinedFocusCrystals, Material.CrystalShards);
+            _AssertTradeRate(TradeRate.Invalid, Material.ExquisiteFocusCrystals, Material.CrystalShards);
         }
 
         [TestMethod]
         public void TradeGrade2InSameCategory()
         {
-            _AssertTradeRate(new TradeRate(3, 1), Materials.CrystalShards, Materials.FlawedFocusCrystals);
-            _AssertTradeRate(TradeRate.Invalid, Materials.FlawedFocusCrystals, Materials.FlawedFocusCrystals);
-            _AssertTradeRate(new TradeRate(1, 6), Materials.FocusCrystals, Materials.FlawedFocusCrystals);
-            _AssertTradeRate(new TradeRate(1, 36), Materials.RefinedFocusCrystals, Materials.FlawedFocusCrystals);
-            _AssertTradeRate(new TradeRate(1, 216), Materials.ExquisiteFocusCrystals, Materials.FlawedFocusCrystals);
+            _AssertTradeRate(new TradeRate(3, 1), Material.CrystalShards, Material.FlawedFocusCrystals);
+            _AssertTradeRate(TradeRate.Invalid, Material.FlawedFocusCrystals, Material.FlawedFocusCrystals);
+            _AssertTradeRate(new TradeRate(1, 6), Material.FocusCrystals, Material.FlawedFocusCrystals);
+            _AssertTradeRate(new TradeRate(1, 36), Material.RefinedFocusCrystals, Material.FlawedFocusCrystals);
+            _AssertTradeRate(new TradeRate(1, 216), Material.ExquisiteFocusCrystals, Material.FlawedFocusCrystals);
         }
 
         [TestMethod]
         public void TradeGrade3InSameCategory()
         {
-            _AssertTradeRate(new TradeRate(9, 1), Materials.CrystalShards, Materials.FocusCrystals);
-            _AssertTradeRate(new TradeRate(3, 1), Materials.FlawedFocusCrystals, Materials.FocusCrystals);
-            _AssertTradeRate(TradeRate.Invalid, Materials.FocusCrystals, Materials.FocusCrystals);
-            _AssertTradeRate(new TradeRate(1, 6), Materials.RefinedFocusCrystals, Materials.FocusCrystals);
-            _AssertTradeRate(new TradeRate(1, 36), Materials.ExquisiteFocusCrystals, Materials.FocusCrystals);
+            _AssertTradeRate(new TradeRate(9, 1), Material.CrystalShards, Material.FocusCrystals);
+            _AssertTradeRate(new TradeRate(3, 1), Material.FlawedFocusCrystals, Material.FocusCrystals);
+            _AssertTradeRate(TradeRate.Invalid, Material.FocusCrystals, Material.FocusCrystals);
+            _AssertTradeRate(new TradeRate(1, 6), Material.RefinedFocusCrystals, Material.FocusCrystals);
+            _AssertTradeRate(new TradeRate(1, 36), Material.ExquisiteFocusCrystals, Material.FocusCrystals);
         }
 
         [TestMethod]
         public void TradeGrade4InSameCategory()
         {
-            _AssertTradeRate(new TradeRate(27, 1), Materials.CrystalShards, Materials.RefinedFocusCrystals);
-            _AssertTradeRate(new TradeRate(9, 1), Materials.FlawedFocusCrystals, Materials.RefinedFocusCrystals);
-            _AssertTradeRate(new TradeRate(3, 1), Materials.FocusCrystals, Materials.RefinedFocusCrystals);
-            _AssertTradeRate(TradeRate.Invalid, Materials.RefinedFocusCrystals, Materials.RefinedFocusCrystals);
-            _AssertTradeRate(new TradeRate(1, 6), Materials.ExquisiteFocusCrystals, Materials.RefinedFocusCrystals);
+            _AssertTradeRate(new TradeRate(27, 1), Material.CrystalShards, Material.RefinedFocusCrystals);
+            _AssertTradeRate(new TradeRate(9, 1), Material.FlawedFocusCrystals, Material.RefinedFocusCrystals);
+            _AssertTradeRate(new TradeRate(3, 1), Material.FocusCrystals, Material.RefinedFocusCrystals);
+            _AssertTradeRate(TradeRate.Invalid, Material.RefinedFocusCrystals, Material.RefinedFocusCrystals);
+            _AssertTradeRate(new TradeRate(1, 6), Material.ExquisiteFocusCrystals, Material.RefinedFocusCrystals);
         }
 
         [TestMethod]
         public void TradeGrade5InSameCategory()
         {
-            _AssertTradeRate(new TradeRate(81, 1), Materials.CrystalShards, Materials.ExquisiteFocusCrystals);
-            _AssertTradeRate(new TradeRate(27, 1), Materials.FlawedFocusCrystals, Materials.ExquisiteFocusCrystals);
-            _AssertTradeRate(new TradeRate(9, 1), Materials.FocusCrystals, Materials.ExquisiteFocusCrystals);
-            _AssertTradeRate(new TradeRate(3, 1), Materials.RefinedFocusCrystals, Materials.ExquisiteFocusCrystals);
-            _AssertTradeRate(TradeRate.Invalid, Materials.ExquisiteFocusCrystals, Materials.ExquisiteFocusCrystals);
+            _AssertTradeRate(new TradeRate(81, 1), Material.CrystalShards, Material.ExquisiteFocusCrystals);
+            _AssertTradeRate(new TradeRate(27, 1), Material.FlawedFocusCrystals, Material.ExquisiteFocusCrystals);
+            _AssertTradeRate(new TradeRate(9, 1), Material.FocusCrystals, Material.ExquisiteFocusCrystals);
+            _AssertTradeRate(new TradeRate(3, 1), Material.RefinedFocusCrystals, Material.ExquisiteFocusCrystals);
+            _AssertTradeRate(TradeRate.Invalid, Material.ExquisiteFocusCrystals, Material.ExquisiteFocusCrystals);
         }
 
         [TestMethod]
         public void TradeGrade1CrossCategory()
         {
-            _AssertTradeRate(new TradeRate(1, 6), Materials.SalvagedAlloys, Materials.CrystalShards);
-            _AssertTradeRate(new TradeRate(1, 36), Materials.GalvanisingAlloys, Materials.CrystalShards);
-            _AssertTradeRate(new TradeRate(1, 216), Materials.PhaseAlloys, Materials.CrystalShards);
-            _AssertTradeRate(TradeRate.Invalid, Materials.ProtoLightAlloys, Materials.CrystalShards);
-            _AssertTradeRate(TradeRate.Invalid, Materials.ProtoRadiolicAlloys, Materials.CrystalShards);
+            _AssertTradeRate(new TradeRate(1, 6), Material.SalvagedAlloys, Material.CrystalShards);
+            _AssertTradeRate(new TradeRate(1, 36), Material.GalvanisingAlloys, Material.CrystalShards);
+            _AssertTradeRate(new TradeRate(1, 216), Material.PhaseAlloys, Material.CrystalShards);
+            _AssertTradeRate(TradeRate.Invalid, Material.ProtoLightAlloys, Material.CrystalShards);
+            _AssertTradeRate(TradeRate.Invalid, Material.ProtoRadiolicAlloys, Material.CrystalShards);
         }
 
         [TestMethod]
         public void TradeGrade2CrossCategory()
         {
-            _AssertTradeRate(new TradeRate(1, 2), Materials.SalvagedAlloys, Materials.FlawedFocusCrystals);
-            _AssertTradeRate(new TradeRate(1, 6), Materials.GalvanisingAlloys, Materials.FlawedFocusCrystals);
-            _AssertTradeRate(new TradeRate(1, 36), Materials.PhaseAlloys, Materials.FlawedFocusCrystals);
-            _AssertTradeRate(new TradeRate(1, 216), Materials.ProtoLightAlloys, Materials.FlawedFocusCrystals);
-            _AssertTradeRate(TradeRate.Invalid, Materials.ProtoRadiolicAlloys, Materials.FlawedFocusCrystals);
+            _AssertTradeRate(new TradeRate(1, 2), Material.SalvagedAlloys, Material.FlawedFocusCrystals);
+            _AssertTradeRate(new TradeRate(1, 6), Material.GalvanisingAlloys, Material.FlawedFocusCrystals);
+            _AssertTradeRate(new TradeRate(1, 36), Material.PhaseAlloys, Material.FlawedFocusCrystals);
+            _AssertTradeRate(new TradeRate(1, 216), Material.ProtoLightAlloys, Material.FlawedFocusCrystals);
+            _AssertTradeRate(TradeRate.Invalid, Material.ProtoRadiolicAlloys, Material.FlawedFocusCrystals);
         }
 
         [TestMethod]
         public void TradeGrade3CrossCategory()
         {
-            _AssertTradeRate(new TradeRate(3, 2), Materials.SalvagedAlloys, Materials.FocusCrystals);
-            _AssertTradeRate(new TradeRate(1, 2), Materials.GalvanisingAlloys, Materials.FocusCrystals);
-            _AssertTradeRate(new TradeRate(1, 6), Materials.PhaseAlloys, Materials.FocusCrystals);
-            _AssertTradeRate(new TradeRate(1, 36), Materials.ProtoLightAlloys, Materials.FocusCrystals);
-            _AssertTradeRate(TradeRate.Invalid, Materials.ProtoRadiolicAlloys, Materials.FocusCrystals);
+            _AssertTradeRate(new TradeRate(3, 2), Material.SalvagedAlloys, Material.FocusCrystals);
+            _AssertTradeRate(new TradeRate(1, 2), Material.GalvanisingAlloys, Material.FocusCrystals);
+            _AssertTradeRate(new TradeRate(1, 6), Material.PhaseAlloys, Material.FocusCrystals);
+            _AssertTradeRate(new TradeRate(1, 36), Material.ProtoLightAlloys, Material.FocusCrystals);
+            _AssertTradeRate(TradeRate.Invalid, Material.ProtoRadiolicAlloys, Material.FocusCrystals);
         }
 
         [TestMethod]
         public void TradeGrade4CrossCategory()
         {
-            _AssertTradeRate(new TradeRate(9, 2), Materials.SalvagedAlloys, Materials.RefinedFocusCrystals);
-            _AssertTradeRate(new TradeRate(3, 2), Materials.GalvanisingAlloys, Materials.RefinedFocusCrystals);
-            _AssertTradeRate(new TradeRate(1, 2), Materials.PhaseAlloys, Materials.RefinedFocusCrystals);
-            _AssertTradeRate(new TradeRate(1, 6), Materials.ProtoLightAlloys, Materials.RefinedFocusCrystals);
-            _AssertTradeRate(new TradeRate(1, 36), Materials.ProtoRadiolicAlloys, Materials.RefinedFocusCrystals);
+            _AssertTradeRate(new TradeRate(9, 2), Material.SalvagedAlloys, Material.RefinedFocusCrystals);
+            _AssertTradeRate(new TradeRate(3, 2), Material.GalvanisingAlloys, Material.RefinedFocusCrystals);
+            _AssertTradeRate(new TradeRate(1, 2), Material.PhaseAlloys, Material.RefinedFocusCrystals);
+            _AssertTradeRate(new TradeRate(1, 6), Material.ProtoLightAlloys, Material.RefinedFocusCrystals);
+            _AssertTradeRate(new TradeRate(1, 36), Material.ProtoRadiolicAlloys, Material.RefinedFocusCrystals);
         }
 
         [TestMethod]
         public void TradeGrade5CrossCategory()
         {
-            _AssertTradeRate(new TradeRate(27, 2), Materials.SalvagedAlloys, Materials.ExquisiteFocusCrystals);
-            _AssertTradeRate(new TradeRate(9, 2), Materials.GalvanisingAlloys, Materials.ExquisiteFocusCrystals);
-            _AssertTradeRate(new TradeRate(3, 2), Materials.PhaseAlloys, Materials.ExquisiteFocusCrystals);
-            _AssertTradeRate(new TradeRate(1, 2), Materials.ProtoLightAlloys, Materials.ExquisiteFocusCrystals);
-            _AssertTradeRate(new TradeRate(1, 6), Materials.ProtoRadiolicAlloys, Materials.ExquisiteFocusCrystals);
+            _AssertTradeRate(new TradeRate(27, 2), Material.SalvagedAlloys, Material.ExquisiteFocusCrystals);
+            _AssertTradeRate(new TradeRate(9, 2), Material.GalvanisingAlloys, Material.ExquisiteFocusCrystals);
+            _AssertTradeRate(new TradeRate(3, 2), Material.PhaseAlloys, Material.ExquisiteFocusCrystals);
+            _AssertTradeRate(new TradeRate(1, 2), Material.ProtoLightAlloys, Material.ExquisiteFocusCrystals);
+            _AssertTradeRate(new TradeRate(1, 6), Material.ProtoRadiolicAlloys, Material.ExquisiteFocusCrystals);
         }
 
         [TestMethod]
         public void GettingRateForMultipleTimes()
         {
-            _AssertTradeRate(TradeRate.Invalid, 2, Materials.CrystalShards, Materials.CrystalShards);
-            _AssertTradeRate(new TradeRate(2, 12), 2, Materials.FlawedFocusCrystals, Materials.CrystalShards);
-            _AssertTradeRate(new TradeRate(2, 72), 2, Materials.FocusCrystals, Materials.CrystalShards);
-            _AssertTradeRate(TradeRate.Invalid, 2, Materials.RefinedFocusCrystals, Materials.CrystalShards);
-            _AssertTradeRate(TradeRate.Invalid, Materials.ExquisiteFocusCrystals, Materials.CrystalShards);
+            _AssertTradeRate(TradeRate.Invalid, 2, Material.CrystalShards, Material.CrystalShards);
+            _AssertTradeRate(new TradeRate(2, 12), 2, Material.FlawedFocusCrystals, Material.CrystalShards);
+            _AssertTradeRate(new TradeRate(2, 72), 2, Material.FocusCrystals, Material.CrystalShards);
+            _AssertTradeRate(TradeRate.Invalid, 2, Material.RefinedFocusCrystals, Material.CrystalShards);
+            _AssertTradeRate(TradeRate.Invalid, Material.ExquisiteFocusCrystals, Material.CrystalShards);
         }
 
         [TestMethod]
         public void TradingMultipleTimesForMaximumCapacityWorks()
         {
-            _AssertTradeRate(new TradeRate(300, 100), 100, Materials.CrystalShards, Materials.FlawedFocusCrystals);
-            _AssertTradeRate(new TradeRate(150, 50), 50, Materials.RefinedFocusCrystals, Materials.ExquisiteFocusCrystals);
-            _AssertTradeRate(new TradeRate(50, 300), 50, Materials.FlawedFocusCrystals, Materials.CrystalShards);
+            _AssertTradeRate(new TradeRate(300, 100), 100, Material.CrystalShards, Material.FlawedFocusCrystals);
+            _AssertTradeRate(new TradeRate(150, 50), 50, Material.RefinedFocusCrystals, Material.ExquisiteFocusCrystals);
+            _AssertTradeRate(new TradeRate(50, 300), 50, Material.FlawedFocusCrystals, Material.CrystalShards);
         }
 
         [TestMethod]
         public void TradingMultipleTimesForAnAmountThatExceedMaximumCapacityReturnsInvalidTradeRate()
         {
-            _AssertTradeRate(TradeRate.Invalid, 101, Materials.CrystalShards, Materials.FlawedFocusCrystals);
-            _AssertTradeRate(TradeRate.Invalid, 51, Materials.RefinedFocusCrystals, Materials.ExquisiteFocusCrystals);
-            _AssertTradeRate(TradeRate.Invalid, 51, Materials.FlawedFocusCrystals, Materials.CrystalShards);
+            _AssertTradeRate(TradeRate.Invalid, 101, Material.CrystalShards, Material.FlawedFocusCrystals);
+            _AssertTradeRate(TradeRate.Invalid, 51, Material.RefinedFocusCrystals, Material.ExquisiteFocusCrystals);
+            _AssertTradeRate(TradeRate.Invalid, 51, Material.FlawedFocusCrystals, Material.CrystalShards);
         }
 
         [TestMethod]
         public void TradingCrossMaterialTypeReturnsInvalidTradeRate()
         {
-            _AssertTradeRate(TradeRate.Invalid, Materials.Iron, Materials.GalvanisingAlloys);
+            _AssertTradeRate(TradeRate.Invalid, Material.Iron, Material.GalvanisingAlloys);
         }
 
         [TestMethod]
         public void TradingNullDemandThrowsException()
         {
-            var exception = Assert.ThrowsException<ArgumentNullException>(() => _MaterialTraderService.GetTradeRate(null, Materials.Iron));
+            var exception = Assert.ThrowsException<ArgumentNullException>(() => _MaterialTraderService.GetTradeRate(null, Material.Iron));
             Assert.AreEqual(new ArgumentNullException("demand").Message, exception.Message);
         }
 
         [TestMethod]
         public void TradingNullOfferThrowsException()
         {
-            var exception = Assert.ThrowsException<ArgumentNullException>(() => _MaterialTraderService.GetTradeRate(Materials.Iron, null));
+            var exception = Assert.ThrowsException<ArgumentNullException>(() => _MaterialTraderService.GetTradeRate(Material.Iron, null));
             Assert.AreEqual(new ArgumentNullException("offer").Message, exception.Message);
         }
 
         [TestMethod]
         public void TradingZeroTimesThrowsException()
         {
-            var exception = Assert.ThrowsException<ArgumentException>(() => _MaterialTraderService.GetTradeRate(0, Materials.Sulphur, Materials.Iron));
+            var exception = Assert.ThrowsException<ArgumentException>(() => _MaterialTraderService.GetTradeRate(0, Material.Sulphur, Material.Iron));
             Assert.AreEqual(new ArgumentException("Trade times must be greater than 0 (zero), '0' provided.", "times").Message, exception.Message);
         }
 
         [TestMethod]
         public void TradingNegativeTimesThrowsException()
         {
-            var exception = Assert.ThrowsException<ArgumentException>(() => _MaterialTraderService.GetTradeRate(-20, Materials.Sulphur, Materials.Iron));
+            var exception = Assert.ThrowsException<ArgumentException>(() => _MaterialTraderService.GetTradeRate(-20, Material.Sulphur, Material.Iron));
             Assert.AreEqual(new ArgumentException("Trade times must be greater than 0 (zero), '-20' provided.", "times").Message, exception.Message);
         }
 
