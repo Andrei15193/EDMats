@@ -2,7 +2,7 @@
 
 namespace EDMats.ActionsData
 {
-    public class JournalImportedActionData : NotificationActionData
+    public class JournalImportedActionData
     {
         public JournalImportedActionData(JournalCommanderInformation commanderInformation)
         {

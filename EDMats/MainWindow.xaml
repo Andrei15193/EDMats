@@ -111,12 +111,12 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0">
-                        <Run Text="Notifications (" /><Run Text="{Binding Notifications.Count, Source={StaticResource NotificationsStore}, Mode=OneWay}" /><Run Text=")" />
+                        <Run Text="Notifications (" /><Run Text="{Binding Notifications.Count, Source={StaticResource NotificationsViewModel}, Mode=OneWay}" /><Run Text=")" />
                     </TextBlock>
                     <Button Grid.Column="1"
                             Style="{StaticResource Hyperlink}"
                             Content="dismiss all"
-                            Click="_DismissAllNotificationsButtonClick"/>
+                            Command="{Binding ClearNotificationsCommand, Source={StaticResource NotificationsViewModel}}"/>
                 </Grid>
                 <controls:Notifications Grid.Row="2"
                                         Margin="5" />

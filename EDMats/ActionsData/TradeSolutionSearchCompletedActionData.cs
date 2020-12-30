@@ -1,8 +1,8 @@
-﻿using EDMats.Services;
+﻿using EDMats.Data.MaterialTrading;
 
 namespace EDMats.ActionsData
 {
-    public class TradeSolutionSearchCompletedActionData : NotificationActionData
+    public class TradeSolutionSearchCompletedActionData
     {
         public TradeSolutionSearchCompletedActionData(TradeSolution tradeSolution)
         {

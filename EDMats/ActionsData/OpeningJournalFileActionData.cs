@@ -1,6 +1,6 @@
 ﻿namespace EDMats.ActionsData
 {
-    public class OpeningJournalFileActionData : NotificationActionData
+    public class OpeningJournalFileActionData
     {
         public OpeningJournalFileActionData(string filePath)
         {

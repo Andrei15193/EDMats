@@ -1,6 +1,6 @@
 ﻿namespace EDMats.ActionsData
 {
-    public class LoadingCommanderGoalsActionData : NotificationActionData
+    public class LoadingCommanderGoalsActionData
     {
         public LoadingCommanderGoalsActionData(string fileName)
         {

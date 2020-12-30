@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
@@ -8,10 +9,48 @@ namespace EDMats.ViewModels
 {
     public class ViewModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        private PropertyChangedEventHandler _propertyChanged;
+        private readonly IEnumerable<INotifyPropertyChanged> _chainedObservables;
+
+        protected ViewModel()
+            : this(default(IEnumerable<INotifyPropertyChanged>))
+        {
+        }
+
+        protected ViewModel(IEnumerable<INotifyPropertyChanged> chainedObservables)
+            => _chainedObservables = (chainedObservables is null || !chainedObservables.Any() ? null : chainedObservables);
+
+        protected ViewModel(params INotifyPropertyChanged[] chainedObservables)
+            : this((IEnumerable<INotifyPropertyChanged>)(chainedObservables is null || chainedObservables.Length == 0 ? null : chainedObservables))
+        {
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged
+        {
+            add
+            {
+                if (_propertyChanged is null && _chainedObservables is object)
+                    foreach (var chainedObservable in _chainedObservables)
+                        chainedObservable.PropertyChanged += ChainedObservablePropertyChanged;
+
+                _propertyChanged += value;
+            }
+            remove
+            {
+                _propertyChanged -= value;
+
+                if (_propertyChanged is null && _chainedObservables is object)
+                    foreach (var chainedObservable in _chainedObservables)
+                        chainedObservable.PropertyChanged -= ChainedObservablePropertyChanged;
+            }
+        }
+
+        protected virtual void ChainedObservablePropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+        {
+        }
 
         protected void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
-            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            => _propertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         protected Command CreateCommand(Action executeCallback)
             => new CallbackCommand(executeCallback);

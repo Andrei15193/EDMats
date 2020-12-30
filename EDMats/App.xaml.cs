@@ -4,6 +4,7 @@ using System.Windows.Threading;
 using EDMats.Services;
 using EDMats.Services.Implementations;
 using EDMats.Stores;
+using EDMats.ViewModels;
 using FluxBase;
 using Unity;
 
@@ -52,7 +53,7 @@ namespace EDMats
         internal static GoalsStore GoalsStore
             => (GoalsStore)Current.FindResource(nameof(GoalsStore));
 
-        internal static NotificationsStore NotificationsStore
-            => (NotificationsStore)Current.FindResource(nameof(NotificationsStore));
+        internal static NotificationsViewModel NotificationsViewModel
+            => (NotificationsViewModel)Current.FindResource(nameof(NotificationsViewModel));
     }
 }

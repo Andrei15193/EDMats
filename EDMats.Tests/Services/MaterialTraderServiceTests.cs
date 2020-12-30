@@ -1,6 +1,6 @@
 ﻿using System;
 using EDMats.Data.Materials;
-using EDMats.Services;
+using EDMats.Data.MaterialTrading;
 using EDMats.Services.Implementations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

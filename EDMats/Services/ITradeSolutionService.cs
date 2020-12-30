@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using EDMats.Data.Materials;
+using EDMats.Data.MaterialTrading;
 
 namespace EDMats.Services
 {

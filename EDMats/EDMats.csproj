@@ -93,27 +93,22 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ActionsData\CommanderGoalsLoadedActionData.cs" />
-    <Compile Include="ActionsData\DismissAllNotificationsActionData.cs" />
-    <Compile Include="ActionsData\DismissNotificationActionData.cs" />
     <Compile Include="ActionsData\FilterMaterialsActionData.cs" />
     <Compile Include="ActionsData\JournalImportedActionData.cs" />
     <Compile Include="ActionsData\LoadingCommanderGoalsActionData.cs" />
     <Compile Include="ActionsData\MaterialCollectedActionData.cs" />
-    <Compile Include="ActionsData\NotificationActionData.cs" />
     <Compile Include="ActionsData\SavingCommanderGoalsActionData.cs" />
-    <Compile Include="ActionsData\TradeSolutionSearchStartedActionData.cs" />
     <Compile Include="ActionsData\TradeSolutionSearchCompletedActionData.cs" />
+    <Compile Include="ActionsData\TradeSolutionSearchStartedActionData.cs" />
     <Compile Include="ActionsData\UpdateMaterialGoalActionData.cs" />
     <Compile Include="ActionsData\OpeningJournalFileActionData.cs" />
     <Compile Include="Actions\GoalActions.cs" />
-    <Compile Include="Actions\NotificationActions.cs" />
     <Compile Include="Actions\JournalImportActions.cs" />
     <Compile Include="Controls\Notifications.xaml.cs">
       <DependentUpon>Notifications.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\TradeSolutionSearchStatusBrushConverter.cs" />
-    <Compile Include="Services\AllowedTrade.cs" />
-    <Compile Include="Services\AllowedTrades.cs" />
+    <Compile Include="Data\MaterialTrading\AllowedTrade.cs" />
     <Compile Include="Services\CommanderGoalsData.cs" />
     <Compile Include="Services\IGoalsFileStorageService.cs" />
     <Compile Include="Services\IGoalsStorageService.cs" />
@@ -143,14 +138,13 @@
     <Compile Include="Data\Materials\MaterialGrade.cs" />
     <Compile Include="Data\Materials\MaterialCategory.cs" />
     <Compile Include="Data\Materials\MaterialQuantity.cs" />
-    <Compile Include="Services\TradeEntry.cs" />
-    <Compile Include="Services\TradeRate.cs" />
-    <Compile Include="Services\TradeSolution.cs" />
+    <Compile Include="Data\MaterialTrading\TradeEntry.cs" />
+    <Compile Include="Data\MaterialTrading\TradeRate.cs" />
+    <Compile Include="Data\MaterialTrading\TradeSolution.cs" />
     <Compile Include="Stores\CommanderInfoStore.cs" />
     <Compile Include="Stores\Extensions.cs" />
     <Compile Include="Stores\GoalsStore.cs" />
-    <Compile Include="Stores\Notification.cs" />
-    <Compile Include="Stores\NotificationsStore.cs" />
+    <Compile Include="ViewModels\NotificationViewModel.cs" />
     <Compile Include="Stores\StoredMaterial.cs" />
     <Compile Include="Converters\StringConverter.cs" />
     <Compile Include="Stores\TradeSolutionSearchStatus.cs" />
@@ -159,6 +153,7 @@
     </Compile>
     <Compile Include="ViewModels\AsyncCommand.cs" />
     <Compile Include="ViewModels\Command.cs" />
+    <Compile Include="ViewModels\NotificationsViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Page Include="Controls\Notifications.xaml">
       <SubType>Designer</SubType>

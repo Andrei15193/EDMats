@@ -1,5 +1,6 @@
 ﻿using System;
 using EDMats.Data.Materials;
+using EDMats.Data.MaterialTrading;
 
 namespace EDMats.Services.Implementations
 {

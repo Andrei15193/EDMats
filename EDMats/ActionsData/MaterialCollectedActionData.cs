@@ -3,7 +3,7 @@ using EDMats.Data.Materials;
 
 namespace EDMats.ActionsData
 {
-    public class MaterialCollectedActionData : NotificationActionData
+    public class MaterialCollectedActionData
     {
         public MaterialCollectedActionData(DateTime latestUpdate, MaterialQuantity collectedMaterial)
         {

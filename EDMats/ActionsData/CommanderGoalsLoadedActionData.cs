@@ -2,7 +2,7 @@
 
 namespace EDMats.ActionsData
 {
-    public class CommanderGoalsLoadedActionData : NotificationActionData
+    public class CommanderGoalsLoadedActionData
     {
         public CommanderGoalsLoadedActionData(CommanderGoalsData commanderGoals)
         {

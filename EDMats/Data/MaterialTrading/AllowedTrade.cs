@@ -2,10 +2,20 @@
 using System.Linq;
 using EDMats.Data.Materials;
 
-namespace EDMats.Services
+namespace EDMats.Data.MaterialTrading
 {
-    public static class AllowedTrades
+    public class AllowedTrade
     {
+        public AllowedTrade(Material demand, Material offer)
+        {
+            Demand = demand;
+            Offer = offer;
+        }
+
+        public Material Demand { get; }
+
+        public Material Offer { get; }
+
         public static IReadOnlyCollection<AllowedTrade> All
         {
             get

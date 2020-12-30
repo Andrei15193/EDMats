@@ -99,13 +99,13 @@ namespace EDMats.Tests.Services
             _journalEntries.Add(new MaterialsJournalEntry(
                 DateTime.Now,
                 expectedMaterials
-                    .Where(materialQuantity => materialQuantity.Material.Type == Material.Encoded)
+                    .Where(materialQuantity => materialQuantity.Material.Type == Material.Raw)
                     .ToList(),
                 expectedMaterials
                     .Where(materialQuantity => materialQuantity.Material.Type == Material.Manufactured)
                     .ToList(),
                 expectedMaterials
-                    .Where(materialQuantity => materialQuantity.Material.Type == Material.Raw)
+                    .Where(materialQuantity => materialQuantity.Material.Type == Material.Encoded)
                     .ToList()
             ));
             _journalEntries.Add(new MaterialCollectedJournalEntry(DateTime.Now, new MaterialQuantity(Material.Iron, 1)));

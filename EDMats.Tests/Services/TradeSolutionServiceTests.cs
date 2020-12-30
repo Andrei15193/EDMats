@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using EDMats.Data.Materials;
+using EDMats.Data.MaterialTrading;
 using EDMats.Services;
 using EDMats.Services.Implementations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -33,7 +34,7 @@ namespace EDMats.Tests.Services
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
                 new[] { new MaterialQuantity(Material.Zinc, 1) },
                 new[] { new MaterialQuantity(Material.Iron, 6) },
-                AllowedTrades.All
+                AllowedTrade.All
             );
 
             _AssertAreEqual(
@@ -58,7 +59,7 @@ namespace EDMats.Tests.Services
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
                 new[] { new MaterialQuantity(Material.Zinc, 2) },
                 new[] { new MaterialQuantity(Material.Iron, 12) },
-                AllowedTrades.All
+                AllowedTrade.All
             );
 
             _AssertAreEqual(
@@ -83,7 +84,7 @@ namespace EDMats.Tests.Services
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
                 new[] { new MaterialQuantity(Material.Zinc, 1) },
                 new[] { new MaterialQuantity(Material.Iron, 9) },
-                AllowedTrades.All
+                AllowedTrade.All
             );
 
             _AssertAreEqual(
@@ -114,7 +115,7 @@ namespace EDMats.Tests.Services
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
                 new[] { new MaterialQuantity(Material.Zinc, 1) },
                 new[] { new MaterialQuantity(Material.Iron, 9), new MaterialQuantity(Material.Germanium, 9), new MaterialQuantity(Material.Manganese, 9) },
-                AllowedTrades.All
+                AllowedTrade.All
             );
 
             _AssertAreEqual(
@@ -142,7 +143,7 @@ namespace EDMats.Tests.Services
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
                 new[] { new MaterialQuantity(Material.Zinc, 1) },
                 new[] { new MaterialQuantity(Material.Germanium, 9), new MaterialQuantity(Material.Iron, 12) },
-                AllowedTrades.All
+                AllowedTrade.All
             );
 
             _AssertAreEqual(
@@ -170,7 +171,7 @@ namespace EDMats.Tests.Services
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
                 new[] { new MaterialQuantity(Material.Zinc, 3) },
                 new[] { new MaterialQuantity(Material.Tin, 6), new MaterialQuantity(Material.Nickel, 108) },
-                AllowedTrades.All
+                AllowedTrade.All
             );
 
             _AssertAreEqual(
@@ -198,7 +199,7 @@ namespace EDMats.Tests.Services
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
                 new[] { new MaterialQuantity(Material.Zinc, 3) },
                 new[] { new MaterialQuantity(Material.Tin, 6), new MaterialQuantity(Material.Germanium, 18) },
-                AllowedTrades.All
+                AllowedTrade.All
             );
 
             _AssertAreEqual(
@@ -226,7 +227,7 @@ namespace EDMats.Tests.Services
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
                 new[] { new MaterialQuantity(Material.Zinc, 6) },
                 new[] { new MaterialQuantity(Material.Tungsten, 3), new MaterialQuantity(Material.Tin, 2) },
-                AllowedTrades.All
+                AllowedTrade.All
             );
 
             _AssertAreEqual(
@@ -254,7 +255,7 @@ namespace EDMats.Tests.Services
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
                 new[] { new MaterialQuantity(Material.Zinc, 2) },
                 new[] { new MaterialQuantity(Material.Iron, 6), new MaterialQuantity(Material.Germanium, 6) },
-                AllowedTrades.All
+                AllowedTrade.All
             );
 
             _AssertAreEqual(
@@ -283,7 +284,7 @@ namespace EDMats.Tests.Services
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
                 new[] { new MaterialQuantity(Material.Zinc, 1) },
                 new[] { new MaterialQuantity(Material.Tin, 2) },
-                AllowedTrades.All
+                AllowedTrade.All
             );
 
             _AssertAreEqual(
@@ -339,7 +340,7 @@ namespace EDMats.Tests.Services
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
                 new[] { new MaterialQuantity(Material.Zinc, 1) },
                 new[] { new MaterialQuantity(Material.Germanium, 5), new MaterialQuantity(Material.Iron, 5) },
-                AllowedTrades.All
+                AllowedTrade.All
             );
 
             Assert.IsNull(tradeSolution);
@@ -358,7 +359,7 @@ namespace EDMats.Tests.Services
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
                 Enumerable.Empty<MaterialQuantity>(),
                 new[] { new MaterialQuantity(Material.Germanium, 5), new MaterialQuantity(Material.Iron, 5) },
-                AllowedTrades.All
+                AllowedTrade.All
             );
 
             Assert.IsFalse(tradeSolution.Trades.Any());
@@ -377,7 +378,7 @@ namespace EDMats.Tests.Services
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
                 new[] { new MaterialQuantity(Material.Zinc, 1) },
                 Enumerable.Empty<MaterialQuantity>(),
-                AllowedTrades.All
+                AllowedTrade.All
             );
 
             Assert.IsNull(tradeSolution);
@@ -415,7 +416,7 @@ namespace EDMats.Tests.Services
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
                 new[] { new MaterialQuantity(Material.Zinc, 1) },
                 new[] { new MaterialQuantity(Material.Germanium, 9), new MaterialQuantity(Material.Iron, 12), new MaterialQuantity(Material.Zinc, 1) },
-                AllowedTrades.All
+                AllowedTrade.All
             );
 
             Assert.IsFalse(tradeSolution.Trades.Any());
@@ -434,7 +435,7 @@ namespace EDMats.Tests.Services
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
                 new[] { new MaterialQuantity(Material.Zinc, 1), new MaterialQuantity(Material.Iron, 6) },
                 new[] { new MaterialQuantity(Material.Germanium, 9), new MaterialQuantity(Material.Iron, 11) },
-                AllowedTrades.All
+                AllowedTrade.All
             );
 
             _AssertAreEqual(
@@ -465,7 +466,7 @@ namespace EDMats.Tests.Services
             var tradeSolution = await _TradeSolutionService.TryFindSolutionAsync(
                 new[] { new MaterialQuantity(Material.Zinc, 1), new MaterialQuantity(Material.Germanium, 1), new MaterialQuantity(Material.Manganese, 1) },
                 new[] { new MaterialQuantity(Material.Iron, 18) },
-                AllowedTrades.All
+                AllowedTrade.All
             );
 
             _AssertAreEqual(

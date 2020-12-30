@@ -35,7 +35,7 @@ namespace EDMats.Stores
             SetProperty(() => JournalFilePath, openingJournalFileActionData.FilePath);
         }
 
-        void Handle(JournalImportedActionData journalImportedActionData)
+        public void Handle(JournalImportedActionData journalImportedActionData)
         {
             _storedMaterials.Clear();
             foreach (var materialQuantity in journalImportedActionData.CommanderInformation.Materials.OrderBy(materialQuantity => materialQuantity.Material.Name))

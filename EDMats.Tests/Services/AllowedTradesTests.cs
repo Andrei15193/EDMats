@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using EDMats.Data.Materials;
-using EDMats.Services;
+using EDMats.Data.MaterialTrading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EDMats.Tests.Services
@@ -23,7 +23,7 @@ namespace EDMats.Tests.Services
                 where offeredEncodedMaterial != demandedEncodedMaterial
                 select new AllowedTrade(demandedEncodedMaterial, offeredEncodedMaterial);
 
-            var actualAllowedTrades = AllowedTrades.All;
+            var actualAllowedTrades = AllowedTrade.All;
 
             Assert.IsTrue(
                 expectedAllowedTrades

@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using EDMats.ActionsData;
 using EDMats.Data.Materials;
+using EDMats.Data.MaterialTrading;
 using EDMats.Services;
 using EDMats.Stores;
 using FluxBase;
@@ -28,7 +29,8 @@ namespace EDMats.Actions
 
         public async Task TryFindGoalTradeSolution(IEnumerable<StoredMaterial> desiredMaterials, IEnumerable<StoredMaterial> availableMaterials, CancellationToken cancellationToken)
         {
-            _dispatcher.Dispatch(new TradeSolutionSearchStartedActionData { NotificationText = "Searching for trade solution" });
+            App.NotificationsViewModel.AddNotification("Searching for trade solution");
+
             var tradeSolution = await _tradeSolutionService.TryFindSolutionAsync(
                 desiredMaterials
                     .Select(materialGoal => new MaterialQuantity(Material.FindById(materialGoal.Id), materialGoal.Amount)),
@@ -37,12 +39,8 @@ namespace EDMats.Actions
                 _GetAllowedTrades(),
                 cancellationToken
             );
-            _dispatcher.Dispatch(
-                new TradeSolutionSearchCompletedActionData(tradeSolution)
-                {
-                    NotificationText = "Trade solution search completed"
-                }
-            );
+            _dispatcher.Dispatch(new TradeSolutionSearchCompletedActionData(tradeSolution));
+            App.NotificationsViewModel.AddNotification("Trade solution search completed");
         }
 
         public Task LoadCommanderGoalsAsync(string fileName)
@@ -50,19 +48,12 @@ namespace EDMats.Actions
 
         public async Task LoadCommanderGoalsAsync(string fileName, CancellationToken cancellationToken)
         {
-            _dispatcher.Dispatch(
-                new LoadingCommanderGoalsActionData(fileName)
-                {
-                    NotificationText = $"Loading commander goals from \"{fileName}\""
-                }
-            );
+            App.NotificationsViewModel.AddNotification($"Loading commander goals from \"{fileName}\"");
+            _dispatcher.Dispatch(new LoadingCommanderGoalsActionData(fileName));
+
             var commanderGoals = await _goalsFileStorageService.ReadGoalsAsync(fileName, cancellationToken);
-            _dispatcher.Dispatch(
-                new CommanderGoalsLoadedActionData(commanderGoals)
-                {
-                    NotificationText = $"Commander goals loaded"
-                }
-            );
+            _dispatcher.Dispatch(new CommanderGoalsLoadedActionData(commanderGoals));
+            App.NotificationsViewModel.AddNotification("Commander goals loaded");
         }
 
         public Task SaveCommanderGoalsAsync(string fileName, CommanderGoalsData commanderGoalsData)
@@ -70,14 +61,10 @@ namespace EDMats.Actions
 
         public async Task SaveCommanderGoalsAsync(string fileName, CommanderGoalsData commanderGoalsData, CancellationToken cancellationToken)
         {
-            _dispatcher.Dispatch(
-                new SavingCommanderGoalsActionData(fileName)
-                {
-                    NotificationText = $"Saving commander goals to \"{fileName}\""
-                }
-            );
+            App.NotificationsViewModel.AddNotification($"Saving commander goals to \"{fileName}\"");
+            _dispatcher.Dispatch(new SavingCommanderGoalsActionData(fileName));
             await _goalsFileStorageService.WriteGoalsAsync(fileName, commanderGoalsData, cancellationToken);
-            _dispatcher.Dispatch(new NotificationActionData("Commander goals saved"));
+            App.NotificationsViewModel.AddNotification("Commander goals saved");
         }
 
         public void UpdateMaterialAmountGoal(string materialId, int amountGoal)

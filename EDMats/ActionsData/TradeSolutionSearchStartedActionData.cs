@@ -1,6 +1,6 @@
 ﻿namespace EDMats.ActionsData
 {
-    public class TradeSolutionSearchStartedActionData : NotificationActionData
+    public class TradeSolutionSearchStartedActionData
     {
     }
 }

@@ -1,4 +1,4 @@
-﻿using EDMats.Services;
+﻿using EDMats.Data.MaterialTrading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EDMats.Tests.Services

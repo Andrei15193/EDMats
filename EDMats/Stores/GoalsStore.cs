@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using EDMats.ActionsData;
 using EDMats.Data.Materials;
-using EDMats.Services;
+using EDMats.Data.MaterialTrading;
 using FluxBase;
 
 namespace EDMats.Stores

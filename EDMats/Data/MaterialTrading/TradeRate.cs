@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EDMats.Services
+namespace EDMats.Data.MaterialTrading
 {
     public struct TradeRate : IEquatable<TradeRate>
     {
@@ -29,6 +29,6 @@ namespace EDMats.Services
             => obj is TradeRate tradeRate && Equals(tradeRate);
 
         public override int GetHashCode()
-            => Demand.GetHashCode() ^ Offer.GetHashCode();
+            => new { Demand, Offer }.GetHashCode();
     }
 }
