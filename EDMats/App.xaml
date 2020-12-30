@@ -2,15 +2,10 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Startup="Application_Startup"
-             xmlns:stores="clr-namespace:EDMats.Stores"
-             xmlns:converters="clr-namespace:EDMats.Converters"
-             xmlns:viewModels="clr-namespace:EDMats.ViewModels">
+             xmlns:stores="clr-namespace:EDMats.Stores">
     <Application.Resources>
         <ResourceDictionary>
-            <stores:CommanderInfoStore x:Key="CommanderInfoStore" />
             <stores:GoalsStore x:Key="GoalsStore" />
-
-            <viewModels:NotificationsViewModel x:Key="NotificationsViewModel" />
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source=".\Styles.xaml" />

@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using EDMats.ViewModels;
 
 namespace EDMats.Controls
 {
@@ -6,5 +7,7 @@ namespace EDMats.Controls
     {
         public Notifications()
             => InitializeComponent();
+
+        public NotificationsViewModel NotificationsViewModel { get; } = App.Resolve<NotificationsViewModel>();
     }
 }

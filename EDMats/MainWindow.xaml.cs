@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using EDMats.Actions;
 using EDMats.Services;
 using EDMats.Stores;
+using EDMats.ViewModels;
 using Microsoft.Win32;
 using Unity;
 
@@ -35,6 +36,10 @@ namespace EDMats
             _UpdateStatusPanel();
         }
 
+        public NotificationsViewModel NotificationsViewModel { get; } = App.Resolve<NotificationsViewModel>();
+
+        public CommanderViewModel CommanderViewModel { get; } = App.Resolve<CommanderViewModel>();
+
         [Dependency]
         public JournalImportActions SettingsActions { get; set; }
 
@@ -54,8 +59,9 @@ namespace EDMats
 
             if (openFileDialog.ShowDialog(this) ?? false)
             {
-                await SettingsActions.LoadJournalFileAsync(openFileDialog.FileName);
-                await _SearchForTradeSolutionAsync();
+                CommanderViewModel.JournalFilePath = openFileDialog.FileName;
+                await CommanderViewModel.LoadJournalAsync();
+                //await _SearchForTradeSolutionAsync();
             }
 
             if (_autoUpdateTask.IsCompleted)
@@ -70,22 +76,16 @@ namespace EDMats
 
         private async Task _AutoUpdateJournalEntries()
         {
-            if (!string.IsNullOrWhiteSpace(App.CommanderInfoStore.JournalFilePath))
+            if (!string.IsNullOrWhiteSpace(CommanderViewModel.JournalFilePath))
             {
                 await Task.Delay(_autoUpdateDelay);
                 while (_AutoUpdateCheckBox.IsChecked ?? false)
                 {
-                    if (await SettingsActions.LoadJournalFileAsync(App.CommanderInfoStore.JournalFilePath, App.CommanderInfoStore.LatestUpdate))
-                        await _SearchForTradeSolutionAsync();
+                    await CommanderViewModel.RefreshJournalAsync();
+                    //await _SearchForTradeSolutionAsync();
                     await Task.Delay(_autoUpdateDelay);
                 }
             }
-        }
-
-        private void _FilterTextChanged(object sender, TextChangedEventArgs e)
-        {
-            var filterTextBox = (TextBox)sender;
-            SettingsActions.FilterMaterials(filterTextBox.Text);
         }
 
         private async void _MaterialGoalTextChanged(object sender, TextChangedEventArgs e)
@@ -180,7 +180,7 @@ namespace EDMats
                 try
                 {
                     _cancellationTokenSource = cancellationTokenSource;
-                    await GoalActions.TryFindGoalTradeSolution(App.GoalsStore.MaterialsGoal, App.CommanderInfoStore.StoredMaterials, cancellationTokenSource.Token);
+                    await GoalActions.TryFindGoalTradeSolution(App.GoalsStore.MaterialsGoal, CommanderViewModel.StoredMaterials, cancellationTokenSource.Token);
                 }
                 catch (OperationCanceledException operationCanceledException) when (operationCanceledException.CancellationToken == _cancellationTokenSource.Token)
                 {

@@ -17,6 +17,7 @@ namespace EDMats
         private static IUnityContainer _GetUnityContainer()
             => new UnityContainer()
                 .RegisterSingleton<FluxBase.Dispatcher>()
+                .RegisterSingleton<NotificationsViewModel>()
                 .RegisterType<IFileSystemService, FileSystemService>()
                 .RegisterType<IJournalImportService, JournalImportService>()
                 .RegisterType<IJournalReaderService, JournalReaderService>()
@@ -25,6 +26,9 @@ namespace EDMats
                 .RegisterType<IGoalsFileStorageService, GoalsFileStorageService>()
                 .RegisterType<IMaterialTraderService, MaterialTraderService>()
                 .RegisterType<ITradeSolutionService, TradeSolutionService>();
+
+        internal static TService Resolve<TService>()
+            => _container.Resolve<TService>();
 
         internal static T EnsureDependencies<T>(T instance)
             => _container.BuildUp(instance);
@@ -47,13 +51,7 @@ namespace EDMats
             MessageBox.Show(e.Exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
-        internal static CommanderInfoStore CommanderInfoStore
-            => (CommanderInfoStore)Current.FindResource(nameof(CommanderInfoStore));
-
         internal static GoalsStore GoalsStore
             => (GoalsStore)Current.FindResource(nameof(GoalsStore));
-
-        internal static NotificationsViewModel NotificationsViewModel
-            => (NotificationsViewModel)Current.FindResource(nameof(NotificationsViewModel));
     }
 }

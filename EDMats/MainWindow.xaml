@@ -1,4 +1,5 @@
 ﻿<Window x:Class="EDMats.MainWindow"
+        x:Name="Self"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -44,8 +45,7 @@
                 </Grid.ColumnDefinitions>
                 <TextBox Grid.Column="0"
                          Margin="5"
-                         DataContext="{StaticResource CommanderInfoStore}"
-                         Text="{Binding JournalFilePath, Mode=OneWay}"
+                         Text="{Binding CommanderViewModel.JournalFilePath, ElementName=Self, Mode=TwoWay}"
                          VerticalAlignment="Center"
                          IsReadOnly="True" />
                 <Button Grid.Column="1"
@@ -111,12 +111,12 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0">
-                        <Run Text="Notifications (" /><Run Text="{Binding Notifications.Count, Source={StaticResource NotificationsViewModel}, Mode=OneWay}" /><Run Text=")" />
+                        <Run Text="Notifications (" /><Run Text="{Binding NotificationsViewModel.Notifications.Count, ElementName=Self, Mode=OneWay}" /><Run Text=")" />
                     </TextBlock>
                     <Button Grid.Column="1"
                             Style="{StaticResource Hyperlink}"
                             Content="dismiss all"
-                            Command="{Binding ClearNotificationsCommand, Source={StaticResource NotificationsViewModel}}"/>
+                            Command="{Binding NotificationsViewModel.ClearNotificationsCommand, ElementName=Self}"/>
                 </Grid>
                 <controls:Notifications Grid.Row="2"
                                         Margin="5" />
@@ -142,8 +142,7 @@
                     <TextBox Grid.Column="1"
                              Grid.Row="0"
                              Margin="5"
-                             TextChanged="_FilterTextChanged"
-                             Text="{Binding FilterText, Mode=OneTime}" />
+                             Text="{Binding CommanderViewModel.FilterText, ElementName=Self, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
                 <TextBlock Grid.Row="1"
                            Margin="5"
@@ -192,7 +191,7 @@
                            Text="Inventory" />
                 <ItemsControl Grid.Row="4"
                               Margin="5"
-                              DataContext="{StaticResource CommanderInfoStore}"
+                              DataContext="{Binding CommanderViewModel, ElementName=Self}"
                               ItemsSource="{Binding FilteredStoredMaterials, Mode=OneTime}">
                     <ItemsControl.Template>
                         <ControlTemplate>

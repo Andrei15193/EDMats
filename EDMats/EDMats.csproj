@@ -141,9 +141,10 @@
     <Compile Include="Data\MaterialTrading\TradeEntry.cs" />
     <Compile Include="Data\MaterialTrading\TradeRate.cs" />
     <Compile Include="Data\MaterialTrading\TradeSolution.cs" />
-    <Compile Include="Stores\CommanderInfoStore.cs" />
     <Compile Include="Stores\Extensions.cs" />
     <Compile Include="Stores\GoalsStore.cs" />
+    <Compile Include="ViewModels\AsyncViewModel.cs" />
+    <Compile Include="ViewModels\CommanderViewModel.cs" />
     <Compile Include="ViewModels\NotificationViewModel.cs" />
     <Compile Include="Stores\StoredMaterial.cs" />
     <Compile Include="Converters\StringConverter.cs" />

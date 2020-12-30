@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using EDMats.ActionsData;
 using EDMats.Services;
+using EDMats.ViewModels;
 using FluxBase;
 
 namespace EDMats.Actions
@@ -24,11 +25,11 @@ namespace EDMats.Actions
 
         public async Task LoadJournalFileAsync(string journalFilePath, CancellationToken cancellationToken)
         {
-            App.NotificationsViewModel.AddNotification($"Loading journal file \"{journalFilePath}\"");
+            App.Resolve<NotificationsViewModel>().AddNotification($"Loading journal file \"{journalFilePath}\"");
             _dispatcher.Dispatch(new OpeningJournalFileActionData(journalFilePath));
             var commanderInformation = await _journalFileImportService.ImportAsync(journalFilePath, cancellationToken);
             _dispatcher.Dispatch(new JournalImportedActionData(commanderInformation));
-            App.NotificationsViewModel.AddNotification($"Journal file loaded, latest entry on {commanderInformation.LatestUpdate:f}");
+            App.Resolve<NotificationsViewModel>().AddNotification($"Journal file loaded, latest entry on {commanderInformation.LatestUpdate:f}");
         }
 
         public Task<bool> LoadJournalFileAsync(string journalFilePath, DateTime latestUpdate)
@@ -40,7 +41,7 @@ namespace EDMats.Actions
             foreach (var update in updates.OfType<MaterialCollectedJournalUpdate>())
             {
                 _dispatcher.Dispatch(new MaterialCollectedActionData(update.Timestamp, update.CollectedMaterial));
-                App.NotificationsViewModel.AddNotification($"Collected {update.CollectedMaterial.Amount} of {update.CollectedMaterial.Material.Name}");
+                App.Resolve<NotificationsViewModel>().AddNotification($"Collected {update.CollectedMaterial.Amount} of {update.CollectedMaterial.Material.Name}");
             }
             return updates.Any();
         }

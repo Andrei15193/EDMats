@@ -55,25 +55,37 @@ namespace EDMats.ViewModels
         protected Command CreateCommand(Action executeCallback)
             => new CallbackCommand(executeCallback);
 
-        protected Command CreateCommand(Action executeCallback, Func<bool> canExecuteCallback, IEnumerable<string> watchedProperties)
+        protected Command CreateCommand(Func<bool> canExecuteCallback, Action executeCallback, IEnumerable<string> watchedProperties)
+            => new CallbackCommand(executeCallback, canExecuteCallback, this, watchedProperties);
+
+        protected Command CreateCommand(Func<bool> canExecuteCallback, Action executeCallback, params string[] watchedProperties)
             => new CallbackCommand(executeCallback, canExecuteCallback, this, watchedProperties);
 
         protected Command<TParameter> CreateCommand<TParameter>(Action<TParameter> executeCallback)
             => new CallbackCommand<TParameter>(executeCallback);
 
-        protected Command<TParameter> CreateCommand<TParameter>(Action<TParameter> executeCallback, Func<TParameter, bool> canExecuteCallback, IEnumerable<string> watchedProperties)
+        protected Command<TParameter> CreateCommand<TParameter>(Func<TParameter, bool> canExecuteCallback, Action<TParameter> executeCallback, IEnumerable<string> watchedProperties)
+            => new CallbackCommand<TParameter>(executeCallback, canExecuteCallback, this, watchedProperties);
+
+        protected Command<TParameter> CreateCommand<TParameter>(Func<TParameter, bool> canExecuteCallback, Action<TParameter> executeCallback, params string[] watchedProperties)
             => new CallbackCommand<TParameter>(executeCallback, canExecuteCallback, this, watchedProperties);
 
         protected AsyncCommand CreateCommand(Func<Task> executeCallback)
             => new CallbackAsyncCommand(executeCallback);
 
-        protected AsyncCommand CreateCommand(Func<Task> executeCallback, Func<bool> canExecuteCallback, IEnumerable<string> watchedProperties)
+        protected AsyncCommand CreateCommand(Func<bool> canExecuteCallback, Func<Task> executeCallback, IEnumerable<string> watchedProperties)
+            => new CallbackAsyncCommand(executeCallback, canExecuteCallback, this, watchedProperties);
+
+        protected AsyncCommand CreateCommand(Func<bool> canExecuteCallback, Func<Task> executeCallback, params string[] watchedProperties)
             => new CallbackAsyncCommand(executeCallback, canExecuteCallback, this, watchedProperties);
 
         protected AsyncCommand<TParameter> CreateCommand<TParameter>(Func<TParameter, Task> executeCallback)
             => new CallbackAsyncCommand<TParameter>(executeCallback);
 
-        protected AsyncCommand<TParameter> CreateCommand<TParameter>(Func<TParameter, Task> executeCallback, Func<TParameter, bool> canExecuteCallback, IEnumerable<string> watchedProperties)
+        protected AsyncCommand<TParameter> CreateCommand<TParameter>(Func<TParameter, bool> canExecuteCallback, Func<TParameter, Task> executeCallback, IEnumerable<string> watchedProperties)
+            => new CallbackAsyncCommand<TParameter>(executeCallback, canExecuteCallback, this, watchedProperties);
+
+        protected AsyncCommand<TParameter> CreateCommand<TParameter>(Func<TParameter, bool> canExecuteCallback, Func<TParameter, Task> executeCallback, params string[] watchedProperties)
             => new CallbackAsyncCommand<TParameter>(executeCallback, canExecuteCallback, this, watchedProperties);
 
         private sealed class CallbackCommand : Command

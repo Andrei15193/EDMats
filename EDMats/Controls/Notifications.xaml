@@ -6,7 +6,7 @@
               mc:Ignorable="d"
               d:DesignHeight="450"
               d:DesignWidth="800"
-              DataContext="{StaticResource NotificationsViewModel}"
+              DataContext="{Binding NotificationsViewModel, RelativeSource={RelativeSource Self}}"
               ItemsSource="{Binding Notifications}">
     <ItemsControl.Template>
         <ControlTemplate>
