@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Media;
 using EDMats.Converters;
-using EDMats.Stores;
+using EDMats.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EDMats.Tests.Converters

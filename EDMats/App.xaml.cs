@@ -3,7 +3,6 @@ using System.Windows;
 using System.Windows.Threading;
 using EDMats.Services;
 using EDMats.Services.Implementations;
-using EDMats.Stores;
 using EDMats.ViewModels;
 using FluxBase;
 using Unity;
@@ -30,9 +29,6 @@ namespace EDMats
         internal static TService Resolve<TService>()
             => _container.Resolve<TService>();
 
-        internal static T EnsureDependencies<T>(T instance)
-            => _container.BuildUp(instance);
-
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             DispatcherUnhandledException += _UnhandledException;
@@ -41,7 +37,7 @@ namespace EDMats
             foreach (var store in Resources.Values.OfType<Store>())
                 dispatcher.Register(store);
 
-            MainWindow = EnsureDependencies(new MainWindow());
+            MainWindow = new MainWindow();
             MainWindow.Show();
         }
 
@@ -50,8 +46,5 @@ namespace EDMats
             e.Handled = MainWindow.IsVisible;
             MessageBox.Show(e.Exception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-
-        internal static GoalsStore GoalsStore
-            => (GoalsStore)Current.FindResource(nameof(GoalsStore));
     }
 }

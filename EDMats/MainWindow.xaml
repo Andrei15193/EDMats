@@ -20,7 +20,6 @@
                 <MenuItem Header="Load goals"
                           Click="_LoadCommanderGoalsButtonClick" />
                 <MenuItem Header="Save goals"
-                          DataContext="{StaticResource GoalsStore}"
                           Click="_SaveCommanderGoalsButtonClick" />
             </MenuItem>
         </Menu>
@@ -76,7 +75,7 @@
                     </Grid.RowDefinitions>
                     <Border Margin="5"
                             Height="100"
-                            DataContext="{StaticResource GoalsStore}"
+                            DataContext="{Binding CommanderViewModel, ElementName=Self}"
                             xmlns:converters="clr-namespace:EDMats.Converters">
                         <Border.Background>
                             <Binding Path="SearchStatus"
@@ -149,8 +148,8 @@
                            Text="Goal" />
                 <ItemsControl Grid.Row="2"
                               Margin="5"
-                              DataContext="{StaticResource GoalsStore}"
-                              ItemsSource="{Binding FilteredMaterialsGoal, Mode=OneTime}">
+                              DataContext="{Binding CommanderViewModel, ElementName=Self}"
+                              ItemsSource="{Binding FilteredMaterialGoals, Mode=OneTime}">
                     <ItemsControl.Template>
                         <ControlTemplate>
                             <Border BorderThickness="1"

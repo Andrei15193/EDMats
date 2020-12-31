@@ -3,23 +3,18 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using EDMats.Actions;
 using EDMats.Services;
-using EDMats.Stores;
 using EDMats.ViewModels;
 using Microsoft.Win32;
-using Unity;
 
 namespace EDMats
 {
     public partial class MainWindow : Window
     {
         private Task _autoUpdateTask = Task.CompletedTask;
-        private CancellationTokenSource _cancellationTokenSource = null;
         private readonly TimeSpan _autoUpdateDelay = TimeSpan.FromSeconds(5);
 
         public MainWindow()
@@ -27,11 +22,11 @@ namespace EDMats
             InitializeComponent();
             Loaded += delegate
             {
-                App.GoalsStore.PropertyChanged += _GoalsStorePropertyChanged;
+                CommanderViewModel.PropertyChanged += _CommanderViewModelPropertyChanged;
             };
             Unloaded += delegate
             {
-                App.GoalsStore.PropertyChanged += _GoalsStorePropertyChanged;
+                CommanderViewModel.PropertyChanged += _CommanderViewModelPropertyChanged;
             };
             _UpdateStatusPanel();
         }
@@ -39,12 +34,6 @@ namespace EDMats
         public NotificationsViewModel NotificationsViewModel { get; } = App.Resolve<NotificationsViewModel>();
 
         public CommanderViewModel CommanderViewModel { get; } = App.Resolve<CommanderViewModel>();
-
-        [Dependency]
-        public JournalImportActions SettingsActions { get; set; }
-
-        [Dependency]
-        public GoalActions GoalActions { get; set; }
 
         private async void _LoadJournalFileButtonClick(object sender, RoutedEventArgs e)
         {
@@ -61,7 +50,7 @@ namespace EDMats
             {
                 CommanderViewModel.JournalFilePath = openFileDialog.FileName;
                 await CommanderViewModel.LoadJournalAsync();
-                //await _SearchForTradeSolutionAsync();
+                await CommanderViewModel.SearchForTradeSolutionAsync();
             }
 
             if (_autoUpdateTask.IsCompleted)
@@ -81,8 +70,8 @@ namespace EDMats
                 await Task.Delay(_autoUpdateDelay);
                 while (_AutoUpdateCheckBox.IsChecked ?? false)
                 {
-                    await CommanderViewModel.RefreshJournalAsync();
-                    //await _SearchForTradeSolutionAsync();
+                    if (await CommanderViewModel.RefreshJournalAsync())
+                        await CommanderViewModel.SearchForTradeSolutionAsync();
                     await Task.Delay(_autoUpdateDelay);
                 }
             }
@@ -99,8 +88,8 @@ namespace EDMats
                 Validation.ClearInvalid(bindingExpression);
                 var storedMaterial = (StoredMaterial)materialGoalTextBox.DataContext;
                 var amountGoal = int.Parse(materialGoalTextBox.Text);
-                GoalActions.UpdateMaterialAmountGoal(storedMaterial.Id, amountGoal);
-                await _SearchForTradeSolutionAsync();
+                storedMaterial.Amount = amountGoal;
+                await CommanderViewModel.SearchForTradeSolutionAsync();
             }
         }
 
@@ -124,8 +113,8 @@ namespace EDMats
                 };
                 if (fileDialog.ShowDialog(this) ?? false)
                 {
-                    await GoalActions.LoadCommanderGoalsAsync(fileDialog.FileName);
-                    await _SearchForTradeSolutionAsync();
+                    //await GoalActions.LoadCommanderGoalsAsync(fileDialog.FileName);
+                    await CommanderViewModel.SearchForTradeSolutionAsync();
                 }
             }
             catch (Exception exception)
@@ -134,7 +123,7 @@ namespace EDMats
             }
         }
 
-        private async void _SaveCommanderGoalsButtonClick(object sender, RoutedEventArgs e)
+        private void _SaveCommanderGoalsButtonClick(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -145,12 +134,11 @@ namespace EDMats
                 if (fileDialog.ShowDialog(this) ?? false)
                 {
                     var menuItem = (MenuItem)sender;
-                    var goalsStore = (GoalsStore)menuItem.DataContext;
 
                     var commanderGoals = new CommanderGoalsData
                     {
-                        Materials = goalsStore
-                            .MaterialsGoal
+                        Materials = CommanderViewModel
+                            .MaterialGoals
                             .Select(
                                 materialGoal => new MaterialGoalData
                                 {
@@ -161,7 +149,7 @@ namespace EDMats
                             )
                             .ToList()
                     };
-                    await GoalActions.SaveCommanderGoalsAsync(fileDialog.FileName, commanderGoals);
+                    //await GoalActions.SaveCommanderGoalsAsync(fileDialog.FileName, commanderGoals);
                 }
             }
             catch (Exception exception)
@@ -171,33 +159,17 @@ namespace EDMats
         }
 
         private void _ViewTradeSolutionButtonClick(object sender, RoutedEventArgs e)
-            => new TradeSolutionWindow().ShowDialog();
+            => new TradeSolutionWindow { DataContext = CommanderViewModel.TradeSolution }.ShowDialog();
 
-        private async Task _SearchForTradeSolutionAsync()
+        private void _CommanderViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            _cancellationTokenSource?.Cancel();
-            using (var cancellationTokenSource = new CancellationTokenSource())
-                try
-                {
-                    _cancellationTokenSource = cancellationTokenSource;
-                    await GoalActions.TryFindGoalTradeSolution(App.GoalsStore.MaterialsGoal, CommanderViewModel.StoredMaterials, cancellationTokenSource.Token);
-                }
-                catch (OperationCanceledException operationCanceledException) when (operationCanceledException.CancellationToken == _cancellationTokenSource.Token)
-                {
-                }
-
-            _cancellationTokenSource = null;
-        }
-
-        private void _GoalsStorePropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName.Equals(nameof(GoalsStore.SearchStatus), StringComparison.OrdinalIgnoreCase))
+            if (e.PropertyName.Equals(nameof(CommanderViewModel.SearchStatus), StringComparison.OrdinalIgnoreCase))
                 _UpdateStatusPanel();
         }
 
         private void _UpdateStatusPanel()
         {
-            switch (App.GoalsStore.SearchStatus)
+            switch (CommanderViewModel.SearchStatus)
             {
                 case TradeSolutionSearchStatus.Idle:
                     _StatusTextBlock.Text = "Idle";

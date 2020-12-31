@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace EDMats.Stores
+namespace EDMats.ViewModels
 {
     internal static class Extensions
     {

@@ -1,4 +1,4 @@
-﻿namespace EDMats.Stores
+﻿namespace EDMats.ViewModels
 {
     public enum TradeSolutionSearchStatus
     {

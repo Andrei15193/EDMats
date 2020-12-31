@@ -92,18 +92,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ActionsData\CommanderGoalsLoadedActionData.cs" />
-    <Compile Include="ActionsData\FilterMaterialsActionData.cs" />
-    <Compile Include="ActionsData\JournalImportedActionData.cs" />
-    <Compile Include="ActionsData\LoadingCommanderGoalsActionData.cs" />
-    <Compile Include="ActionsData\MaterialCollectedActionData.cs" />
-    <Compile Include="ActionsData\SavingCommanderGoalsActionData.cs" />
-    <Compile Include="ActionsData\TradeSolutionSearchCompletedActionData.cs" />
-    <Compile Include="ActionsData\TradeSolutionSearchStartedActionData.cs" />
-    <Compile Include="ActionsData\UpdateMaterialGoalActionData.cs" />
-    <Compile Include="ActionsData\OpeningJournalFileActionData.cs" />
-    <Compile Include="Actions\GoalActions.cs" />
-    <Compile Include="Actions\JournalImportActions.cs" />
     <Compile Include="Controls\Notifications.xaml.cs">
       <DependentUpon>Notifications.xaml</DependentUpon>
     </Compile>
@@ -141,14 +129,15 @@
     <Compile Include="Data\MaterialTrading\TradeEntry.cs" />
     <Compile Include="Data\MaterialTrading\TradeRate.cs" />
     <Compile Include="Data\MaterialTrading\TradeSolution.cs" />
-    <Compile Include="Stores\Extensions.cs" />
-    <Compile Include="Stores\GoalsStore.cs" />
-    <Compile Include="ViewModels\AsyncViewModel.cs" />
+    <Compile Include="ViewModels\Extensions.cs" />
+    <Compile Include="ViewModels\AsyncState.cs" />
     <Compile Include="ViewModels\CommanderViewModel.cs" />
+    <Compile Include="ViewModels\FormViewModel.cs" />
+    <Compile Include="ViewModels\IAsyncState.cs" />
     <Compile Include="ViewModels\NotificationViewModel.cs" />
-    <Compile Include="Stores\StoredMaterial.cs" />
+    <Compile Include="ViewModels\StoredMaterial.cs" />
     <Compile Include="Converters\StringConverter.cs" />
-    <Compile Include="Stores\TradeSolutionSearchStatus.cs" />
+    <Compile Include="ViewModels\TradeSolutionSearchStatus.cs" />
     <Compile Include="TradeSolutionWindow.xaml.cs">
       <DependentUpon>TradeSolutionWindow.xaml</DependentUpon>
     </Compile>

@@ -8,8 +8,7 @@
         Height="450"
         Width="1100">
     <Grid>
-        <ListView DataContext="{StaticResource GoalsStore}"
-                  ItemsSource="{Binding TradeEntries}">
+        <ListView ItemsSource="{Binding Trades, Mode=OneTime}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Type"

@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
-using EDMats.Stores;
+using EDMats.ViewModels;
 
 namespace EDMats.Converters
 {
