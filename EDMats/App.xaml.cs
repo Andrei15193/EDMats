@@ -26,8 +26,10 @@ namespace EDMats
         internal static TService Resolve<TService>()
             => _container.Resolve<TService>();
 
-        private void Application_Startup(object sender, StartupEventArgs e)
+        protected override void OnStartup(StartupEventArgs e)
         {
+            base.OnStartup(e);
+
             DispatcherUnhandledException += _UnhandledException;
 
             MainWindow = new MainWindow();

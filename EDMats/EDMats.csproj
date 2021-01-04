@@ -95,6 +95,9 @@
     </Compile>
     <Compile Include="Converters\TradeSolutionSearchStatusBrushConverter.cs" />
     <Compile Include="Data\MaterialTrading\AllowedTrade.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Services\CommanderGoalsData.cs" />
     <Compile Include="Services\IGoalsFileStorageService.cs" />
     <Compile Include="Services\IGoalsStorageService.cs" />
@@ -143,11 +146,43 @@
     <Compile Include="ViewModels\Command.cs" />
     <Compile Include="ViewModels\NotificationsViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
+    <Page Include="Assets\Drawings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Assets\Preview\Symbols\surface-port-pm-2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\Preview\Symbols\surface-port-pm.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\Preview\Symbols\material.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\Symbols.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Assets\Preview\Symbols\engineer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\Preview\Drawings\sidewinder.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\Notifications.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow_old.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -155,8 +190,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="MainWindow_old.xaml.cs">
+      <DependentUpon>MainWindow_old.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Styles.xaml">
@@ -195,6 +230,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Assets\Images\tower.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\settlement.png" />
+    <Resource Include="Assets\Images\starport.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\base.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
