@@ -90,13 +90,40 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controls\Notifications.xaml.cs">
-      <DependentUpon>Notifications.xaml</DependentUpon>
+    <Compile Include="Controls\BrowserHyperlink.cs" />
+    <Compile Include="Controls\MaterialQuantitiesView.xaml.cs">
+      <DependentUpon>MaterialQuantitiesView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MaterialRequirementsView.xaml.cs">
+      <DependentUpon>MaterialRequirementsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\NotEqualsComparer.cs" />
+    <Compile Include="Converters\EqualsComparer.cs" />
+    <Compile Include="Converters\SwitchConverter.cs" />
     <Compile Include="Converters\TradeSolutionSearchStatusBrushConverter.cs" />
+    <Compile Include="Data\Engineering\Blueprint.cs" />
+    <Compile Include="Data\Engineering\BlueprintGoal.cs" />
+    <Compile Include="Data\Engineering\BlueprintGrade.cs" />
+    <Compile Include="Data\Engineering\BlueprintGradeRequirements.cs" />
+    <Compile Include="Data\Engineering\ExperimentalEffect.cs" />
+    <Compile Include="Data\Engineering\Module.cs" />
+    <Compile Include="Data\Engineering\ModuleType.cs" />
     <Compile Include="Data\MaterialTrading\AllowedTrade.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Commander.xaml.cs">
+      <DependentUpon>Commander.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Engineering.xaml.cs">
+      <DependentUpon>Engineering.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ModuleEngineering.xaml.cs">
+      <DependentUpon>ModuleEngineering.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\CommanderGoalsData.cs" />
     <Compile Include="Services\IGoalsFileStorageService.cs" />
@@ -135,6 +162,9 @@
     <Compile Include="ViewModels\CommanderViewModel.cs" />
     <Compile Include="ViewModels\FormViewModel.cs" />
     <Compile Include="ViewModels\IAsyncState.cs" />
+    <Compile Include="ViewModels\BlueprintViewModel.cs" />
+    <Compile Include="ViewModels\ModuleEngineeringViewModel.cs" />
+    <Compile Include="ViewModels\ModulesBrowserViewModel.cs" />
     <Compile Include="ViewModels\NotificationViewModel.cs" />
     <Compile Include="ViewModels\StoredMaterial.cs" />
     <Compile Include="Converters\StringConverter.cs" />
@@ -149,6 +179,26 @@
     <Page Include="Assets\Drawings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Assets\Preview\Symbols\material-grade-4.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\Preview\Symbols\material-grade-3.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\Preview\Symbols\material-grade-5.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\Preview\Symbols\material-grade-2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\Preview\Symbols\material-grade-1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Assets\Preview\Symbols\surface-port-pm-2.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -174,7 +224,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\Notifications.xaml">
+    <Page Include="Controls\MaterialQuantitiesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MaterialRequirementsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -182,18 +236,26 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow_old.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow_old.xaml.cs">
-      <DependentUpon>MainWindow_old.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Page Include="Pages\About.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Commander.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Engineering.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ModuleEngineering.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

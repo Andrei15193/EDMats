@@ -1,0 +1,89 @@
+﻿<UserControl x:Class="EDMats.Pages.ModuleEngineering"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:EDMats.ViewModels"
+             xmlns:controls="clr-namespace:EDMats.Controls"
+             DataContextChanged="_DataContextChanges"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800">
+    <UserControl.Resources>
+        <viewModels:ModuleEngineeringViewModel x:Key="ViewModel"
+                                               Saved="_ModuleEngineeringSaved" />
+    </UserControl.Resources>
+    <Grid DataContext="{StaticResource ViewModel}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ScrollViewer Grid.Row="0">
+            <ScrollViewer.Resources>
+                <Style TargetType="ListView"
+                       BasedOn="{StaticResource {x:Type ListView}}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListView">
+                                <ItemsPresenter />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ScrollViewer.Resources>
+            <StackPanel>
+                <Border BorderThickness="0, 0, 0, 1.5"
+                        BorderBrush="{StaticResource LightBlueBrush}">
+                    <TextBlock Text="Blueprints"
+                               FontSize="18"
+                               FontWeight="SemiBold" />
+                </Border>
+                <ListView ItemsSource="{Binding Module.Blueprints, Mode=OneWay}"
+                          SelectedItem="{Binding SelectedBlueprint, Mode=TwoWay}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name, Mode=OneTime}"
+                                       Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=ListViewItem}}" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <controls:MaterialRequirementsView Margin="5, 2, 5, 0"
+                                                   ItemsSource="{Binding SelectedBlueprint.GradeRequirements, Mode=OneWay}" />
+
+                <Border Margin="0, 10, 0, 0"
+                        BorderThickness="0, 0, 0, 1.5"
+                        BorderBrush="{StaticResource LightBlueBrush}">
+                    <TextBlock Text="Experimental Effects"
+                               FontSize="18"
+                               FontWeight="SemiBold" />
+                </Border>
+                <ListView ItemsSource="{Binding Module.ExperimentalEffects, Mode=OneWay}"
+                          SelectedItem="{Binding SelectedExperimentalEffect, Mode=TwoWay}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name, Mode=OneTime}"
+                                       Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=ListViewItem}}" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <controls:MaterialQuantitiesView Margin="5, 2, 0, 0"
+                                                 ItemsSource="{Binding SelectedExperimentalEffect.Requirements, Mode=OneWay}" />
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+            <Button Content="Save"
+                    BorderThickness="3"
+                    Padding="3, 2"
+                    Command="{Binding SaveCommand}" />
+            <Button Content="Cancel"
+                    Margin="10, 0, 0, 0"
+                    BorderThickness="3"
+                    Padding="3, 2"
+                    Click="_CancelButtonClick" />
+        </StackPanel>
+    </Grid>
+</UserControl>

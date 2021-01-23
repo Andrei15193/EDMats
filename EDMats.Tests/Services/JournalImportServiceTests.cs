@@ -90,6 +90,7 @@ namespace EDMats.Tests.Services
         [TestMethod]
         public async Task ReadingMaterialsThenMaterialCollectedAndThenMaterialsEntryResetsPreviousInformation()
         {
+            var now = DateTime.Now;
             var expectedMaterials = new[]
             {
                 new MaterialQuantity(Material.Iron, 4),
@@ -97,7 +98,7 @@ namespace EDMats.Tests.Services
                 new MaterialQuantity(Material.DataminedWakeExceptions, 9)
             };
             _journalEntries.Add(new MaterialsJournalEntry(
-                DateTime.Now,
+                now,
                 expectedMaterials
                     .Where(materialQuantity => materialQuantity.Material.Type == Material.Raw)
                     .ToList(),
@@ -108,7 +109,7 @@ namespace EDMats.Tests.Services
                     .Where(materialQuantity => materialQuantity.Material.Type == Material.Encoded)
                     .ToList()
             ));
-            _journalEntries.Add(new MaterialCollectedJournalEntry(DateTime.Now, new MaterialQuantity(Material.Iron, 1)));
+            _journalEntries.Add(new MaterialCollectedJournalEntry(now, new MaterialQuantity(Material.Iron, 1)));
             _journalEntries.Add(_journalEntries[0]);
 
             var commanderInformation = await _JournalImportService.ImportJournalAsync(null);

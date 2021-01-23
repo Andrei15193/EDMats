@@ -1,0 +1,53 @@
+﻿<ItemsControl x:Class="EDMats.Controls.MaterialQuantitiesView"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+              xmlns:materials="clr-namespace:EDMats.Data.Materials"
+              xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib"
+              xmlns:converters="clr-namespace:EDMats.Converters"
+              mc:Ignorable="d"
+              d:DesignHeight="450"
+              d:DesignWidth="800">
+    <ItemsControl.Resources>
+        <ResourceDictionary Source="../Assets/Symbols.xaml" />
+    </ItemsControl.Resources>
+    <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+            <StackPanel Orientation="Horizontal" />
+        </ItemsPanelTemplate>
+    </ItemsControl.ItemsPanel>
+    <ItemsControl.ItemTemplate>
+        <DataTemplate>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel.Resources>
+                    <converters:SwitchConverter x:Key="MaterialGradePathConverter">
+                        <converters:SwitchConverter.Cases>
+                            <collections:ArrayList>
+                                <converters:SwitchCase Value="{x:Static materials:MaterialGrade.VeryCommon}"
+                                                       MappedValue="{StaticResource Material_Grade_1}" />
+                                <converters:SwitchCase Value="{x:Static materials:MaterialGrade.Common}"
+                                                       MappedValue="{StaticResource Material_Grade_2}" />
+                                <converters:SwitchCase Value="{x:Static materials:MaterialGrade.Standard}"
+                                                       MappedValue="{StaticResource Material_Grade_3}" />
+                                <converters:SwitchCase Value="{x:Static materials:MaterialGrade.Rare}"
+                                                       MappedValue="{StaticResource Material_Grade_4}" />
+                                <converters:SwitchCase Value="{x:Static materials:MaterialGrade.VeryRare}"
+                                                       MappedValue="{StaticResource Material_Grade_5}" />
+                            </collections:ArrayList>
+                        </converters:SwitchConverter.Cases>
+                    </converters:SwitchConverter>
+                </StackPanel.Resources>
+
+                <Viewbox Width="16"
+                         Height="16">
+                    <Path Data="{Binding Material.Grade, Converter={StaticResource MaterialGradePathConverter}, Mode=OneTime}"
+                          Fill="{StaticResource OrangeBrush}" />
+                </Viewbox>
+                <TextBlock FontSize="12">
+                    <Run Text=" " /><Run Text="{Binding Amount, Mode=OneTime}" /><Run Text=" " /><Run Text="{Binding Material.Name, Mode=OneTime}" /><Run Text=" " />
+                </TextBlock>
+            </StackPanel>
+        </DataTemplate>
+    </ItemsControl.ItemTemplate>
+</ItemsControl>

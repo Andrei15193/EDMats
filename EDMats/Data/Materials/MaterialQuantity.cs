@@ -1,6 +1,6 @@
 ﻿namespace EDMats.Data.Materials
 {
-    public class MaterialQuantity
+    public sealed class MaterialQuantity
     {
         public MaterialQuantity(Material material, int amount)
         {

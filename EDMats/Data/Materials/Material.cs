@@ -28,7 +28,6 @@ namespace EDMats.Data.Materials
         public MaterialType Type
             => Category.Type;
 
-
         private static readonly IReadOnlyDictionary<string, Material> _materialsById;
 
         public static IReadOnlyList<Material> All { get; }
@@ -323,7 +322,7 @@ namespace EDMats.Data.Materials
                 Raw = new MaterialType("Raw", categories);
                 {
                     var materials = new Material[4];
-                    categories[0] = RawMaterialsCategory1 = new MaterialCategory("Raw Material Category 1", Raw, materials);
+                    categories[0] = RawMaterialsCategory1 = new MaterialCategory("Raw Materials Category 1", Raw, materials);
                     materials[0] = Carbon = new Material("carbon", "Carbon", MaterialGrade.VeryCommon, RawMaterialsCategory1, 300);
                     materials[1] = Vanadium = new Material("vanadium", "Vanadium", MaterialGrade.Common, RawMaterialsCategory1, 250);
                     materials[2] = Niobium = new Material("niobium", "Niobium", MaterialGrade.Standard, RawMaterialsCategory1, 200);
@@ -331,7 +330,7 @@ namespace EDMats.Data.Materials
                 }
                 {
                     var materials = new Material[4];
-                    categories[1] = RawMaterialsCategory2 = new MaterialCategory("Raw Material Category 2", Raw, materials);
+                    categories[1] = RawMaterialsCategory2 = new MaterialCategory("Raw Materials Category 2", Raw, materials);
                     materials[0] = Phosphorus = new Material("phosphorus", "Phosphorus", MaterialGrade.VeryCommon, RawMaterialsCategory2, 300);
                     materials[1] = Chromium = new Material("chromium", "Chromium", MaterialGrade.Common, RawMaterialsCategory2, 250);
                     materials[2] = Molybdenum = new Material("molybdenum", "Molybdenum", MaterialGrade.Standard, RawMaterialsCategory2, 200);
@@ -339,7 +338,7 @@ namespace EDMats.Data.Materials
                 }
                 {
                     var materials = new Material[4];
-                    categories[2] = RawMaterialsCategory3 = new MaterialCategory("Raw Material Category 3", Raw, materials);
+                    categories[2] = RawMaterialsCategory3 = new MaterialCategory("Raw Materials Category 3", Raw, materials);
                     materials[0] = Sulphur = new Material("sulphur", "Sulphur", MaterialGrade.VeryCommon, RawMaterialsCategory3, 300);
                     materials[1] = Manganese = new Material("manganese", "Manganese", MaterialGrade.Common, RawMaterialsCategory3, 250);
                     materials[2] = Cadmium = new Material("cadmium", "Cadmium", MaterialGrade.Standard, RawMaterialsCategory3, 200);
@@ -347,7 +346,7 @@ namespace EDMats.Data.Materials
                 }
                 {
                     var materials = new Material[4];
-                    categories[3] = RawMaterialsCategory4 = new MaterialCategory("Raw Material Category 4", Raw, materials);
+                    categories[3] = RawMaterialsCategory4 = new MaterialCategory("Raw Materials Category 4", Raw, materials);
                     materials[0] = Iron = new Material("iron", "Iron", MaterialGrade.VeryCommon, RawMaterialsCategory4, 300);
                     materials[1] = Zinc = new Material("zinc", "Zinc", MaterialGrade.Common, RawMaterialsCategory4, 250);
                     materials[2] = Tin = new Material("tin", "Tin", MaterialGrade.Standard, RawMaterialsCategory4, 200);
@@ -355,7 +354,7 @@ namespace EDMats.Data.Materials
                 }
                 {
                     var materials = new Material[4];
-                    categories[4] = RawMaterialsCategory5 = new MaterialCategory("Raw Material Category 5", Raw, materials);
+                    categories[4] = RawMaterialsCategory5 = new MaterialCategory("Raw Materials Category 5", Raw, materials);
                     materials[0] = Nickel = new Material("nickel", "Nickel", MaterialGrade.VeryCommon, RawMaterialsCategory5, 300);
                     materials[1] = Germanium = new Material("germanium", "Germanium", MaterialGrade.Common, RawMaterialsCategory5, 250);
                     materials[2] = Tungsten = new Material("tungsten", "Tungsten", MaterialGrade.Standard, RawMaterialsCategory5, 200);
@@ -363,7 +362,7 @@ namespace EDMats.Data.Materials
                 }
                 {
                     var materials = new Material[4];
-                    categories[5] = RawMaterialsCategory6 = new MaterialCategory("Raw Material Category 6", Raw, materials);
+                    categories[5] = RawMaterialsCategory6 = new MaterialCategory("Raw Materials Category 6", Raw, materials);
                     materials[0] = Rhenium = new Material("rhenium", "Rhenium", MaterialGrade.VeryCommon, RawMaterialsCategory6, 300);
                     materials[1] = Arsenic = new Material("arsenic", "Arsenic", MaterialGrade.Common, RawMaterialsCategory6, 250);
                     materials[2] = Mercury = new Material("mercury", "Mercury", MaterialGrade.Standard, RawMaterialsCategory6, 200);
@@ -371,7 +370,7 @@ namespace EDMats.Data.Materials
                 }
                 {
                     var materials = new Material[4];
-                    categories[6] = RawMaterialsCategory7 = new MaterialCategory("Raw Material Category 7", Raw, materials);
+                    categories[6] = RawMaterialsCategory7 = new MaterialCategory("Raw Materials Category 7", Raw, materials);
                     materials[0] = Lead = new Material("lead", "Lead", MaterialGrade.VeryCommon, RawMaterialsCategory7, 300);
                     materials[1] = Zirconium = new Material("zirconium", "Zirconium", MaterialGrade.Common, RawMaterialsCategory7, 250);
                     materials[2] = Boron = new Material("boron", "Boron", MaterialGrade.Standard, RawMaterialsCategory7, 200);

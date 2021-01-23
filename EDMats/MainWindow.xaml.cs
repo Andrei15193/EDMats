@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using EDMats.Data.Engineering;
 using Microsoft.Win32;
 
 namespace EDMats
@@ -14,6 +15,7 @@ namespace EDMats
 
         private void _SectionSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var x = Module.All;
             if (Section.SelectedItem is null)
                 Section.SelectedItem = Main;
         }
