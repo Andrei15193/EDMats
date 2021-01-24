@@ -90,6 +90,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\BlueprintRequirementsEditView.xaml.cs">
+      <DependentUpon>BlueprintRequirementsEditView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\BrowserHyperlink.cs" />
     <Compile Include="Controls\MaterialQuantitiesView.xaml.cs">
       <DependentUpon>MaterialQuantitiesView.xaml</DependentUpon>
@@ -103,7 +106,6 @@
     <Compile Include="Converters\SwitchConverter.cs" />
     <Compile Include="Converters\TradeSolutionSearchStatusBrushConverter.cs" />
     <Compile Include="Data\Engineering\Blueprint.cs" />
-    <Compile Include="Data\Engineering\BlueprintGoal.cs" />
     <Compile Include="Data\Engineering\BlueprintGrade.cs" />
     <Compile Include="Data\Engineering\BlueprintGradeRequirements.cs" />
     <Compile Include="Data\Engineering\ExperimentalEffect.cs" />
@@ -157,6 +159,8 @@
     <Compile Include="Data\MaterialTrading\TradeEntry.cs" />
     <Compile Include="Data\MaterialTrading\TradeRate.cs" />
     <Compile Include="Data\MaterialTrading\TradeSolution.cs" />
+    <Compile Include="ViewModels\BlueprintGradeRequirementsViewModel.cs" />
+    <Compile Include="ViewModels\ExperimentalEffectRequirementsViewModel.cs" />
     <Compile Include="ViewModels\Extensions.cs" />
     <Compile Include="ViewModels\AsyncState.cs" />
     <Compile Include="ViewModels\CommanderViewModel.cs" />
@@ -223,6 +227,10 @@
     <Page Include="Assets\Preview\Drawings\sidewinder.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\BlueprintRequirementsEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\MaterialQuantitiesView.xaml">
       <SubType>Designer</SubType>

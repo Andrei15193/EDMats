@@ -44,7 +44,8 @@
                     <Path Data="{Binding Material.Grade, Converter={StaticResource MaterialGradePathConverter}, Mode=OneTime}"
                           Fill="{StaticResource OrangeBrush}" />
                 </Viewbox>
-                <TextBlock FontSize="12">
+                <TextBlock FontSize="12"
+                           VerticalAlignment="Center">
                     <Run Text=" " /><Run Text="{Binding Amount, Mode=OneTime}" /><Run Text=" " /><Run Text="{Binding Material.Name, Mode=OneTime}" /><Run Text=" " />
                 </TextBlock>
             </StackPanel>

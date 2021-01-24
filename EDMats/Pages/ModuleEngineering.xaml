@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModels="clr-namespace:EDMats.ViewModels"
+             xmlns:converters="clr-namespace:EDMats.Converters"
              xmlns:controls="clr-namespace:EDMats.Controls"
              DataContextChanged="_DataContextChanges"
              mc:Ignorable="d"
@@ -48,8 +49,8 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <controls:MaterialRequirementsView Margin="5, 2, 5, 0"
-                                                   ItemsSource="{Binding SelectedBlueprint.GradeRequirements, Mode=OneWay}" />
+                <controls:BlueprintRequirementsEditView Margin="5, 2, 5, 0"
+                                                        DataContext="{Binding BlueprintGradesRequirements, Mode=OneTime}" />
 
                 <Border Margin="0, 10, 0, 0"
                         BorderThickness="0, 0, 0, 1.5"
@@ -67,12 +68,53 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <controls:MaterialQuantitiesView Margin="5, 2, 0, 0"
-                                                 ItemsSource="{Binding SelectedExperimentalEffect.Requirements, Mode=OneWay}" />
+
+                <StackPanel Margin="5, 2, 5, 0"
+                            DataContext="{Binding ExperimentalEffectRequirements, Mode=OneWay}"
+                            Visibility="{Binding Converter={converters:EqualsComparer ValueIfEqual={x:Static Visibility.Collapsed}, FallbackValue={x:Static Visibility.Visible}}, ConverterParameter={x:Null}, Mode=OneWay}">
+                    <Border BorderThickness="0, 0, 0, 1.5"
+                            BorderBrush="{StaticResource LightBlueBrush}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Row="0"
+                                       Grid.Column="0"
+                                       Text="Requirements"
+                                       FontSize="12" />
+                            <TextBlock Grid.Row="0"
+                                       Grid.Column="1"
+                                       Text="Repetitions"
+                                       HorizontalAlignment="Right"
+                                       FontSize="12" />
+                        </Grid>
+                    </Border>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="60" />
+                        </Grid.ColumnDefinitions>
+                        <controls:MaterialQuantitiesView Grid.Column="0"
+                                                         ItemsSource="{Binding Requirements, Mode=OneTime}" />
+                        <TextBox Grid.Column="1"
+                                 Margin="0, 2"
+                                 TextAlignment="Right"
+                                 InputScope="Number"
+                                 MinWidth="10"
+                                 VerticalAlignment="Center"
+                                 HorizontalAlignment="Stretch"
+                                 PreviewTextInput="_PreviewRepetitionInput"
+                                 Text="{Binding Repetitions, Mode=TwoWay}" />
+                    </Grid>
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
 
         <StackPanel Grid.Row="1"
+                    Margin="0, 10, 0, 0"
                     Orientation="Horizontal"
                     HorizontalAlignment="Right">
             <Button Content="Save"

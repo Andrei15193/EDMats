@@ -1,10 +1,32 @@
 ﻿<Application x:Class="EDMats.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:engineering="clr-namespace:EDMats.Data.Engineering"
+             xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib"
+             xmlns:converters="clr-namespace:EDMats.Converters">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source=".\Styles.xaml" />
+
+                <ResourceDictionary>
+                    <converters:SwitchConverter x:Key="BlueprintGradeLabelConverter">
+                        <converters:SwitchConverter.Cases>
+                            <collections:ArrayList>
+                                <converters:SwitchCase Value="{x:Static engineering:BlueprintGrade.Grade1}"
+                                                       MappedValue="Grade 1" />
+                                <converters:SwitchCase Value="{x:Static engineering:BlueprintGrade.Grade2}"
+                                                       MappedValue="Grade 2" />
+                                <converters:SwitchCase Value="{x:Static engineering:BlueprintGrade.Grade3}"
+                                                       MappedValue="Grade 3" />
+                                <converters:SwitchCase Value="{x:Static engineering:BlueprintGrade.Grade4}"
+                                                       MappedValue="Grade 4" />
+                                <converters:SwitchCase Value="{x:Static engineering:BlueprintGrade.Grade5}"
+                                                       MappedValue="Grade 5" />
+                            </collections:ArrayList>
+                        </converters:SwitchConverter.Cases>
+                    </converters:SwitchConverter>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
