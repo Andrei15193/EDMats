@@ -6,13 +6,13 @@ namespace EDMats.Data.Materials
 {
     public sealed class Material
     {
-        internal Material(string id, string name, MaterialGrade grade, MaterialCategory category, int maximumCapacity)
+        internal Material(string id, string name, MaterialGrade grade, MaterialCategory category, int capacity)
         {
             Id = id;
             Name = name;
             Grade = grade;
             Category = category;
-            MaximumCapacity = maximumCapacity;
+            Capacity = capacity;
         }
 
         public string Id { get; }
@@ -23,7 +23,7 @@ namespace EDMats.Data.Materials
 
         public MaterialCategory Category { get; }
 
-        public int MaximumCapacity { get; }
+        public int Capacity { get; }
 
         public MaterialType Type
             => Category.Type;

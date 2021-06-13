@@ -86,8 +86,6 @@ namespace EDMats.ViewModels
         public event EventHandler Saved;
 
         public void LoadModule(Module module)
-        {
-            Module = module;
-        }
+            => Module = module;
     }
 }

@@ -73,24 +73,24 @@ namespace EDMats.Tests.Data.Materials
                         switch (material.Grade)
                         {
                             case MaterialGrade.VeryCommon:
-                                Assert.AreEqual(300, material.MaximumCapacity);
+                                Assert.AreEqual(300, material.Capacity);
                                 break;
 
                             case MaterialGrade.Common:
-                                Assert.AreEqual(250, material.MaximumCapacity);
+                                Assert.AreEqual(250, material.Capacity);
                                 break;
 
                             case MaterialGrade.Standard:
-                                Assert.AreEqual(200, material.MaximumCapacity);
+                                Assert.AreEqual(200, material.Capacity);
                                 break;
 
                             case MaterialGrade.Rare:
-                                Assert.AreEqual(150, material.MaximumCapacity);
+                                Assert.AreEqual(150, material.Capacity);
                                 break;
 
 
                             case MaterialGrade.VeryRare:
-                                Assert.AreEqual(100, material.MaximumCapacity);
+                                Assert.AreEqual(100, material.Capacity);
                                 break;
                         }
                     }

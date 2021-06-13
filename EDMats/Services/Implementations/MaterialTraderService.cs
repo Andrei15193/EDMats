@@ -23,7 +23,7 @@ namespace EDMats.Services.Implementations
 
             var baseTradeRate = _GetTradeRate(demand, offer);
             var tradeRate = times == 1 ? baseTradeRate : new TradeRate(times * baseTradeRate.Demand, times * baseTradeRate.Offer);
-            if (tradeRate.Demand <= demand.MaximumCapacity && tradeRate.Offer <= offer.MaximumCapacity)
+            if (tradeRate.Demand <= demand.Capacity && tradeRate.Offer <= offer.Capacity)
                 return tradeRate;
             return TradeRate.Invalid;
         }
