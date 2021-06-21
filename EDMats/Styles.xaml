@@ -713,6 +713,8 @@
                                  Value="False">
                             <Setter Property="BorderBrush"
                                     Value="{StaticResource GreenBrush}" />
+                            <Setter Property="Foreground"
+                                    Value="{StaticResource GreenBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -772,6 +774,13 @@
                                  Value="True">
                             <Setter Property="Foreground"
                                     Value="{StaticResource OrangeBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter Property="BorderBrush"
+                                    Value="{StaticResource GreenBrush}" />
+                            <Setter Property="Foreground"
+                                    Value="{StaticResource GreenBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

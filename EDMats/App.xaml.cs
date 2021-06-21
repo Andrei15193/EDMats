@@ -2,6 +2,7 @@
 using System.Windows.Threading;
 using EDMats.Services;
 using EDMats.Services.Implementations;
+using EDMats.Storage;
 using EDMats.ViewModels;
 using Unity;
 
@@ -21,7 +22,9 @@ namespace EDMats
                 .RegisterType<IGoalsStorageService, GoalsStorageService>()
                 .RegisterType<IGoalsFileStorageService, GoalsFileStorageService>()
                 .RegisterType<IMaterialTraderService, MaterialTraderService>()
-                .RegisterType<ITradeSolutionService, TradeSolutionService>();
+                .RegisterType<ITradeSolutionService, TradeSolutionService>()
+                .RegisterType<IProfileStorageHandler, ProfileStorageHandler>()
+                .RegisterSingleton<IStorageHandler, InMemoryStorageHandler>();
 
         internal static TService Resolve<TService>()
             => _container.Resolve<TService>();

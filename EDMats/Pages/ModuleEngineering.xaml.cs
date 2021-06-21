@@ -37,7 +37,13 @@ namespace EDMats.Pages
             e.Handled = !_IsValidRepetitionNumber();
 
             bool _IsValidRepetitionNumber()
-                => int.TryParse(textBox.Text + e.Text, out var number) && 0 <= number && number <= 50;
+                => int.TryParse(textBox.Text.Substring(0, textBox.SelectionStart) + e.Text + textBox.Text.Substring(textBox.SelectionStart + textBox.SelectionLength), out var number) && 0 <= number && number <= 50;
+        }
+
+        private void _ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            if (e.ExtentHeightChange != 0)
+                ((ScrollViewer)sender).ScrollToVerticalOffset(e.VerticalOffset - e.VerticalChange);
         }
     }
 }

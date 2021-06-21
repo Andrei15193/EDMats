@@ -4,7 +4,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace EDMats.Storage
 {
-    public class ProfileStorageHandler
+    public class ProfileStorageHandler : IProfileStorageHandler
     {
         private static JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
         {

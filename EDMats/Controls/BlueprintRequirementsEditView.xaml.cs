@@ -14,7 +14,7 @@ namespace EDMats.Controls
             e.Handled = !_IsValidRepetitionNumber();
 
             bool _IsValidRepetitionNumber()
-                => int.TryParse(textBox.Text + e.Text, out var number) && 0 <= number && number <= 50;
+                => int.TryParse(textBox.Text.Substring(0, textBox.SelectionStart) + e.Text + textBox.Text.Substring(textBox.SelectionStart + textBox.SelectionLength), out var number) && 0 <= number && number <= 50;
         }
     }
 }

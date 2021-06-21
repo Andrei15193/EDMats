@@ -159,6 +159,7 @@
     <Compile Include="Data\MaterialTrading\TradeEntry.cs" />
     <Compile Include="Data\MaterialTrading\TradeRate.cs" />
     <Compile Include="Data\MaterialTrading\TradeSolution.cs" />
+    <Compile Include="Storage\IProfileStorageHandler.cs" />
     <Compile Include="Storage\StorageBlueprint.cs" />
     <Compile Include="Storage\StorageBlueprintGrade.cs" />
     <Compile Include="Storage\StorageCommander.cs" />

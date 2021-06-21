@@ -12,7 +12,10 @@ namespace EDMats.Converters
         public object FallbackValue { get; set; }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-            => System.Convert.ChangeType(_AreEqual(value, parameter) ? ValueIfEqual : FallbackValue, targetType);
+        {
+            var result = _AreEqual(value, parameter) ? ValueIfEqual : FallbackValue;
+            return result is IConvertible ? System.Convert.ChangeType(result, targetType) : result;
+        }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
             => throw new NotImplementedException();
