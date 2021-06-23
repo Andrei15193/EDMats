@@ -45,5 +45,12 @@ namespace EDMats.Pages
             if (e.ExtentHeightChange != 0)
                 ((ScrollViewer)sender).ScrollToVerticalOffset(e.VerticalOffset - e.VerticalChange);
         }
+
+        private void _ListViewSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var listView = (ListView)sender;
+            if (e.AddedItems.Count > 0 && listView.SelectedItem != e.AddedItems[0])
+                listView.SelectedItem = e.AddedItems[0];
+        }
     }
 }

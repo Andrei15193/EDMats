@@ -18,8 +18,8 @@ namespace EDMats.Tests.Storage
             Assert.IsNotNull(profile.Commander);
             Assert.IsNull(profile.Commander.Name);
             Assert.IsNull(profile.Commander.PictureId);
-            Assert.IsNotNull(profile.Blueprints);
-            Assert.AreEqual(0, profile.Blueprints.Count);
+            Assert.IsNotNull(profile.Modules);
+            Assert.AreEqual(0, profile.Modules.Count);
         }
 
         [TestMethod]
@@ -34,27 +34,33 @@ namespace EDMats.Tests.Storage
                 {
                     Name = "commander name"
                 },
-                Blueprints =
+                Modules =
                 {
-                    new StorageBlueprint
                     {
-                        Id = "blueprint id",
-                        Grade1 = new StorageBlueprintGrade
+                        "module id",
+                        new StorageModule
                         {
-                            Repetitions = 3
-                        },
-                        Grade2 = new StorageBlueprintGrade
-                        {
-                            Repetitions = 10
-                        },
-                        Grade4 = new StorageBlueprintGrade
-                        {
-                            Repetitions = 1
-                        },
-                        ExperimentalEffect = new StorageExperimentalEffect
-                        {
-                            Id = "experimental effect id",
-                            Repetitions = 2
+                            Blueprint = new StorageBlueprint
+                            {
+                                Id = "blueprint id",
+                                Grade1 = new StorageBlueprintGrade
+                                {
+                                    Repetitions = 3
+                                },
+                                Grade2 = new StorageBlueprintGrade
+                                {
+                                    Repetitions = 10
+                                },
+                                Grade4 = new StorageBlueprintGrade
+                                {
+                                    Repetitions = 1
+                                }
+                            },
+                            ExperimentalEffect = new StorageExperimentalEffect
+                            {
+                                Id = "experimental effect id",
+                                Repetitions = 2
+                            }
                         }
                     }
                 }
@@ -70,24 +76,26 @@ namespace EDMats.Tests.Storage
                     ""commander"": {
                         ""name"": ""commander name""
                     },
-                    ""blueprints"": [
-                        {
-                            ""id"": ""blueprint id"",
-                            ""grade1"": {
-                                ""repetitions"": 3
-                            },
-                            ""grade2"": {
-                                ""repetitions"": 10
-                            },
-                            ""grade4"": {
-                                ""repetitions"": 1
+                    ""modules"": {
+                        ""module id"": {
+                            ""blueprint"": {
+                                ""id"": ""blueprint id"",
+                                ""grade1"": {
+                                    ""repetitions"": 3
+                                },
+                                ""grade2"": {
+                                    ""repetitions"": 10
+                                },
+                                ""grade4"": {
+                                    ""repetitions"": 1
+                                },
                             },
                             ""experimentalEffect"": {
                                 ""id"": ""experimental effect id"",
                                 ""repetitions"": 2
                             }
                         }
-                    ]
+                    }
                 }"),
                 _FormatJson(profileJson)
             );
@@ -103,27 +111,33 @@ namespace EDMats.Tests.Storage
                 {
                     Name = "commander name"
                 },
-                Blueprints =
+                Modules =
                 {
-                    new StorageBlueprint
                     {
-                        Id = "blueprint id",
-                        Grade1 = new StorageBlueprintGrade
+                        "module id",
+                        new StorageModule
                         {
-                            Repetitions = 3
-                        },
-                        Grade2 = new StorageBlueprintGrade
-                        {
-                            Repetitions = 10
-                        },
-                        Grade4 = new StorageBlueprintGrade
-                        {
-                            Repetitions = 1
-                        },
-                        ExperimentalEffect = new StorageExperimentalEffect
-                        {
-                            Id = "experimental effect id",
-                            Repetitions = 2
+                            Blueprint = new StorageBlueprint
+                            {
+                                Id = "blueprint id",
+                                Grade1 = new StorageBlueprintGrade
+                                {
+                                    Repetitions = 3
+                                },
+                                Grade2 = new StorageBlueprintGrade
+                                {
+                                    Repetitions = 10
+                                },
+                                Grade4 = new StorageBlueprintGrade
+                                {
+                                    Repetitions = 1
+                                }
+                            },
+                            ExperimentalEffect = new StorageExperimentalEffect
+                            {
+                                Id = "experimental effect id",
+                                Repetitions = 2
+                            }
                         }
                     }
                 }
@@ -135,20 +149,20 @@ namespace EDMats.Tests.Storage
             Assert.IsNotNull(profile.Commander);
             Assert.AreEqual("commander name", profile.Commander.Name);
             Assert.IsNull(profile.Commander.PictureId);
-            Assert.IsNotNull(profile.Blueprints);
-            Assert.AreEqual(1, profile.Blueprints.Count);
-            Assert.AreEqual("blueprint id", profile.Blueprints[0].Id);
-            Assert.IsNotNull(profile.Blueprints[0].Grade1);
-            Assert.AreEqual(3, profile.Blueprints[0].Grade1.Repetitions);
-            Assert.IsNotNull(profile.Blueprints[0].Grade2);
-            Assert.AreEqual(10, profile.Blueprints[0].Grade2.Repetitions);
-            Assert.IsNull(profile.Blueprints[0].Grade3);
-            Assert.IsNotNull(profile.Blueprints[0].Grade4);
-            Assert.AreEqual(1, profile.Blueprints[0].Grade4.Repetitions);
-            Assert.IsNull(profile.Blueprints[0].Grade5);
-            Assert.IsNotNull(profile.Blueprints[0].ExperimentalEffect);
-            Assert.AreEqual("experimental effect id", profile.Blueprints[0].ExperimentalEffect.Id);
-            Assert.AreEqual(2, profile.Blueprints[0].ExperimentalEffect.Repetitions);
+            Assert.IsNotNull(profile.Modules);
+            Assert.AreEqual(1, profile.Modules.Count);
+            Assert.IsNotNull(profile.Modules["module id"].Blueprint);
+            Assert.IsNotNull(profile.Modules["module id"].Blueprint.Grade1);
+            Assert.AreEqual(3, profile.Modules["module id"].Blueprint.Grade1.Repetitions);
+            Assert.IsNotNull(profile.Modules["module id"].Blueprint.Grade2);
+            Assert.AreEqual(10, profile.Modules["module id"].Blueprint.Grade2.Repetitions);
+            Assert.IsNull(profile.Modules["module id"].Blueprint.Grade3);
+            Assert.IsNotNull(profile.Modules["module id"].Blueprint.Grade4);
+            Assert.AreEqual(1, profile.Modules["module id"].Blueprint.Grade4.Repetitions);
+            Assert.IsNull(profile.Modules["module id"].Blueprint.Grade5);
+            Assert.IsNotNull(profile.Modules["module id"].ExperimentalEffect);
+            Assert.AreEqual("experimental effect id", profile.Modules["module id"].ExperimentalEffect.Id);
+            Assert.AreEqual(2, profile.Modules["module id"].ExperimentalEffect.Repetitions);
         }
 
         private static string _FormatJson(string json)

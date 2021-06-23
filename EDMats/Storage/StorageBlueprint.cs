@@ -13,7 +13,5 @@
         public StorageBlueprintGrade Grade4 { get; set; }
 
         public StorageBlueprintGrade Grade5 { get; set; }
-
-        public StorageExperimentalEffect ExperimentalEffect { get; set; }
     }
 }

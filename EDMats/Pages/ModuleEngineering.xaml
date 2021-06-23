@@ -41,7 +41,9 @@
                                FontWeight="SemiBold" />
                 </Border>
                 <ListView ItemsSource="{Binding Module.Blueprints, Mode=OneWay}"
-                          SelectedItem="{Binding SelectedBlueprint, Mode=TwoWay}">
+                          SelectedItem="{Binding SelectedBlueprint, Mode=TwoWay}"
+                          SelectionMode="Multiple"
+                          SelectionChanged="_ListViewSelectionChanged">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Name, Mode=OneTime}"
@@ -53,16 +55,15 @@
                                                         DataContext="{Binding BlueprintGradesRequirements, Mode=OneTime}" />
 
                 <Border Margin="0, 10, 0, 0"
-                        BorderThickness="0, 0, 0, 1.5"
-                        BorderBrush="{Binding SelectedBlueprint, Converter={converters:EqualsComparer ValueIfEqual={StaticResource GreenBrush}, FallbackValue={StaticResource LightBlueBrush}}, ConverterParameter={x:Null}, Mode=OneWay}">
+                        BorderThickness="0, 0, 0, 1.5">
                     <TextBlock Text="Experimental Effects"
-                               Foreground="{Binding BorderBrush, RelativeSource={RelativeSource FindAncestor, AncestorType=Border}}"
                                FontSize="18"
                                FontWeight="SemiBold" />
                 </Border>
                 <ListView ItemsSource="{Binding Module.ExperimentalEffects, Mode=OneWay}"
-                          IsEnabled="{Binding SelectedBlueprint, Converter={converters:EqualsComparer ValueIfEqual=False, FallbackValue=True}, ConverterParameter={x:Null}, Mode=OneWay}"
-                          SelectedItem="{Binding SelectedExperimentalEffect, Mode=TwoWay}">
+                          SelectedItem="{Binding SelectedExperimentalEffect, Mode=TwoWay}"
+                          SelectionMode="Multiple"
+                          SelectionChanged="_ListViewSelectionChanged">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Name, Mode=OneTime}"

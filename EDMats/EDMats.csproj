@@ -165,6 +165,7 @@
     <Compile Include="Storage\StorageCommander.cs" />
     <Compile Include="Storage\InMemoryStorageHandler.cs" />
     <Compile Include="Storage\StorageExperimentalEffect.cs" />
+    <Compile Include="Storage\StorageModule.cs" />
     <Compile Include="Storage\StorageProfile.cs" />
     <Compile Include="Storage\IStorageHandler.cs" />
     <Compile Include="Storage\ProfileStorageHandler.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="ViewModels\FormViewModel.cs" />
     <Compile Include="ViewModels\IAsyncState.cs" />
     <Compile Include="ViewModels\BlueprintViewModel.cs" />
+    <Compile Include="ListExtensions.cs" />
     <Compile Include="ViewModels\ModuleEngineeringViewModel.cs" />
     <Compile Include="ViewModels\ModulesBrowserViewModel.cs" />
     <Compile Include="ViewModels\NotificationViewModel.cs" />

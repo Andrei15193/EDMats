@@ -8,9 +8,10 @@ namespace EDMats.ViewModels
 {
     public class ModuleEngineeringViewModel : ViewModel
     {
-        private Module _module;
-        private Blueprint _selectedBlueprint;
         private readonly IProfileStorageHandler _profileStorageHandler;
+        private Module _module;
+        private StorageModule _storageModule;
+        private Blueprint _selectedBlueprint;
         private readonly ObservableCollection<BlueprintGradeRequirementsViewModel> _blueprintGradesRequirements;
         private ExperimentalEffect _selectedExperimentalEffect;
         private ExperimentalEffectRequirementsViewModel _experimentalEffectRequirements;
@@ -24,9 +25,9 @@ namespace EDMats.ViewModels
         {
             _profileStorageHandler = profileStorageHandler;
             SaveCommand = CreateCommand(
-                () => SelectedBlueprint is object,
+                () => SelectedBlueprint is object || SelectedExperimentalEffect is object,
                 _Save,
-                nameof(SelectedBlueprint)
+                nameof(SelectedBlueprint), nameof(SelectedExperimentalEffect)
             );
             _blueprintGradesRequirements = new ObservableCollection<BlueprintGradeRequirementsViewModel>();
             BlueprintGradesRequirements = new ReadOnlyObservableCollection<BlueprintGradeRequirementsViewModel>(_blueprintGradesRequirements);
@@ -41,9 +42,17 @@ namespace EDMats.ViewModels
                 {
                     _module = value;
                     NotifyPropertyChanged();
+
+                    if (!_profileStorageHandler.LoadProfile("default").Modules.TryGetValue(_module.Id, out _storageModule))
+                        _storageModule = new StorageModule();
+
+                    SelectedBlueprint = _storageModule.Blueprint is object ? Module.Blueprints.SingleOrDefault(blueprint => blueprint.Id == _storageModule.Blueprint.Id) : default;
+                    SelectedExperimentalEffect = _storageModule.ExperimentalEffect is object ? Module.ExperimentalEffects.SingleOrDefault(experimentalEffect => experimentalEffect.Id == _storageModule.ExperimentalEffect.Id) : default;
                 }
             }
         }
+
+        private const int DefaultRepetitions = 8;
 
         public Blueprint SelectedBlueprint
         {
@@ -56,24 +65,16 @@ namespace EDMats.ViewModels
                     NotifyPropertyChanged();
 
                     if (_selectedBlueprint is object)
-                    {
-                        var storageBlueprint = _GetStorageBlueprint(_selectedBlueprint.Id);
-                        var blueprintGradeIndex = 0;
-                        foreach (var blueprintGradeRequirement in _selectedBlueprint.GradeRequirements)
-                        {
-                            var repetitions = _GetRepetitionsFor(blueprintGradeRequirement.Grade, storageBlueprint) ?? 8;
-                            var blueprintGradeRequirementViewModel = new BlueprintGradeRequirementsViewModel(blueprintGradeRequirement, repetitions);
-
-                            if (blueprintGradeIndex == _blueprintGradesRequirements.Count)
-                                _blueprintGradesRequirements.Add(blueprintGradeRequirementViewModel);
-                            else
-                                _blueprintGradesRequirements[blueprintGradeIndex] = blueprintGradeRequirementViewModel;
-                            blueprintGradeIndex++;
-                        }
-                        while (blueprintGradeIndex < _blueprintGradesRequirements.Count)
-                            _blueprintGradesRequirements.RemoveAt(blueprintGradeIndex);
-                        SelectedExperimentalEffect = Module.ExperimentalEffects.SingleOrDefault(experimentalEffect => experimentalEffect.Id == storageBlueprint.ExperimentalEffect?.Id);
-                    }
+                        if (_storageModule.Blueprint is object && _selectedBlueprint.Id == _storageModule.Blueprint.Id)
+                            _blueprintGradesRequirements.Reset(
+                                from gradeRequirement in _selectedBlueprint.GradeRequirements
+                                select new BlueprintGradeRequirementsViewModel(gradeRequirement, _GetRepetitionsFor(gradeRequirement.Grade, _storageModule.Blueprint) ?? DefaultRepetitions)
+                            );
+                        else
+                            _blueprintGradesRequirements.Reset(
+                                from gradeRequirement in _selectedBlueprint.GradeRequirements
+                                select new BlueprintGradeRequirementsViewModel(gradeRequirement, DefaultRepetitions)
+                            );
                     else
                         _blueprintGradesRequirements.Clear();
                 }
@@ -93,13 +94,10 @@ namespace EDMats.ViewModels
                     NotifyPropertyChanged();
 
                     if (_selectedExperimentalEffect is object)
-                    {
-                        var storageBlueprint = _GetStorageBlueprint(_selectedBlueprint.Id);
-                        if (storageBlueprint.ExperimentalEffect?.Id == _selectedExperimentalEffect.Id)
-                            ExperimentalEffectRequirements = new ExperimentalEffectRequirementsViewModel(_selectedExperimentalEffect.Requirements, storageBlueprint.ExperimentalEffect.Repetitions);
+                        if (_selectedExperimentalEffect.Id == _storageModule.ExperimentalEffect?.Id)
+                            ExperimentalEffectRequirements = new ExperimentalEffectRequirementsViewModel(_selectedExperimentalEffect.Requirements, _storageModule.ExperimentalEffect.Repetitions);
                         else
-                            ExperimentalEffectRequirements = new ExperimentalEffectRequirementsViewModel(_selectedExperimentalEffect.Requirements, 8);
-                    }
+                            ExperimentalEffectRequirements = new ExperimentalEffectRequirementsViewModel(_selectedExperimentalEffect.Requirements, DefaultRepetitions);
                     else
                         ExperimentalEffectRequirements = null;
                 }
@@ -128,46 +126,36 @@ namespace EDMats.ViewModels
 
         private void _Save()
         {
+            var profile = _profileStorageHandler.LoadProfile("default");
+
             if (_selectedBlueprint is object)
             {
-                var storageBlueprint = _GetStorageBlueprint(_selectedBlueprint.Id, out var profile);
-
-                foreach (var blueprintGradeRequirements in _blueprintGradesRequirements)
-                    _SetRepetitionsFor(storageBlueprint, blueprintGradeRequirements);
-                if (_selectedExperimentalEffect is object)
-                    storageBlueprint.ExperimentalEffect = new StorageExperimentalEffect
-                    {
-                        Id = _selectedExperimentalEffect.Id,
-                        Repetitions = _experimentalEffectRequirements.Repetitions
-                    };
-                else
-                    storageBlueprint.ExperimentalEffect = null;
-
-                _profileStorageHandler.SaveProfile(profile);
-            }
-
-            Saved?.Invoke(this, EventArgs.Empty);
-        }
-
-        private StorageBlueprint _GetStorageBlueprint(string blueprintId)
-            => _GetStorageBlueprint(blueprintId, out var _);
-
-        private StorageBlueprint _GetStorageBlueprint(string blueprintId, out StorageProfile profile)
-        {
-            profile = _profileStorageHandler.LoadProfile("default");
-
-            var storageBlueprintId = $"{Module.Id}/{blueprintId}";
-            var storageBlueprint = profile.Blueprints.SingleOrDefault(blueprint => blueprint.Id == storageBlueprintId);
-            if (storageBlueprint is null)
-            {
-                storageBlueprint = new StorageBlueprint
+                _storageModule.Blueprint = new StorageBlueprint
                 {
-                    Id = storageBlueprintId
+                    Id = _selectedBlueprint.Id
                 };
-                profile.Blueprints.Add(storageBlueprint);
+                foreach (var gradeRequirements in _blueprintGradesRequirements)
+                    _SetRepetitionsFor(_storageModule.Blueprint, gradeRequirements);
             }
+            else
+                _storageModule.Blueprint = null;
 
-            return storageBlueprint;
+            if (_selectedExperimentalEffect is object)
+                _storageModule.ExperimentalEffect = new StorageExperimentalEffect
+                {
+                    Id = _selectedExperimentalEffect.Id,
+                    Repetitions = _experimentalEffectRequirements.Repetitions
+                };
+            else
+                _storageModule.ExperimentalEffect = null;
+
+            if (_storageModule.Blueprint is object || _storageModule.ExperimentalEffect is object)
+                profile.Modules[_module.Id] = _storageModule;
+            else
+                profile.Modules.Remove(_module.Id);
+
+            _profileStorageHandler.SaveProfile(profile);
+            Saved?.Invoke(this, EventArgs.Empty);
         }
 
         private static int? _GetRepetitionsFor(BlueprintGrade blueprintGrade, StorageBlueprint storageBlueprint)

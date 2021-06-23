@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace EDMats.Storage
@@ -13,6 +14,6 @@ namespace EDMats.Storage
 
         public StorageCommander Commander { get; } = new StorageCommander();
 
-        public List<StorageBlueprint> Blueprints { get; } = new List<StorageBlueprint>();
+        public SortedDictionary<string, StorageModule> Modules { get; } = new SortedDictionary<string, StorageModule>(StringComparer.Ordinal);
     }
 }
