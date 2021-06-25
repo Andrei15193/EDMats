@@ -17,7 +17,8 @@ namespace EDMats.Tests.Storage
             Assert.AreEqual("profile", profile.Name);
             Assert.IsNotNull(profile.Commander);
             Assert.IsNull(profile.Commander.Name);
-            Assert.IsNull(profile.Commander.PictureId);
+            Assert.IsNull(profile.Commander.Picture);
+            Assert.IsNull(profile.Commander.JournalsDirectoryPath);
             Assert.IsNotNull(profile.Modules);
             Assert.AreEqual(0, profile.Modules.Count);
         }
@@ -148,7 +149,7 @@ namespace EDMats.Tests.Storage
             Assert.AreEqual("profile", profile.Name);
             Assert.IsNotNull(profile.Commander);
             Assert.AreEqual("commander name", profile.Commander.Name);
-            Assert.IsNull(profile.Commander.PictureId);
+            Assert.IsNull(profile.Commander.Picture);
             Assert.IsNotNull(profile.Modules);
             Assert.AreEqual(1, profile.Modules.Count);
             Assert.IsNotNull(profile.Modules["module id"].Blueprint);

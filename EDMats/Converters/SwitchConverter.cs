@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
@@ -8,10 +8,12 @@ namespace EDMats.Converters
 {
     public class SwitchConverter : IValueConverter
     {
-        public IEnumerable Cases { get; set; }
+        public List<object> Cases { get; set; } = new List<object>();
+
+        public object DefaultCase { get; set; }
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-            => Cases.OfType<SwitchCase>().Single(@case => Equals(@case.Value, value)).MappedValue;
+            => Cases.OfType<SwitchCase>().SingleOrDefault(@case => Equals(@case.Value, value))?.MappedValue ?? DefaultCase;
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
             => throw new NotImplementedException();

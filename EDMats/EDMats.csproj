@@ -100,6 +100,9 @@
     <Compile Include="Controls\MaterialRequirementsView.xaml.cs">
       <DependentUpon>MaterialRequirementsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ProfilePictureViewbox.xaml.cs">
+      <DependentUpon>ProfilePictureViewbox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\NotEqualsComparer.cs" />
     <Compile Include="Converters\EqualsComparer.cs" />
@@ -112,6 +115,7 @@
     <Compile Include="Data\Engineering\Module.cs" />
     <Compile Include="Data\Engineering\ModuleType.cs" />
     <Compile Include="Data\MaterialTrading\AllowedTrade.cs" />
+    <Compile Include="Data\ProfilePicture.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -170,6 +174,7 @@
     <Compile Include="Storage\IStorageHandler.cs" />
     <Compile Include="Storage\ProfileStorageHandler.cs" />
     <Compile Include="ViewModels\BlueprintGradeRequirementsViewModel.cs" />
+    <Compile Include="ViewModels\CommanderViewModelNew.cs" />
     <Compile Include="ViewModels\ExperimentalEffectRequirementsViewModel.cs" />
     <Compile Include="ViewModels\Extensions.cs" />
     <Compile Include="ViewModels\AsyncState.cs" />
@@ -248,6 +253,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\MaterialRequirementsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ProfilePictureViewbox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

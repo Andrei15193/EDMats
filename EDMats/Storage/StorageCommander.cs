@@ -4,6 +4,8 @@
     {
         public string Name { get; set; }
 
-        public string PictureId { get; set; }
+        public string Picture { get; set; }
+
+        public string JournalsDirectoryPath { get; set; }
     }
 }
