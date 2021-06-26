@@ -76,7 +76,7 @@
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
 
-                <controls:ProfilePictureViewbox Picture="None" />
+                <controls:ProfilePictureViewbox Picture="EliteDangerousLogo" />
                 <controls:ProfilePictureViewbox Picture="Sidewinder" />
             </ListView>
         </StackPanel>

@@ -100,6 +100,9 @@
     <Compile Include="Controls\MaterialRequirementsView.xaml.cs">
       <DependentUpon>MaterialRequirementsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ProcessRing.xaml.cs">
+      <DependentUpon>ProcessRing.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ProfilePictureViewbox.xaml.cs">
       <DependentUpon>ProfilePictureViewbox.xaml</DependentUpon>
     </Compile>
@@ -200,6 +203,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Assets\Preview\Animations\process_ring.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Assets\Preview\Symbols\elite_dangerous_logo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Assets\Preview\Symbols\material-grade-4.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -253,6 +264,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\MaterialRequirementsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ProcessRing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

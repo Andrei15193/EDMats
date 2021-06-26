@@ -129,7 +129,53 @@
                 </TabItem.Background>
                 <TabItem.ContentTemplate>
                     <DataTemplate>
-                        <TextBlock Text="Main" />
+                        <StackPanel>
+                            <TextBlock Grid.Row="0"
+                                       Text="Materials Search"
+                                       Style="{StaticResource TextBlockHeader}" />
+
+                            <Border BorderThickness="2"
+                                    BorderBrush="{StaticResource DarkBlueBrush}"
+                                    Padding="10"
+                                    Height="100">
+                                <controls:ProcessRing Grid.Row="1"
+                                                      Color="{StaticResource Orange}" />
+                            </Border>
+
+                            <Grid Margin="0, 10, 0, 10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <ToggleButton Grid.Column="0"
+                                              BorderThickness="3"
+                                              HorizontalContentAlignment="Center">
+                                    <TextBlock Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=ToggleButton}, Mode=OneWay}"
+                                               TextAlignment="Center"
+                                               Text="Raw" />
+                                </ToggleButton>
+                                <ToggleButton Grid.Column="2"
+                                              BorderThickness="3"
+                                              HorizontalContentAlignment="Center">
+                                    <TextBlock Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=ToggleButton}, Mode=OneWay}"
+                                               TextAlignment="Center"
+                                               Text="Manufactured" />
+                                </ToggleButton>
+                                <ToggleButton Grid.Column="4"
+                                              BorderThickness="3"
+                                              HorizontalContentAlignment="Center">
+                                    <TextBlock Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=ToggleButton}, Mode=OneWay}"
+                                               TextAlignment="Center"
+                                               Text="Encoded" />
+                                </ToggleButton>
+                            </Grid>
+
+                            <Button BorderThickness="3"
+                                    Content="Start Session" />
+                        </StackPanel>
                     </DataTemplate>
                 </TabItem.ContentTemplate>
             </TabItem>

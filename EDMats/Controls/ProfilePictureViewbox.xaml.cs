@@ -1,5 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Shapes;
 using EDMats.Data;
 
 namespace EDMats.Controls
@@ -34,6 +36,14 @@ namespace EDMats.Controls
             {
                 case ProfilePicture.Sidewinder:
                     Child = (UIElement)Resources["Drawings_Sidewinder"];
+                    break;
+
+                case ProfilePicture.EliteDangerousLogo:
+                    Child = new Path
+                    {
+                        Fill = (Brush)Resources["GoldBrush"],
+                        Data = (Geometry)Resources["Elite_Dangerous_Logo"]
+                    };
                     break;
 
                 default:

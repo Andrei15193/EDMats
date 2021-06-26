@@ -3,6 +3,7 @@
     public enum ProfilePicture
     {
         None,
-        Sidewinder
+        Sidewinder,
+        EliteDangerousLogo
     }
 }

@@ -7,6 +7,12 @@
          d:DesignHeight="450"
          d:DesignWidth="800">
     <Viewbox.Resources>
-        <ResourceDictionary Source="../Assets/Drawings.xaml" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles.xaml" />
+                <ResourceDictionary Source="../Assets/Drawings.xaml" />
+                <ResourceDictionary Source="../Assets/Symbols.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Viewbox.Resources>
 </Viewbox>

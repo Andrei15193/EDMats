@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
@@ -8,7 +8,7 @@ namespace EDMats.Converters
 {
     public class SwitchConverter : IValueConverter
     {
-        public List<object> Cases { get; set; } = new List<object>();
+        public ArrayList Cases { get; set; }
 
         public object DefaultCase { get; set; }
 
