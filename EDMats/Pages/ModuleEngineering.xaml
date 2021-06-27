@@ -20,7 +20,8 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ScrollViewer Grid.Row="0" ScrollChanged="_ScrollChanged">
+        <ScrollViewer Grid.Row="0"
+                      ScrollChanged="_ScrollChanged">
             <ScrollViewer.Resources>
                 <Style TargetType="ListView"
                        BasedOn="{StaticResource {x:Type ListView}}">

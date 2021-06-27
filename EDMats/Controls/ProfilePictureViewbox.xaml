@@ -9,7 +9,6 @@
     <Viewbox.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Styles.xaml" />
                 <ResourceDictionary Source="../Assets/Drawings.xaml" />
                 <ResourceDictionary Source="../Assets/Symbols.xaml" />
             </ResourceDictionary.MergedDictionaries>
