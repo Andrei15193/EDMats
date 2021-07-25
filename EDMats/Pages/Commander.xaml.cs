@@ -10,16 +10,16 @@ namespace EDMats.Pages
     {
         public static readonly DependencyProperty CommanderViewModelProperty = DependencyProperty.Register(
             nameof(CommanderViewModel),
-            typeof(CommanderViewModelNew),
+            typeof(CommanderViewModel),
             typeof(Commander)
         );
 
         public Commander()
             => InitializeComponent();
 
-        public CommanderViewModelNew CommanderViewModel
+        public CommanderViewModel CommanderViewModel
         {
-            get => (CommanderViewModelNew)GetValue(CommanderViewModelProperty);
+            get => (CommanderViewModel)GetValue(CommanderViewModelProperty);
             set => SetValue(CommanderViewModelProperty, value);
         }
 

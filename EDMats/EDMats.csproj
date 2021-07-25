@@ -94,6 +94,9 @@
       <DependentUpon>BlueprintRequirementsEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\BrowserHyperlink.cs" />
+    <Compile Include="Controls\MaterialGradeView.xaml.cs">
+      <DependentUpon>MaterialGradeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MaterialQuantitiesView.xaml.cs">
       <DependentUpon>MaterialQuantitiesView.xaml</DependentUpon>
     </Compile>
@@ -130,6 +133,9 @@
     </Compile>
     <Compile Include="Pages\Engineering.xaml.cs">
       <DependentUpon>Engineering.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Materials.xaml.cs">
+      <DependentUpon>Materials.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ModuleEngineering.xaml.cs">
       <DependentUpon>ModuleEngineering.xaml</DependentUpon>
@@ -177,19 +183,12 @@
     <Compile Include="Storage\IStorageHandler.cs" />
     <Compile Include="Storage\ProfileStorageHandler.cs" />
     <Compile Include="ViewModels\BlueprintGradeRequirementsViewModel.cs" />
-    <Compile Include="ViewModels\CommanderViewModelNew.cs" />
-    <Compile Include="ViewModels\ExperimentalEffectRequirementsViewModel.cs" />
-    <Compile Include="ViewModels\Extensions.cs" />
-    <Compile Include="ViewModels\AsyncState.cs" />
     <Compile Include="ViewModels\CommanderViewModel.cs" />
-    <Compile Include="ViewModels\FormViewModel.cs" />
-    <Compile Include="ViewModels\IAsyncState.cs" />
-    <Compile Include="ViewModels\BlueprintViewModel.cs" />
+    <Compile Include="ViewModels\ExperimentalEffectRequirementsViewModel.cs" />
     <Compile Include="ListExtensions.cs" />
+    <Compile Include="ViewModels\MaterialsViewModel.cs" />
     <Compile Include="ViewModels\ModuleEngineeringViewModel.cs" />
     <Compile Include="ViewModels\ModulesBrowserViewModel.cs" />
-    <Compile Include="ViewModels\NotificationViewModel.cs" />
-    <Compile Include="ViewModels\StoredMaterial.cs" />
     <Compile Include="Converters\StringConverter.cs" />
     <Compile Include="ViewModels\TradeSolutionSearchStatus.cs" />
     <Compile Include="TradeSolutionWindow.xaml.cs">
@@ -197,7 +196,6 @@
     </Compile>
     <Compile Include="ViewModels\AsyncCommand.cs" />
     <Compile Include="ViewModels\Command.cs" />
-    <Compile Include="ViewModels\NotificationsViewModel.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Page Include="Assets\Drawings.xaml">
       <SubType>Designer</SubType>
@@ -403,6 +401,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\MaterialGradeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\MaterialQuantitiesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -436,6 +438,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Engineering.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Materials.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

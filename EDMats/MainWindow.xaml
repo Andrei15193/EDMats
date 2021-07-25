@@ -18,7 +18,7 @@
                 <ResourceDictionary Source="Assets/Symbols.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <viewModels:CommanderViewModelNew x:Key="CommanderViewModel"
+            <viewModels:CommanderViewModel x:Key="CommanderViewModel"
                                               Saved="_UnselectTab"
                                               Reset="_UnselectTab" />
         </ResourceDictionary>
@@ -219,7 +219,7 @@
                 </TabItem.Background>
                 <TabItem.ContentTemplate>
                     <DataTemplate>
-                        <TextBlock Text="Materials" />
+                        <pages:Materials />
                     </DataTemplate>
                 </TabItem.ContentTemplate>
             </TabItem>

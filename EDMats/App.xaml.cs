@@ -3,7 +3,6 @@ using System.Windows.Threading;
 using EDMats.Services;
 using EDMats.Services.Implementations;
 using EDMats.Storage;
-using EDMats.ViewModels;
 using Unity;
 
 namespace EDMats
@@ -14,7 +13,6 @@ namespace EDMats
 
         private static IUnityContainer _GetUnityContainer()
             => new UnityContainer()
-                .RegisterSingleton<NotificationsViewModel>()
                 .RegisterType<IFileSystemService, FileSystemService>()
                 .RegisterType<IJournalImportService, JournalImportService>()
                 .RegisterType<IJournalReaderService, JournalReaderService>()
