@@ -13,7 +13,7 @@ namespace EDMats
         private void _SectionSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (Section.SelectedItem is null)
-                Section.SelectedItem = Main;
+                Section.SelectedItem = MaterialsTradeSearch;
         }
 
         private void _UnselectTab(object sender, EventArgs e)

@@ -1,0 +1,111 @@
+﻿<UserControl x:Class="EDMats.Pages.MaterialsTradeSearch"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:EDMats.Controls"
+             xmlns:converters="clr-namespace:EDMats.Converters"
+             xmlns:viewModels="clr-namespace:EDMats.ViewModels"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             Loaded="_Loaded">
+    <UserControl.Resources>
+        <viewModels:MaterialsTradeSearchViewModel x:Key="ViewModel" />
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <TextBlock Grid.Row="0"
+                       Text="Materials Trade Search"
+                       Style="{StaticResource TextBlockHeader}" />
+
+            <Border BorderThickness="2"
+                    BorderBrush="{StaticResource DarkBlueBrush}"
+                    Padding="10"
+                    Height="100">
+                <controls:ProcessRing Grid.Row="1"
+                                      Color="{StaticResource Orange}" />
+            </Border>
+
+            <Grid Margin="0, 10, 0, 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <ToggleButton Grid.Column="0"
+                              BorderThickness="3"
+                              HorizontalContentAlignment="Center">
+                    <TextBlock Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=ToggleButton}, Mode=OneWay}"
+                               TextAlignment="Center"
+                               Text="Raw" />
+                </ToggleButton>
+                <ToggleButton Grid.Column="2"
+                              BorderThickness="3"
+                              HorizontalContentAlignment="Center">
+                    <TextBlock Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=ToggleButton}, Mode=OneWay}"
+                               TextAlignment="Center"
+                               Text="Manufactured" />
+                </ToggleButton>
+                <ToggleButton Grid.Column="4"
+                              BorderThickness="3"
+                              HorizontalContentAlignment="Center">
+                    <TextBlock Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=ToggleButton}, Mode=OneWay}"
+                               TextAlignment="Center"
+                               Text="Encoded" />
+                </ToggleButton>
+            </Grid>
+
+            <Button Margin="0, 0, 0, 10"
+                    BorderThickness="3"
+                    IsEnabled="{Binding SelectedEngineeringConfiguration, Source={StaticResource ViewModel}, Converter={converters:EqualsComparer ValueIfEqual=False, FallbackValue=True}, Mode=OneWay}">
+                <TextBlock Text="Start Session"
+                           Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=Button}}"/>
+            </Button>
+
+            <TextBlock Grid.Row="0"
+                       Margin="0"
+                       FontSize="16"
+                       FontWeight="DemiBold"
+                       Text="Engineering Configurations"
+                       Style="{StaticResource TextBlockHeader}" />
+        </StackPanel>
+
+        <ListView Grid.Row="1"
+                  SelectedItem="{Binding SelectedEngineeringConfiguration, Source={StaticResource ViewModel}, Mode=TwoWay}"
+                  ItemsSource="{Binding EngineeringConfigurations, Source={StaticResource ViewModel}, Mode=OneTime}"
+                  SelectionMode="Multiple"
+                  SelectionChanged="_ListViewSelectionChanged">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Module.Name}"
+                                   FontWeight="Bold"
+                                   FontSize="14"
+                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=ListViewItem}}" />
+
+                        <TextBlock VerticalAlignment="Center"
+                                   Visibility="{Binding Blueprint, Converter={converters:EqualsComparer ValueIfEqual={x:Static Visibility.Collapsed}, FallbackValue={x:Static Visibility.Visible}}}"
+                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=ListViewItem}}">
+                            <Run Text=" / " /><Run Text="{Binding Blueprint.Name, Mode=OneWay}" />
+                        </TextBlock>
+
+                        <TextBlock VerticalAlignment="Center"
+                                   Visibility="{Binding ExperimentalEffect, Converter={converters:EqualsComparer ValueIfEqual={x:Static Visibility.Collapsed}, FallbackValue={x:Static Visibility.Visible}}}"
+                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=ListViewItem}}">
+                            <Run Text=" / " /><Run Text="{Binding ExperimentalEffect.Name, Mode=OneWay}" />
+                        </TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</UserControl>

@@ -14,13 +14,12 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Assets/Drawings.xaml" />
                 <ResourceDictionary Source="Assets/Symbols.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <viewModels:CommanderViewModel x:Key="CommanderViewModel"
-                                              Saved="_UnselectTab"
-                                              Reset="_UnselectTab" />
+                                           Saved="_UnselectTab"
+                                           Reset="_UnselectTab" />
         </ResourceDictionary>
     </Window.Resources>
 
@@ -117,10 +116,10 @@
                     Background="{StaticResource BackgroundBrush}"
                     BorderThickness="2"
                     BorderBrush="{StaticResource DarkBlueBrush}"
-                    SelectedItem="{Binding ElementName=Main, Mode=OneTime}"
+                    SelectedItem="{Binding ElementName=MaterialsTradeSearch, Mode=OneTime}"
                     SelectionChanged="_SectionSelectionChanged"
                     Style="{StaticResource NavigationTabControl}">
-            <TabItem Name="Main">
+            <TabItem Name="MaterialsTradeSearch">
                 <TabItem.Background>
                     <ImageBrush Stretch="UniformToFill">
                         <ImageBrush.ImageSource>
@@ -130,53 +129,7 @@
                 </TabItem.Background>
                 <TabItem.ContentTemplate>
                     <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Grid.Row="0"
-                                       Text="Materials Search"
-                                       Style="{StaticResource TextBlockHeader}" />
-
-                            <Border BorderThickness="2"
-                                    BorderBrush="{StaticResource DarkBlueBrush}"
-                                    Padding="10"
-                                    Height="100">
-                                <controls:ProcessRing Grid.Row="1"
-                                                      Color="{StaticResource Orange}" />
-                            </Border>
-
-                            <Grid Margin="0, 10, 0, 10">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="10" />
-                                    <ColumnDefinition />
-                                    <ColumnDefinition Width="10" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <ToggleButton Grid.Column="0"
-                                              BorderThickness="3"
-                                              HorizontalContentAlignment="Center">
-                                    <TextBlock Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=ToggleButton}, Mode=OneWay}"
-                                               TextAlignment="Center"
-                                               Text="Raw" />
-                                </ToggleButton>
-                                <ToggleButton Grid.Column="2"
-                                              BorderThickness="3"
-                                              HorizontalContentAlignment="Center">
-                                    <TextBlock Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=ToggleButton}, Mode=OneWay}"
-                                               TextAlignment="Center"
-                                               Text="Manufactured" />
-                                </ToggleButton>
-                                <ToggleButton Grid.Column="4"
-                                              BorderThickness="3"
-                                              HorizontalContentAlignment="Center">
-                                    <TextBlock Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=ToggleButton}, Mode=OneWay}"
-                                               TextAlignment="Center"
-                                               Text="Encoded" />
-                                </ToggleButton>
-                            </Grid>
-
-                            <Button BorderThickness="3"
-                                    Content="Start Session" />
-                        </StackPanel>
+                        <pages:MaterialsTradeSearch />
                     </DataTemplate>
                 </TabItem.ContentTemplate>
             </TabItem>

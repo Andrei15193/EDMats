@@ -24,11 +24,7 @@ namespace EDMats.ViewModels
         public ModuleEngineeringViewModel(IProfileStorageHandler profileStorageHandler)
         {
             _profileStorageHandler = profileStorageHandler;
-            SaveCommand = CreateCommand(
-                () => SelectedBlueprint is object || SelectedExperimentalEffect is object,
-                _Save,
-                nameof(SelectedBlueprint), nameof(SelectedExperimentalEffect)
-            );
+            SaveCommand = CreateCommand(_Save);
             _blueprintGradesRequirements = new ObservableCollection<BlueprintGradeRequirementsViewModel>();
             BlueprintGradesRequirements = new ReadOnlyObservableCollection<BlueprintGradeRequirementsViewModel>(_blueprintGradesRequirements);
         }

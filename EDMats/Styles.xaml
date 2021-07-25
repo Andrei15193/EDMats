@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:controls="clr-namespace:EDMats.Controls">
+                    xmlns:controls="clr-namespace:EDMats.Controls"
+                    xmlns:converters="clr-namespace:EDMats.Converters">
     <Color x:Key="Gold"
            A="#FF"
            R="#FF"
@@ -145,6 +146,13 @@
                                     Value="{StaticResource GoldBrush}" />
                             <Setter Property="BorderBrush"
                                     Value="{StaticResource GoldBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter Property="Foreground"
+                                    Value="{StaticResource RedBrush}" />
+                            <Setter Property="BorderBrush"
+                                    Value="{StaticResource RedBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -700,7 +708,13 @@
                             Padding="{TemplateBinding Padding}"
                             Background="{TemplateBinding Background}">
                         <ScrollViewer>
-                            <ItemsPresenter />
+                            <Grid>
+                                <ItemsPresenter Visibility="{Binding Items.Count, RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Converter={converters:EqualsComparer ValueIfEqual={x:Static Visibility.Collapsed}, FallbackValue={x:Static Visibility.Visible}}, ConverterParameter=0}" />
+                                <TextBlock Margin="0, 5"
+                                           HorizontalAlignment="Center"
+                                           Text="There are no items"
+                                           Visibility="{Binding Items.Count, RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Converter={converters:NotEqualsComparer ValueIfNotEqual={x:Static Visibility.Collapsed}, FallbackValue={x:Static Visibility.Visible}}, ConverterParameter=0}" />
+                            </Grid>
                         </ScrollViewer>
                     </Border>
                     <ControlTemplate.Triggers>
