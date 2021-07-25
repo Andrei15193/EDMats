@@ -280,6 +280,13 @@
                             <Setter Property="BorderBrush"
                                     Value="{StaticResource GoldBrush}" />
                         </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter Property="Foreground"
+                                    Value="{StaticResource RedBrush}" />
+                            <Setter Property="BorderBrush"
+                                    Value="{StaticResource RedBrush}" />
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

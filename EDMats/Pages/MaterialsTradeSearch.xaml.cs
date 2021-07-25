@@ -10,7 +10,7 @@ namespace EDMats.Pages
             => InitializeComponent();
 
         private void _Loaded(object sender, RoutedEventArgs e)
-            => ((MaterialsTradeSearchViewModel)FindResource("ViewModel")).Load();
+            => ((MaterialsTradeSearchViewModel)FindResource("MaterialsTradeSearchViewModel")).Load();
 
         private void _ListViewSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
