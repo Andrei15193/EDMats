@@ -3,43 +3,170 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:controls="clr-namespace:EDMats.Controls"
         mc:Ignorable="d"
         Title="Trade Solution"
         Height="450"
         Width="1100">
-    <Grid>
-        <ListView ItemsSource="{Binding Trades, Mode=OneTime}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Type"
-                                    Width="120"
-                                    DisplayMemberBinding="{Binding Offer.Material.Type.Name}" />
-                    <GridViewColumn Header="Material"
-                                    Width="120"
-                                    DisplayMemberBinding="{Binding Demand.Material.Name}" />
-                    <GridViewColumn Header="Amount"
-                                    Width="120"
-                                    DisplayMemberBinding="{Binding Demand.Amount}" />
-                    <GridViewColumn Header="Grade"
-                                    Width="120"
-                                    DisplayMemberBinding="{Binding Demand.Material.Grade}" />
-                    <GridViewColumn Header="Category"
-                                    Width="120"
-                                    DisplayMemberBinding="{Binding Demand.Material.Category.Name}" />
-                    <GridViewColumn Header="Offered Material"
-                                    Width="120"
-                                    DisplayMemberBinding="{Binding Offer.Material.Name}" />
-                    <GridViewColumn Header="Offered Amount"
-                                    Width="120"
-                                    DisplayMemberBinding="{Binding Offer.Amount}" />
-                    <GridViewColumn Header="Offered Grade"
-                                    Width="120"
-                                    DisplayMemberBinding="{Binding Offer.Material.Grade}" />
-                    <GridViewColumn Header="Offered Category"
-                                    Width="120"
-                                    DisplayMemberBinding="{Binding Offer.Material.Category.Name}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
-    </Grid>
+    <Window.Background>
+        <ImageBrush Stretch="UniformToFill">
+            <ImageBrush.ImageSource>
+                <BitmapImage UriSource="pack://application:,,,/EDMats;component/Assets/Images/starport.png" />
+            </ImageBrush.ImageSource>
+        </ImageBrush>
+    </Window.Background>
+    <Border Margin="15"
+            Padding="10"
+            BorderThickness="2"
+            BorderBrush="{StaticResource DarkBlueBrush}"
+            Background="{StaticResource BackgroundBrush}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            
+            <Border Grid.Row="0"
+                    BorderThickness="0, 0, 0, 1.5"
+                    BorderBrush="{StaticResource LightBlueBrush}">
+                <Grid Margin="0, 0, 7, 0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="43" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="150" />
+
+                        <ColumnDefinition Width="20" />
+
+                        <ColumnDefinition Width="43" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="80" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="150" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
+                               Grid.ColumnSpan="7"
+                               FontSize="13"
+                               FontWeight="SemiBold"
+                               Text="Demand"
+                               TextAlignment="Center" />
+
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="0"
+                               Text="Amount"
+                               FontSize="12" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="2"
+                               Text="Material"
+                               FontSize="12" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="4"
+                               Text="Type"
+                               FontSize="12" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="6"
+                               Text="Category"
+                               FontSize="12" />
+
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="8"
+                               Grid.ColumnSpan="7"
+                               FontSize="13"
+                               FontWeight="SemiBold"
+                               Text="Offer"
+                               TextAlignment="Center" />
+
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="8"
+                               Text="Amount"
+                               FontSize="12" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="10"
+                               Text="Material"
+                               FontSize="12" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="12"
+                               Text="Type"
+                               FontSize="12" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="14"
+                               Text="Category"
+                               FontSize="12" />
+                </Grid>
+            </Border>
+
+            <ScrollViewer Grid.Row="1">
+                <ItemsControl ItemsSource="{Binding Trades, Mode=OneTime}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="43" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="150" />
+
+                                    <ColumnDefinition Width="20" />
+
+                                    <ColumnDefinition Width="43" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="150" />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0"
+                                           Text="{Binding Demand.Amount, Mode=OneTime}"
+                                           TextAlignment="Right" />
+                                <StackPanel Grid.Column="2"
+                                            Orientation="Horizontal">
+                                    <controls:MaterialGradeView MaterialGrade="{Binding Demand.Material.Grade, Mode=OneWay}" />
+                                    <TextBlock>
+                                    <Run Text=" " /><Run Text="{Binding Demand.Material.Name, Mode=OneTime}" />
+                                    </TextBlock>
+                                </StackPanel>
+                                <TextBlock Grid.Column="4"
+                                           Text="{Binding Demand.Material.Type.Name, Mode=OneTime}" />
+                                <TextBlock Grid.Column="6"
+                                           Text="{Binding Demand.Material.Category.Name, Mode=OneTime}" />
+
+                                <TextBlock Grid.Column="7" Text="&lt;" />
+
+                                <TextBlock Grid.Column="8"
+                                           Text="{Binding Offer.Amount, Mode=OneTime}"
+                                           TextAlignment="Right" />
+                                <StackPanel Grid.Column="10"
+                                            Orientation="Horizontal">
+                                    <controls:MaterialGradeView MaterialGrade="{Binding Offer.Material.Grade, Mode=OneWay}" />
+                                    <TextBlock>
+                                    <Run Text=" " /><Run Text="{Binding Offer.Material.Name, Mode=OneTime}" />
+                                    </TextBlock>
+                                </StackPanel>
+                                <TextBlock Grid.Column="12"
+                                           Text="{Binding Offer.Material.Type.Name, Mode=OneTime}" />
+                                <TextBlock Grid.Column="14"
+                                           Text="{Binding Offer.Material.Category.Name, Mode=OneTime}" />
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+        </Grid>
+    </Border>
 </Window>

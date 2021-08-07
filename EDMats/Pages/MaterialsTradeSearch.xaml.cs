@@ -26,7 +26,7 @@ namespace EDMats.Pages
             _tradeSolutionSearchTimer.Tick += _SearchForTradeSolution;
             viewModel.PropertyChanged += _ViewModelPropertyChanged;
             if (viewModel.IsSessionActive)
-                _tradeSolutionSearchTimer.Start();
+                _SearchForTradeSolution();
         }
 
         private void _Unloaded(object sender, RoutedEventArgs e)
@@ -45,7 +45,7 @@ namespace EDMats.Pages
                 var viewModel = (MaterialsTradeSearchViewModel)FindResource("MaterialsTradeSearchViewModel");
 
                 if (viewModel.IsSessionActive)
-                    _tradeSolutionSearchTimer.Start();
+                    _SearchForTradeSolution();
                 else
                     _tradeSolutionSearchTimer.Stop();
             }
@@ -57,7 +57,7 @@ namespace EDMats.Pages
                 listView.SelectedItem = e.AddedItems[0];
         }
 
-        private async void _SearchForTradeSolution(object sender, EventArgs e)
+        private async void _SearchForTradeSolution(object sender = null, EventArgs e = null)
         {
             var viewModel = (MaterialsTradeSearchViewModel)FindResource("MaterialsTradeSearchViewModel");
 
@@ -70,6 +70,17 @@ namespace EDMats.Pages
             {
                 _tradeSolutionSearchTimer.Start();
             }
+        }
+
+        private void _OpenTradeSolutionView(object sender, RoutedEventArgs e)
+        {
+            var viewModel = (MaterialsTradeSearchViewModel)FindResource("MaterialsTradeSearchViewModel");
+
+            var tradeSolutionWindow = new TradeSolutionWindow
+            {
+                DataContext = viewModel.TradeSolution
+            };
+            tradeSolutionWindow.ShowDialog();
         }
     }
 }

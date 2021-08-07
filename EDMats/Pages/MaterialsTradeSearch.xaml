@@ -28,7 +28,7 @@
                             <Run FontSize="14"
                                  Text="A trade solution has been found." />
                             <LineBreak />
-                            <Run Text="Click here to see the trade solution to get started on your engineering." />
+                            <Hyperlink Click="_OpenTradeSolutionView"><Run Text="Click here to see the trade solution to get started on your engineering." /></Hyperlink>
                         </TextBlock>
                     </converters:SwitchCase.MappedValue>
                 </converters:SwitchCase>

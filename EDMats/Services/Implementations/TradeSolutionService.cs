@@ -95,7 +95,12 @@ namespace EDMats.Services.Implementations
 
             if (tradeEntries == null)
                 return null;
-            return new TradeSolution(tradeEntries);
+            return new TradeSolution(tradeEntries
+                .OrderBy(trade => trade.Demand.Material.Type.Name)
+                .ThenBy(trade => trade.Demand.Amount)
+                .ThenBy(trade => trade.Demand.Material.Grade)
+                .ThenBy(trade => trade.Demand.Material.Name)
+            );
         }
 
         private DesiredMaterialInfo _RemoveUsed(DesiredMaterialInfo desiredMaterialData, IReadOnlyCollection<TradeEntry> tradeEntries)
