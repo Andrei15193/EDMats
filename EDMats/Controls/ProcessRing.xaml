@@ -11,7 +11,7 @@
             Height="32">
         <Canvas.Triggers>
             <EventTrigger RoutedEvent="Canvas.Loaded">
-                <BeginStoryboard>
+                <BeginStoryboard Name="ProcessRingAnimation">
                     <Storyboard>
                         <DoubleAnimationUsingKeyFrames Storyboard.TargetName="d1"
                                                        Storyboard.TargetProperty="(Fill).Opacity"
@@ -302,6 +302,9 @@
                         </DoubleAnimationUsingKeyFrames>
                     </Storyboard>
                 </BeginStoryboard>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="Canvas.Unloaded">
+                <StopStoryboard BeginStoryboardName="ProcessRingAnimation" />
             </EventTrigger>
         </Canvas.Triggers>
 

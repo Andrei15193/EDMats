@@ -1,6 +1,7 @@
 ﻿<Application x:Class="EDMats.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="clr-namespace:EDMats.Controls"
              xmlns:converters="clr-namespace:EDMats.Converters"
              xmlns:viewModels="clr-namespace:EDMats.ViewModels"
              xmlns:engineering="clr-namespace:EDMats.Data.Engineering">
@@ -26,6 +27,47 @@
                     </converters:SwitchConverter>
 
                     <viewModels:MaterialsTradeSearchViewModel x:Key="MaterialsTradeSearchViewModel" />
+
+                    <x:Array x:Key="ProfilePcitures"
+                             Type="controls:ProfilePictureViewbox">
+                        <controls:ProfilePictureViewbox Picture="EliteDangerousLogo" />
+                        <controls:ProfilePictureViewbox Picture="Sidewinder" />
+                        <controls:ProfilePictureViewbox Picture="EagleMk2" />
+                        <controls:ProfilePictureViewbox Picture="Hauler" />
+                        <controls:ProfilePictureViewbox Picture="Adder" />
+                        <controls:ProfilePictureViewbox Picture="ViperMk3" />
+                        <controls:ProfilePictureViewbox Picture="CobraMk3" />
+                        <controls:ProfilePictureViewbox Picture="ViperMk4" />
+                        <controls:ProfilePictureViewbox Picture="DiamondbackScout" />
+                        <controls:ProfilePictureViewbox Picture="Type6" />
+                        <controls:ProfilePictureViewbox Picture="Dolphin" />
+                        <controls:ProfilePictureViewbox Picture="DiamondbackExplorer" />
+                        <controls:ProfilePictureViewbox Picture="ImperialCourier" />
+                        <controls:ProfilePictureViewbox Picture="Keelback" />
+                        <controls:ProfilePictureViewbox Picture="AspScout" />
+                        <controls:ProfilePictureViewbox Picture="Vulture" />
+                        <controls:ProfilePictureViewbox Picture="AspExplorer" />
+                        <controls:ProfilePictureViewbox Picture="FederalDropship" />
+                        <controls:ProfilePictureViewbox Picture="Type7" />
+                        <controls:ProfilePictureViewbox Picture="AllianceChieftain" />
+                        <controls:ProfilePictureViewbox Picture="FederalAssaultShip" />
+                        <controls:ProfilePictureViewbox Picture="ImperialClipper" />
+                        <controls:ProfilePictureViewbox Picture="AllianceCrusader" />
+                        <controls:ProfilePictureViewbox Picture="AllianceChallenger" />
+                        <controls:ProfilePictureViewbox Picture="FederalGunship" />
+                        <controls:ProfilePictureViewbox Picture="KraitPhantom" />
+                        <controls:ProfilePictureViewbox Picture="KraitMk2" />
+                        <controls:ProfilePictureViewbox Picture="Orca" />
+                        <controls:ProfilePictureViewbox Picture="FerDeLance" />
+                        <controls:ProfilePictureViewbox Picture="Mamba" />
+                        <controls:ProfilePictureViewbox Picture="Python" />
+                        <controls:ProfilePictureViewbox Picture="Type9" />
+                        <controls:ProfilePictureViewbox Picture="Beluga" />
+                        <controls:ProfilePictureViewbox Picture="Type10" />
+                        <controls:ProfilePictureViewbox Picture="Anaconda" />
+                        <controls:ProfilePictureViewbox Picture="FederalCorvette" />
+                        <controls:ProfilePictureViewbox Picture="ImperialCutter" />
+                    </x:Array>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

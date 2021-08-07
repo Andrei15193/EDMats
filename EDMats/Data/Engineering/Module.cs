@@ -486,7 +486,7 @@ namespace EDMats.Data.Engineering
                             new BlueprintGradeRequirements(BlueprintGrade.Grade1, new[] { new MaterialQuantity(Material.MechanicalScrap, 1) }),
                             new BlueprintGradeRequirements(BlueprintGrade.Grade2, new[] { new MaterialQuantity(Material.Germanium, 1), new MaterialQuantity(Material.MechanicalScrap, 1) }),
                             new BlueprintGradeRequirements(BlueprintGrade.Grade3, new[] { new MaterialQuantity(Material.ClassifiedScanDatabanks, 1), new MaterialQuantity(Material.Germanium, 1), new MaterialQuantity(Material.MechanicalScrap, 1) }),
-                            new BlueprintGradeRequirements(BlueprintGrade.Grade4, new[] { new MaterialQuantity(Material.DivergendScanData, 1), new MaterialQuantity(Material.MechanicalEquipment, 1), new MaterialQuantity(Material.Niobium, 1) }),
+                            new BlueprintGradeRequirements(BlueprintGrade.Grade4, new[] { new MaterialQuantity(Material.DivergentScanData, 1), new MaterialQuantity(Material.MechanicalEquipment, 1), new MaterialQuantity(Material.Niobium, 1) }),
                             new BlueprintGradeRequirements(BlueprintGrade.Grade5, new[] { new MaterialQuantity(Material.ClassifiedScanFragment, 1), new MaterialQuantity(Material.MechanicalComponents, 1), new MaterialQuantity(Material.Tin, 1) })
                         }
                     );
@@ -1780,7 +1780,7 @@ namespace EDMats.Data.Engineering
                             new BlueprintGradeRequirements(BlueprintGrade.Grade1, new[] { new MaterialQuantity(Material.MechanicalScrap, 1) }),
                             new BlueprintGradeRequirements(BlueprintGrade.Grade2, new[] { new MaterialQuantity(Material.MechanicalEquipment, 1), new MaterialQuantity(Material.UnusualEncryptedFiles, 1) }),
                             new BlueprintGradeRequirements(BlueprintGrade.Grade3, new[] { new MaterialQuantity(Material.GridResistors, 1), new MaterialQuantity(Material.MechanicalComponents, 1), new MaterialQuantity(Material.TaggedEncryptionCodes, 1) }),
-                            new BlueprintGradeRequirements(BlueprintGrade.Grade4, new[] { new MaterialQuantity(Material.DivergendScanData, 1), new MaterialQuantity(Material.MechanicalEquipment, 1), new MaterialQuantity(Material.StrangeWakeSolutions, 1) }),
+                            new BlueprintGradeRequirements(BlueprintGrade.Grade4, new[] { new MaterialQuantity(Material.DivergentScanData, 1), new MaterialQuantity(Material.MechanicalEquipment, 1), new MaterialQuantity(Material.StrangeWakeSolutions, 1) }),
                             new BlueprintGradeRequirements(BlueprintGrade.Grade5, new[] { new MaterialQuantity(Material.ClassifiedScanFragment, 1), new MaterialQuantity(Material.EccentricHyperspaceTrajectories, 1), new MaterialQuantity(Material.MechanicalComponents, 1) })
                         }
                     );
@@ -2325,7 +2325,7 @@ namespace EDMats.Data.Engineering
                             new BlueprintGradeRequirements(BlueprintGrade.Grade1, new[] { new MaterialQuantity(Material.MechanicalScrap, 1) }),
                             new BlueprintGradeRequirements(BlueprintGrade.Grade2, new[] { new MaterialQuantity(Material.Germanium, 1), new MaterialQuantity(Material.MechanicalScrap, 1) }),
                             new BlueprintGradeRequirements(BlueprintGrade.Grade3, new[] { new MaterialQuantity(Material.ClassifiedScanDatabanks, 1), new MaterialQuantity(Material.Germanium, 1), new MaterialQuantity(Material.MechanicalScrap, 1) }),
-                            new BlueprintGradeRequirements(BlueprintGrade.Grade4, new[] { new MaterialQuantity(Material.DivergendScanData, 1), new MaterialQuantity(Material.MechanicalEquipment, 1), new MaterialQuantity(Material.Niobium, 1) }),
+                            new BlueprintGradeRequirements(BlueprintGrade.Grade4, new[] { new MaterialQuantity(Material.DivergentScanData, 1), new MaterialQuantity(Material.MechanicalEquipment, 1), new MaterialQuantity(Material.Niobium, 1) }),
                             new BlueprintGradeRequirements(BlueprintGrade.Grade5, new[] { new MaterialQuantity(Material.ClassifiedScanFragment, 1), new MaterialQuantity(Material.MechanicalComponents, 1), new MaterialQuantity(Material.Tin, 1) })
                         }
                     );
@@ -2461,7 +2461,7 @@ namespace EDMats.Data.Engineering
                             new BlueprintGradeRequirements(BlueprintGrade.Grade1, new[] { new MaterialQuantity(Material.MechanicalScrap, 1) }),
                             new BlueprintGradeRequirements(BlueprintGrade.Grade2, new[] { new MaterialQuantity(Material.Germanium, 1), new MaterialQuantity(Material.MechanicalScrap, 1) }),
                             new BlueprintGradeRequirements(BlueprintGrade.Grade3, new[] { new MaterialQuantity(Material.ClassifiedScanDatabanks, 1), new MaterialQuantity(Material.Germanium, 1), new MaterialQuantity(Material.MechanicalScrap, 1) }),
-                            new BlueprintGradeRequirements(BlueprintGrade.Grade4, new[] { new MaterialQuantity(Material.DivergendScanData, 1), new MaterialQuantity(Material.MechanicalEquipment, 1), new MaterialQuantity(Material.Niobium, 1) }),
+                            new BlueprintGradeRequirements(BlueprintGrade.Grade4, new[] { new MaterialQuantity(Material.DivergentScanData, 1), new MaterialQuantity(Material.MechanicalEquipment, 1), new MaterialQuantity(Material.Niobium, 1) }),
                             new BlueprintGradeRequirements(BlueprintGrade.Grade5, new[] { new MaterialQuantity(Material.ClassifiedScanFragment, 1), new MaterialQuantity(Material.MechanicalComponents, 1), new MaterialQuantity(Material.Tin, 1) })
                         }
                     );
@@ -2544,7 +2544,7 @@ namespace EDMats.Data.Engineering
                             new BlueprintGradeRequirements(BlueprintGrade.Grade1, new[] { new MaterialQuantity(Material.MechanicalScrap, 1) }),
                             new BlueprintGradeRequirements(BlueprintGrade.Grade2, new[] { new MaterialQuantity(Material.Germanium, 1), new MaterialQuantity(Material.MechanicalScrap, 1) }),
                             new BlueprintGradeRequirements(BlueprintGrade.Grade3, new[] { new MaterialQuantity(Material.ClassifiedScanDatabanks, 1), new MaterialQuantity(Material.Germanium, 1), new MaterialQuantity(Material.MechanicalScrap, 1) }),
-                            new BlueprintGradeRequirements(BlueprintGrade.Grade4, new[] { new MaterialQuantity(Material.DivergendScanData, 1), new MaterialQuantity(Material.MechanicalEquipment, 1), new MaterialQuantity(Material.Niobium, 1) }),
+                            new BlueprintGradeRequirements(BlueprintGrade.Grade4, new[] { new MaterialQuantity(Material.DivergentScanData, 1), new MaterialQuantity(Material.MechanicalEquipment, 1), new MaterialQuantity(Material.Niobium, 1) }),
                             new BlueprintGradeRequirements(BlueprintGrade.Grade5, new[] { new MaterialQuantity(Material.ClassifiedScanFragment, 1), new MaterialQuantity(Material.MechanicalComponents, 1), new MaterialQuantity(Material.Tin, 1) })
                         }
                     );

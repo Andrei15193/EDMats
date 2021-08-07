@@ -5,10 +5,48 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:controls="clr-namespace:EDMats.Controls"
              xmlns:converters="clr-namespace:EDMats.Converters"
+             xmlns:viewModels="clr-namespace:EDMats.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800"
-             Loaded="_Loaded">
+             Loaded="_Loaded"
+             Unloaded="_Unloaded">
+    <UserControl.Resources>
+        <converters:SwitchConverter x:Key="TradeSolutionSearchStatusConverter">
+            <converters:SwitchConverter.Cases>
+                <converters:SwitchCase Value="{x:Static viewModels:TradeSolutionSearchStatus.Searching}">
+                    <converters:SwitchCase.MappedValue>
+                        <controls:ProcessRing Color="{StaticResource Orange}" />
+                    </converters:SwitchCase.MappedValue>
+                </converters:SwitchCase>
+
+                <converters:SwitchCase Value="{x:Static viewModels:TradeSolutionSearchStatus.SearchSucceeded}">
+                    <converters:SwitchCase.MappedValue>
+                        <TextBlock TextAlignment="Center"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Center">
+                            <Run FontSize="14"
+                                 Text="A trade solution has been found." />
+                            <LineBreak />
+                            <Run Text="Click here to see the trade solution to get started on your engineering." />
+                        </TextBlock>
+                    </converters:SwitchCase.MappedValue>
+                </converters:SwitchCase>
+            </converters:SwitchConverter.Cases>
+
+            <converters:SwitchConverter.DefaultCase>
+                <TextBlock TextAlignment="Center"
+                           HorizontalAlignment="Stretch"
+                           VerticalAlignment="Center">
+                            <Run FontSize="14"
+                                 Text="Trade solution not yet found." />
+                            <LineBreak />
+                            <Run Text="No trade solution has been found, please continue gathering materials." />
+                </TextBlock>
+            </converters:SwitchConverter.DefaultCase>
+        </converters:SwitchConverter>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -24,8 +62,19 @@
                     BorderBrush="{StaticResource DarkBlueBrush}"
                     Padding="10"
                     Height="100">
-                <controls:ProcessRing Grid.Row="1"
-                                      Color="{StaticResource Orange}" />
+                <Grid>
+                    <TextBlock TextAlignment="Center"
+                               HorizontalAlignment="Stretch"
+                               VerticalAlignment="Center"
+                               Visibility="{Binding IsSessionActive, Source={StaticResource MaterialsTradeSearchViewModel}, Converter={converters:BooleanToVisibilityConverter VisibilityWhenFalse=Visible, VisibilityWhenTrue=Collapsed}, Mode=OneWay}">
+                        <Run FontSize="14"
+                             Text="The session is not started." />
+                        <LineBreak />
+                        <Run Text="Please select the type of materials you wish to include and which blueprint you want to engineer." />
+                    </TextBlock>
+                    <ContentPresenter Visibility="{Binding IsSessionActive, Source={StaticResource MaterialsTradeSearchViewModel}, Converter={converters:BooleanToVisibilityConverter VisibilityWhenFalse=Collapsed, VisibilityWhenTrue=Visible}, Mode=OneWay}"
+                                      Content="{Binding Status, Source={StaticResource MaterialsTradeSearchViewModel}, Converter={StaticResource TradeSolutionSearchStatusConverter}, Mode=OneWay}" />
+                </Grid>
             </Border>
 
             <Grid Margin="0, 10, 0, 10">
@@ -66,7 +115,7 @@
                           BorderThickness="3"
                           HorizontalContentAlignment="Center"
                           IsEnabled="{Binding CanStartSession, Source={StaticResource MaterialsTradeSearchViewModel}, Mode=OneWay}"
-                          IsChecked="{Binding HasActiveSession, Source={StaticResource MaterialsTradeSearchViewModel}, Mode=TwoWay}">
+                          IsChecked="{Binding IsSessionActive, Source={StaticResource MaterialsTradeSearchViewModel}, Mode=TwoWay}">
                 <TextBlock Foreground="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType=ToggleButton}, Mode=OneWay}"
                            TextAlignment="Center"
                            Text="Start Session" />

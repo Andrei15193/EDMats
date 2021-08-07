@@ -284,7 +284,7 @@ namespace EDMats.Data.Materials
 
         public static Material ClassifiedScanDatabanks { get; }
 
-        public static Material DivergendScanData { get; }
+        public static Material DivergentScanData { get; }
 
         public static Material ClassifiedScanFragment { get; }
 
@@ -307,7 +307,24 @@ namespace EDMats.Data.Materials
 
             try
             {
-                return _materialsById[id];
+                switch (id)
+                {
+                    //    case "classifiedscandata":
+                    //        return ClassifiedScanDatabanks;
+
+                    //    case "legacyfirmware":
+                    //        return SpecialisedLegacyFirmware;
+
+                    //    case "encodedscandata":
+                    //        // return AnomalousBulkScanData;
+                    //        // return UnidentifiedScanArchives;
+                    //        // return DivergendScanData;
+                    //        // return ClassifiedScanFragment;
+                    //        return ClassifiedScanFragment;
+
+                    default:
+                        return _materialsById[id];
+                }
             }
             catch (KeyNotFoundException keyNotFoundException)
             {
@@ -518,7 +535,7 @@ namespace EDMats.Data.Materials
                     materials[0] = AnomalousBulkScanData = new Material("bulkscandata", "Anomalous Bulk Scan Data", MaterialGrade.VeryCommon, DataArchives, 300);
                     materials[1] = UnidentifiedScanArchives = new Material("scanarchives", "Unidentified Scan Archives", MaterialGrade.Common, DataArchives, 250);
                     materials[2] = ClassifiedScanDatabanks = new Material("scandatabanks", "Classified Scan Databanks", MaterialGrade.Standard, DataArchives, 200);
-                    materials[3] = DivergendScanData = new Material("divergendscandata", "Divergend Scan Data", MaterialGrade.Rare, DataArchives, 150);
+                    materials[3] = DivergentScanData = new Material("encodedscandata", "Divergent Scan Data", MaterialGrade.Rare, DataArchives, 150);
                     materials[4] = ClassifiedScanFragment = new Material("classifiedscanfragment", "Classified Scan Fragment", MaterialGrade.VeryRare, DataArchives, 100);
                 }
                 {
@@ -527,7 +544,7 @@ namespace EDMats.Data.Materials
                     materials[0] = SpecialisedLegacyFirmware = new Material("specialisedlegacyfirmware", "Specialised Legacy Firmware", MaterialGrade.VeryCommon, EncodedFirmware, 300);
                     materials[1] = ModifiedConsumerFirmware = new Material("consumerfirmware", "Modified Consumer Firmware", MaterialGrade.Common, EncodedFirmware, 250);
                     materials[2] = CrackedIndustrialFirmware = new Material("industrialfirmware", "Cracked Industrial Firmware", MaterialGrade.Standard, EncodedFirmware, 200);
-                    materials[3] = SecurityFirmwarePatch = new Material("securityfirmwarepatch", "Security Firmware Patch", MaterialGrade.Rare, EncodedFirmware, 150);
+                    materials[3] = SecurityFirmwarePatch = new Material("securityfirmware", "Security Firmware Patch", MaterialGrade.Rare, EncodedFirmware, 150);
                     materials[4] = ModifiedEmbeddedFirmware = new Material("embeddedfirmware", "Modified Embedded Firmware", MaterialGrade.VeryRare, EncodedFirmware, 100);
                 }
             }
