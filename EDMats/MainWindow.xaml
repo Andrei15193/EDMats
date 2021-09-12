@@ -3,7 +3,97 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:pages="clr-namespace:EDMats.Pages"
         mc:Ignorable="d"
-        Title="MainWindow"
+        Title="EDMats"
         Height="450"
-        Width="800" />
+        Width="800">
+    <Window.Resources>
+        <Style x:Key="TabControlStyle"
+               TargetType="TabControl">
+            <Setter Property="SelectedIndex"
+                    Value="0" />
+            <Setter Property="VerticalAlignment"
+                    Value="Stretch" />
+            <Setter Property="VerticalContentAlignment"
+                    Value="Stretch" />
+            <Setter Property="HorizontalAlignment"
+                    Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment"
+                    Value="Stretch" />
+            <Setter Property="Margin"
+                    Value="0" />
+            <Setter Property="BorderThickness"
+                    Value="0" />
+            <Setter Property="Padding"
+                    Value="0" />
+            <Setter Property="Background"
+                    Value="Transparent" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabControl">
+                        <Border Padding="{TemplateBinding Padding}"
+                                Background="{TemplateBinding Background}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                                HorizontalAlignment="{TemplateBinding HorizontalAlignment}">
+                            <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              ContentSource="SelectedContent" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   Grid.Column="0"
+                   Text="EDMats" />
+
+        <ToggleButton Grid.Row="0"
+                      Grid.Column="1"
+                      IsChecked="{Binding IsSelected, ElementName=CommanderTabItem, Mode=TwoWay}">
+            <TextBlock Text="Commander" />
+        </ToggleButton>
+
+        <TabControl Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Name="TabControl"
+                    SelectionChanged="_SelectionChanged"
+                    Margin="0, 10, 0, 0"
+                    Style="{StaticResource TabControlStyle}">
+            <TabItem Name="SearchTabItem"
+                     Header="Search">
+                <TabItem.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="Search" />
+                    </DataTemplate>
+                </TabItem.ContentTemplate>
+            </TabItem>
+            <TabItem Name="CommanderTabItem"
+                     Header="Commander">
+                <TabItem.ContentTemplate>
+                    <DataTemplate>
+                        <pages:Commander Saved="_SelectSearchTab"
+                                         Cancelled="_SelectSearchTab" />
+                    </DataTemplate>
+                </TabItem.ContentTemplate>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

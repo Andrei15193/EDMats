@@ -1,17 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
+using EDMats.Storage;
+using Unity;
 
 namespace EDMats
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
+        private static readonly IUnityContainer _unityContainer;
+
+        static App()
+        {
+            _unityContainer = new UnityContainer()
+                .RegisterSingleton<IStorageHandler, InMemoryStorageHandler>();
+        }
+
+        public static T Resolve<T>()
+            => _unityContainer.Resolve<T>();
     }
 }
