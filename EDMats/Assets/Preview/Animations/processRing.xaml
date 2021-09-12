@@ -1,6 +1,0 @@
-<Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-         xmlns:controls="clr-namespace:EDMats.Controls"
-         Stretch="Uniform"
-         Width="1500">
-    <controls:ProcessRing Color="{StaticResource Orange}" />
-</Viewbox>

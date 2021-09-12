@@ -1,25 +1,28 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using EDMats.ViewModels;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
 namespace EDMats
 {
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
-            => InitializeComponent();
-
-        private void _SectionSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (Section.SelectedItem is null)
-                Section.SelectedItem = MaterialsTradeSearch;
+            InitializeComponent();
         }
-
-        private void _UnselectTab(object sender, EventArgs e)
-            => Section.SelectedItem = null;
-
-        private void _LoadCommander(object sender, RoutedEventArgs e)
-            => ((CommanderViewModel)Resources["CommanderViewModel"]).Load();
     }
 }
