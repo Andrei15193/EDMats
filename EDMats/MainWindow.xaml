@@ -6,7 +6,9 @@
         xmlns:pages="clr-namespace:EDMats.Pages"
         mc:Ignorable="d"
         Title="EDMats"
-        Height="450"
+        MinHeight="600"
+        MaxWidth="700"
+        Height="600"
         Width="800">
     <Window.Resources>
         <Style x:Key="TabControlStyle"
@@ -79,11 +81,7 @@
                     Style="{StaticResource TabControlStyle}">
             <TabItem Name="SearchTabItem"
                      Header="Search">
-                <TabItem.ContentTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="Search" />
-                    </DataTemplate>
-                </TabItem.ContentTemplate>
+                <pages:TradeSolutionSearch />
             </TabItem>
             <TabItem Name="CommanderTabItem"
                      Header="Commander">

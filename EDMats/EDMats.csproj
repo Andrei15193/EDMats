@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
-
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -9,5 +8,4 @@
   <ItemGroup>
     <PackageReference Include="Unity.Container" Version="5.11.11" />
   </ItemGroup>
-
 </Project>
