@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
+using EDMats.Journals;
 using EDMats.Models.Engineering;
 using EDMats.Storage;
 
@@ -7,7 +10,6 @@ namespace EDMats.ViewModels
 {
     public class SolutionSearchViewModel : ViewModel
     {
-        private readonly CommanderProfileStorageHandler _commanderProfileStorageHandler;
         private Module _selectedModule;
         private Blueprint _selectedBlueprint;
         private IEnumerable<BlueprintRequirementRepetitionsViewModel> _blueprintGradeRequirements = Enumerable.Empty<BlueprintRequirementRepetitionsViewModel>();
@@ -16,15 +18,18 @@ namespace EDMats.ViewModels
         private object _rawMaterialsTradeSolution;
         private object _encodedMaterialsTradeSolution;
         private object _manufacturedMaterialsTradeSolution;
+        private readonly CommanderProfileStorageHandler _commanderProfileStorageHandler;
+        private readonly JournalReader _journalReader;
 
         public SolutionSearchViewModel()
-            : this(App.Resolve<CommanderProfileStorageHandler>())
+            : this(App.Resolve<CommanderProfileStorageHandler>(), App.Resolve<JournalReader>())
         {
         }
 
-        public SolutionSearchViewModel(CommanderProfileStorageHandler commanderProfileStorageHandler)
+        public SolutionSearchViewModel(CommanderProfileStorageHandler commanderProfileStorageHandler, JournalReader journalReader)
         {
             _commanderProfileStorageHandler = commanderProfileStorageHandler;
+            _journalReader = journalReader;
             SearchTradeSolutionCommand = CreateCommand(
                 () => (RawMaterialsTradeSolution is null || EncodedMaterialsTradeSolution is null || ManufacturedMaterialsTradeSolution is null)
                       && (SelectedBlueprint is object || SelectedExperimentalEffect is object),
@@ -141,24 +146,29 @@ namespace EDMats.ViewModels
             }
         }
 
-        int interval = 0;
         private void _SearchSolution()
         {
-            switch (interval)
+            var commanderProfile = _commanderProfileStorageHandler.Load();
+            var commanderInfo = _GetCommanderInfo(commanderProfile.JournalsDirectoryPath);
+        }
+
+        private CommanderInfo _GetCommanderInfo(string journalsDirectoryPath)
+        {
+            var journalsDirectory = new DirectoryInfo(journalsDirectoryPath);
+            if (journalsDirectory.Exists)
             {
-                case 3:
-                    RawMaterialsTradeSolution = new object();
-                    break;
-
-                case 5:
-                    ManufacturedMaterialsTradeSolution = new object();
-                    break;
-
-                case 6:
-                    EncodedMaterialsTradeSolution = new object();
-                    break;
+                var latestJournalFile = journalsDirectory
+                    .EnumerateFiles("*.log", SearchOption.TopDirectoryOnly).OrderBy(journalFile => journalFile.LastWriteTimeUtc)
+                    .FirstOrDefault();
+                if (latestJournalFile is object)
+                    using (var fileStream = new FileStream(journalsDirectoryPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
+                        return _journalReader.Read(streamReader);
+                else
+                    return new CommanderInfo();
             }
-            interval++;
+            else
+                return new CommanderInfo();
         }
     }
 }
