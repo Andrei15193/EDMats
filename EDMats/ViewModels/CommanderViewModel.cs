@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Windows.Input;
 using EDMats.Data;
 using EDMats.Storage;
@@ -57,8 +56,8 @@ namespace EDMats.ViewModels
         {
             var commanderProfile = _commanderProfileStorageHandler.Load();
 
-            CommanderName = commanderProfile.CommanderName ?? "Anonymous";
-            JournalsDirectoryPath = commanderProfile.JournalsDirectoryPath ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Saved Games", "Frontier Developments", "Elite Dangerous");
+            CommanderName = commanderProfile.CommanderName;
+            JournalsDirectoryPath = commanderProfile.JournalsDirectoryPath;
         }
 
         private void _Save()

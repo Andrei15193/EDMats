@@ -14,7 +14,7 @@ namespace EDMats.Pages
         public TradeSolutionSearch()
         {
             InitializeComponent();
-            _tradeSolutionSearchTimer = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Normal, delegate { ViewModel.SearchTradeSolutionCommand.Execute(); }, Dispatcher)
+            _tradeSolutionSearchTimer = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Normal, delegate { ViewModel.SearchTradeSolutions(); }, Dispatcher)
             {
                 IsEnabled = false
             };
@@ -40,12 +40,5 @@ namespace EDMats.Pages
 
         private void _EndTradeSolutionSearch(object sender, RoutedEventArgs e)
             => _tradeSolutionSearchTimer.IsEnabled = false;
-
-        private void _SolutionSearchToggleButtonChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            var toggleButton = (ToggleButton)sender;
-            if (!toggleButton.IsEnabled)
-                toggleButton.IsChecked = false;
-        }
     }
 }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using EDMats.Journals;
 using EDMats.Models.Engineering;
+using EDMats.Models.Materials;
+using EDMats.Models.Trading;
 using EDMats.Storage;
 
 namespace EDMats.ViewModels
@@ -15,32 +17,23 @@ namespace EDMats.ViewModels
         private IEnumerable<BlueprintRequirementRepetitionsViewModel> _blueprintGradeRequirements = Enumerable.Empty<BlueprintRequirementRepetitionsViewModel>();
         private ExperimentalEffect _selectedExperimentalEffect;
         private int _experimentalEffectRepetitions;
-        private object _rawMaterialsTradeSolution;
-        private object _encodedMaterialsTradeSolution;
-        private object _manufacturedMaterialsTradeSolution;
+        private TradeSolution _rawMaterialsTradeSolution;
+        private TradeSolution _encodedMaterialsTradeSolution;
+        private TradeSolution _manufacturedMaterialsTradeSolution;
         private readonly CommanderProfileStorageHandler _commanderProfileStorageHandler;
         private readonly JournalReader _journalReader;
 
         public SolutionSearchViewModel()
             : this(App.Resolve<CommanderProfileStorageHandler>(), App.Resolve<JournalReader>())
         {
+            _encodedMaterialsTradeSolution = new TradeSolution(Enumerable.Empty<TradeEntry>());
+            _manufacturedMaterialsTradeSolution = new TradeSolution(new[] { new TradeEntry(new MaterialQuantity(Material.Iron, 3), new MaterialQuantity(Material.Manganese, 3)) });
         }
 
         public SolutionSearchViewModel(CommanderProfileStorageHandler commanderProfileStorageHandler, JournalReader journalReader)
-        {
-            _commanderProfileStorageHandler = commanderProfileStorageHandler;
-            _journalReader = journalReader;
-            SearchTradeSolutionCommand = CreateCommand(
-                () => (RawMaterialsTradeSolution is null || EncodedMaterialsTradeSolution is null || ManufacturedMaterialsTradeSolution is null)
-                      && (SelectedBlueprint is object || SelectedExperimentalEffect is object),
-                _SearchSolution,
-                new[] { nameof(RawMaterialsTradeSolution), nameof(EncodedMaterialsTradeSolution), nameof(ManufacturedMaterialsTradeSolution), nameof(SelectedBlueprint), nameof(SelectedExperimentalEffect) }
-            );
-        }
+            => (_commanderProfileStorageHandler, _journalReader) = (commanderProfileStorageHandler, journalReader);
 
-        public Command SearchTradeSolutionCommand { get; }
-
-        public object RawMaterialsTradeSolution
+        public TradeSolution RawMaterialsTradeSolution
         {
             get => _rawMaterialsTradeSolution;
             private set
@@ -53,7 +46,7 @@ namespace EDMats.ViewModels
             }
         }
 
-        public object EncodedMaterialsTradeSolution
+        public TradeSolution EncodedMaterialsTradeSolution
         {
             get => _encodedMaterialsTradeSolution;
             private set
@@ -66,7 +59,7 @@ namespace EDMats.ViewModels
             }
         }
 
-        public object ManufacturedMaterialsTradeSolution
+        public TradeSolution ManufacturedMaterialsTradeSolution
         {
             get => _manufacturedMaterialsTradeSolution;
             private set
@@ -146,7 +139,7 @@ namespace EDMats.ViewModels
             }
         }
 
-        private void _SearchSolution()
+        public void SearchTradeSolutions()
         {
             var commanderProfile = _commanderProfileStorageHandler.Load();
             var commanderInfo = _GetCommanderInfo(commanderProfile.JournalsDirectoryPath);
@@ -161,7 +154,7 @@ namespace EDMats.ViewModels
                     .EnumerateFiles("*.log", SearchOption.TopDirectoryOnly).OrderBy(journalFile => journalFile.LastWriteTimeUtc)
                     .FirstOrDefault();
                 if (latestJournalFile is object)
-                    using (var fileStream = new FileStream(journalsDirectoryPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                    using (var fileStream = new FileStream(latestJournalFile.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                     using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
                         return _journalReader.Read(streamReader);
                 else

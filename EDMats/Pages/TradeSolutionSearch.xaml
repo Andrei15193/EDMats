@@ -16,57 +16,52 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="{Binding SelectedModule, Converter={converters:GridLengthNullConverter}, Mode=OneWay}" />
             <RowDefinition Height="{Binding SelectedBlueprint, Converter={converters:GridLengthNullConverter}, Mode=OneWay}" />
             <RowDefinition Height="{Binding SelectedExperimentalEffect, Converter={converters:GridLengthNullConverter}, Mode=OneWay}" />
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0">
-            <StackPanel.Resources>
-                <converters:EqualsConverter x:Key="HyperlinkTradeSolutionEnabledConverter"
-                                            ValueWhenEqual="False"
-                                            ValueWhenNotEqual="True" />
-                <converters:EqualsConverter x:Key="HyperlinkTradeSolutionTextDecorationConverter"
-                                            ValueWhenNotEqual="{x:Static TextDecorations.Underline}">
-                    <converters:EqualsConverter.ValueWhenEqual>
-                        <TextDecorationCollection />
-                    </converters:EqualsConverter.ValueWhenEqual>
-                </converters:EqualsConverter>
-            </StackPanel.Resources>
-            <ToggleButton HorizontalContentAlignment="Stretch"
-                          VerticalAlignment="Stretch"
-                          IsEnabledChanged="_SolutionSearchToggleButtonChanged"
-                          Command="{Binding SearchTradeSolutionCommand, Mode=OneTime}"
-                          Checked="_BeginTradeSolutionSearch"
-                          Unchecked="_EndTradeSolutionSearch">
-                <Grid>
-                    <Grid Panel.ZIndex="1"
-                          Margin="10">
-                        <TextBlock Grid.Row="0"
-                                   Text="{Binding IsChecked, RelativeSource={RelativeSource FindAncestor, AncestorType=ToggleButton}, Mode=OneWay, Converter={converters:EqualsConverter ValueWhenEqual='Searching for Trade Solution', ValueWhenNotEqual='Search for Trade Solution'}, ConverterParameter=True}"
-                                   FontSize="14"
-                                   TextAlignment="Center" />
-                    </Grid>
-                    <ProgressBar Panel.ZIndex="0"
-                                 IsEnabled="{Binding IsChecked, RelativeSource={RelativeSource FindAncestor, AncestorType=ToggleButton}, Mode=OneWay}"
-                                 IsIndeterminate="{Binding IsChecked, RelativeSource={RelativeSource FindAncestor, AncestorType=ToggleButton}, Mode=OneWay}" />
-                </Grid>
+            <ToggleButton Checked="_BeginTradeSolutionSearch"
+                          Unchecked="_EndTradeSolutionSearch"
+                          Padding="10"
+                          FontSize="15"
+                          Content="Watch Journal File">
             </ToggleButton>
-            <TextBlock Grid.Row="1"
-                       Margin="0, 2, 0, 0"
-                       TextAlignment="Center">
-                            <Hyperlink IsEnabled="{Binding RawMaterialsTradeSolution, Mode=OneWay, Converter={StaticResource HyperlinkTradeSolutionEnabledConverter}}"
-                                       TextDecorations="{Binding RawMaterialsTradeSolution, Mode=OneWay, Converter={StaticResource HyperlinkTradeSolutionTextDecorationConverter}}">Raw</Hyperlink>
-                            <Run Text="|" />
-                            <Hyperlink IsEnabled="{Binding EncodedMaterialsTradeSolution, Mode=OneWay, Converter={StaticResource HyperlinkTradeSolutionEnabledConverter}}"
-                                       TextDecorations="{Binding EncodedMaterialsTradeSolution, Mode=OneWay, Converter={StaticResource HyperlinkTradeSolutionTextDecorationConverter}}">Encoded</Hyperlink>
-                            <Run Text="|" />
-                            <Hyperlink IsEnabled="{Binding ManufacturedMaterialsTradeSolution, Mode=OneWay, Converter={StaticResource HyperlinkTradeSolutionEnabledConverter}}"
-                                       TextDecorations="{Binding ManufacturedMaterialsTradeSolution, Mode=OneWay, Converter={StaticResource HyperlinkTradeSolutionTextDecorationConverter}}">Manufactured</Hyperlink>
+
+            <TextBlock Margin="0, 2, 0, 0"
+                       TextAlignment="Center"
+                       FontSize="14"
+                       Text="Trade solutions"
+                       TextDecorations="Underline" />
+            <TextBlock TextAlignment="Center">
+                <TextBlock.Resources>
+                    <converters:TradeSolutionBrushConverter x:Key="TradeSolutionBrushConverter"
+                                                            NoTradeSolutionBrush="Red"
+                                                            EmptyTradeSolutionBrush="Green"
+                                                            TradeSolutionBrush="Blue" />
+                    <converters:TradeSolutionViewAvailableConverter x:Key="HyperlinkTradeSolutionEnabledConverter" />
+                    <converters:TradeSolutionTextDecorationsConverter x:Key="HyperlinkTradeSolutionTextDecorationConverter"
+                                                                      TradeSolutionTextDecoration="Underline" />
+                </TextBlock.Resources>
+                    <Hyperlink Foreground="{Binding RawMaterialsTradeSolution, Mode=OneWay, Converter={StaticResource TradeSolutionBrushConverter}}"
+                               IsEnabled="{Binding RawMaterialsTradeSolution, Mode=OneWay, Converter={StaticResource HyperlinkTradeSolutionEnabledConverter}}"
+                               TextDecorations="{Binding RawMaterialsTradeSolution, Mode=OneWay, Converter={StaticResource HyperlinkTradeSolutionTextDecorationConverter}}">Raw</Hyperlink>
+                    <Run Text="|" />
+                    <Hyperlink DataContext="{Binding EncodedMaterialsTradeSolution, Mode=OneWay}"
+                               Foreground="{Binding Mode=OneWay, Converter={StaticResource TradeSolutionBrushConverter}}"
+                               IsEnabled="{Binding Mode=OneWay, Converter={StaticResource HyperlinkTradeSolutionEnabledConverter}}"
+                               TextDecorations="{Binding Mode=OneWay, Converter={StaticResource HyperlinkTradeSolutionTextDecorationConverter}}">Encoded</Hyperlink>
+                    <Run Text="|" />
+                    <Hyperlink DataContext="{Binding ManufacturedMaterialsTradeSolution, Mode=OneWay}"
+                               Foreground="{Binding Mode=OneWay, Converter={StaticResource TradeSolutionBrushConverter}}"
+                               IsEnabled="{Binding Mode=OneWay, Converter={StaticResource HyperlinkTradeSolutionEnabledConverter}}"
+                               TextDecorations="{Binding Mode=OneWay, Converter={StaticResource HyperlinkTradeSolutionTextDecorationConverter}}">Manufactured</Hyperlink>
             </TextBlock>
         </StackPanel>
 
         <Grid Grid.Row="1"
+              Grid.RowSpan="{Binding SelectedModule, ConverterParameter={x:Null}, Converter={converters:EqualsConverter ValueWhenEqual=3, ValueWhenNotEqual=1}, Mode=OneWay}"
               Margin="0, 6, 0, 0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -92,11 +87,12 @@
         </Grid>
 
         <Grid Grid.Row="2"
+              Grid.RowSpan="{Binding SelectedModule.ExperimentalEffects.Count, ConverterParameter=0, Converter={converters:EqualsConverter ValueWhenEqual=2, ValueWhenNotEqual=1}, Mode=OneWay}"
               Margin="0, 6, 0, 0"
               Visibility="{Binding SelectedModule, Mode=OneWay, ConverterParameter={x:Null}, Converter={converters:EqualsConverter ValueWhenEqual={x:Static Visibility.Collapsed}, ValueWhenNotEqual={x:Static Visibility.Visible}}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="1*" />
+                <RowDefinition Height="{Binding SelectedBlueprint, Converter={converters:GridLengthNullConverter}, Mode=OneWay}" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
@@ -173,7 +169,7 @@
             <Grid Visibility="{Binding SelectedModule, Mode=OneWay, ConverterParameter={x:Null}, Converter={converters:EqualsConverter ValueWhenEqual={x:Static Visibility.Collapsed}, ValueWhenNotEqual={x:Static Visibility.Visible}}}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="{Binding SelectedExperimentalEffect, Converter={converters:GridLengthNullConverter}, Mode=OneWay}" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
