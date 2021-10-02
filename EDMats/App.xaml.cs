@@ -14,6 +14,7 @@ namespace EDMats
         static App()
         {
             _unityContainer = new UnityContainer()
+                .RegisterSingleton<ITradeSolutionService, TradeSolutionService>()
                 .RegisterSingleton<IMaterialTraderService, MaterialTraderService>()
                 .RegisterSingleton<ICommanderProfileStorageHandler, CommanderProfileStorageHandler>()
                 .RegisterSingleton<IStorageHandler, InMemoryStorageHandler>();

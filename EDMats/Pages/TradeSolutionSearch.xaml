@@ -44,19 +44,23 @@
                     <converters:TradeSolutionTextDecorationsConverter x:Key="HyperlinkTradeSolutionTextDecorationConverter"
                                                                       TradeSolutionTextDecoration="Underline" />
                 </TextBlock.Resources>
-                    <Hyperlink Foreground="{Binding RawMaterialsTradeSolution, Mode=OneWay, Converter={StaticResource TradeSolutionBrushConverter}}"
-                               IsEnabled="{Binding RawMaterialsTradeSolution, Mode=OneWay, Converter={StaticResource HyperlinkTradeSolutionEnabledConverter}}"
-                               TextDecorations="{Binding RawMaterialsTradeSolution, Mode=OneWay, Converter={StaticResource HyperlinkTradeSolutionTextDecorationConverter}}">Raw</Hyperlink>
+                    <Hyperlink DataContext="{Binding RawMaterialsTradeSolution, Mode=OneWay}"
+                               Foreground="{Binding Mode=OneWay, Converter={StaticResource TradeSolutionBrushConverter}}"
+                               IsEnabled="{Binding Mode=OneWay, Converter={StaticResource HyperlinkTradeSolutionEnabledConverter}}"
+                               TextDecorations="{Binding Mode=OneWay, Converter={StaticResource HyperlinkTradeSolutionTextDecorationConverter}}"
+                               Click="_ShowTradeSolution">Raw</Hyperlink>
                     <Run Text="|" />
                     <Hyperlink DataContext="{Binding EncodedMaterialsTradeSolution, Mode=OneWay}"
                                Foreground="{Binding Mode=OneWay, Converter={StaticResource TradeSolutionBrushConverter}}"
                                IsEnabled="{Binding Mode=OneWay, Converter={StaticResource HyperlinkTradeSolutionEnabledConverter}}"
-                               TextDecorations="{Binding Mode=OneWay, Converter={StaticResource HyperlinkTradeSolutionTextDecorationConverter}}">Encoded</Hyperlink>
+                               TextDecorations="{Binding Mode=OneWay, Converter={StaticResource HyperlinkTradeSolutionTextDecorationConverter}}"
+                               Click="_ShowTradeSolution">Encoded</Hyperlink>
                     <Run Text="|" />
                     <Hyperlink DataContext="{Binding ManufacturedMaterialsTradeSolution, Mode=OneWay}"
                                Foreground="{Binding Mode=OneWay, Converter={StaticResource TradeSolutionBrushConverter}}"
                                IsEnabled="{Binding Mode=OneWay, Converter={StaticResource HyperlinkTradeSolutionEnabledConverter}}"
-                               TextDecorations="{Binding Mode=OneWay, Converter={StaticResource HyperlinkTradeSolutionTextDecorationConverter}}">Manufactured</Hyperlink>
+                               TextDecorations="{Binding Mode=OneWay, Converter={StaticResource HyperlinkTradeSolutionTextDecorationConverter}}"
+                               Click="_ShowTradeSolution">Manufactured</Hyperlink>
             </TextBlock>
         </StackPanel>
 

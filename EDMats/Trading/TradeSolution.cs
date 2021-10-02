@@ -5,6 +5,11 @@ namespace EDMats.Trading
 {
     public class TradeSolution
     {
+        public TradeSolution()
+            : this(Enumerable.Empty<TradeEntry>())
+        {
+        }
+
         public TradeSolution(IEnumerable<TradeEntry> trades)
             => Trades = trades as IReadOnlyList<TradeEntry> ?? trades.ToArray();
 
