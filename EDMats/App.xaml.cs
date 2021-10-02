@@ -1,5 +1,8 @@
 ﻿using System.Windows;
 using EDMats.Storage;
+using EDMats.Storage.Implementations;
+using EDMats.Trading;
+using EDMats.Trading.Implementations;
 using Unity;
 
 namespace EDMats
@@ -11,6 +14,8 @@ namespace EDMats
         static App()
         {
             _unityContainer = new UnityContainer()
+                .RegisterSingleton<IMaterialTraderService, MaterialTraderService>()
+                .RegisterSingleton<ICommanderProfileStorageHandler, CommanderProfileStorageHandler>()
                 .RegisterSingleton<IStorageHandler, InMemoryStorageHandler>();
         }
 

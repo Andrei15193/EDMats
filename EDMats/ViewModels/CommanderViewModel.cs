@@ -9,14 +9,14 @@ namespace EDMats.ViewModels
     {
         private string _commanderName;
         private string _journalsDirectoryPath;
-        private readonly CommanderProfileStorageHandler _commanderProfileStorageHandler;
+        private readonly ICommanderProfileStorageHandler _commanderProfileStorageHandler;
 
         public CommanderViewModel()
-            : this(App.Resolve<CommanderProfileStorageHandler>())
+            : this(App.Resolve<ICommanderProfileStorageHandler>())
         {
         }
 
-        public CommanderViewModel(CommanderProfileStorageHandler commanderProfileStorageHandler)
+        public CommanderViewModel(ICommanderProfileStorageHandler commanderProfileStorageHandler)
         {
             _commanderProfileStorageHandler = commanderProfileStorageHandler;
             SaveCommand = CreateCommand(_Save);

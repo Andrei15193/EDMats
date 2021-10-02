@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace EDMats.Models.Trading
+namespace EDMats.Trading
 {
     public class TradeSolution
     {

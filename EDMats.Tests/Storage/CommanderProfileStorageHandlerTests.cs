@@ -1,5 +1,7 @@
-﻿using EDMats.Data;
-using EDMats.Storage;
+﻿using System;
+using System.IO;
+using EDMats.Data;
+using EDMats.Storage.Implementations;
 using Xunit;
 
 namespace EDMats.Tests.Storage
@@ -13,8 +15,8 @@ namespace EDMats.Tests.Storage
 
             var commanderProfile = commanderProfileStorageHandler.Load();
 
-            Assert.Null(commanderProfile.CommanderName);
-            Assert.Null(commanderProfile.JournalsDirectoryPath);
+            Assert.Equal("Anonymous", commanderProfile.CommanderName);
+            Assert.Equal(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Saved Games", "Frontier Developments", "Elite Dangerous"), commanderProfile.JournalsDirectoryPath);
         }
 
         [Fact]

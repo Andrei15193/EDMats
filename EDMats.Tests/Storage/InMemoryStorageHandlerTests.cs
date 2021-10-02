@@ -1,4 +1,5 @@
 ﻿using EDMats.Storage;
+using EDMats.Storage.Implementations;
 
 namespace EDMats.Tests.Storage
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace EDMats.Storage
+namespace EDMats.Storage.Implementations
 {
     public class InMemoryStorageHandler : IStorageHandler
     {

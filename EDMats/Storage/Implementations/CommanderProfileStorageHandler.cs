@@ -1,11 +1,12 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 using EDMats.Data;
 
-namespace EDMats.Storage
+namespace EDMats.Storage.Implementations
 {
-    public class CommanderProfileStorageHandler
+    public class CommanderProfileStorageHandler : ICommanderProfileStorageHandler
     {
         private const string CommanderProfileFileName = "commander-profile.xml";
         private static readonly XmlSerializer _xmlSerializer = new XmlSerializer(typeof(CommanderProfile));
@@ -20,7 +21,11 @@ namespace EDMats.Storage
             {
                 var content = reader.ReadToEnd();
                 if (string.IsNullOrWhiteSpace(content))
-                    return new CommanderProfile();
+                    return new CommanderProfile
+                    {
+                        CommanderName = "Anonymous",
+                        JournalsDirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Saved Games", "Frontier Developments", "Elite Dangerous")
+                    };
                 else
                     using (var stringReader = new StringReader(content))
                         return (CommanderProfile)_xmlSerializer.Deserialize(XmlReader.Create(stringReader));

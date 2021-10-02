@@ -1,6 +1,6 @@
 ﻿using EDMats.Models.Materials;
 
-namespace EDMats.Models.Trading
+namespace EDMats.Trading
 {
     public class TradeEntry
     {

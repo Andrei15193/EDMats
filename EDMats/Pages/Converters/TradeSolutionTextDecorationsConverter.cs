@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
-using EDMats.Models.Trading;
+using EDMats.Trading;
 
 namespace EDMats.Pages.Converters
 {
