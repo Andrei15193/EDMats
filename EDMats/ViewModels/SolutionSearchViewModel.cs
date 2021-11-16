@@ -126,7 +126,7 @@ namespace EDMats.ViewModels
                 {
                     _selectedExperimentalEffect = value;
                     NotifyPropertyChanged();
-                    ExperimentalEffectRepetitions = 8;
+                    ExperimentalEffectRepetitions = 1;
                     _ResetTradeSolutions();
                 }
             }
