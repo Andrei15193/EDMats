@@ -5,27 +5,8 @@ using EDMats.Models.Materials;
 
 namespace EDMats.Models.Engineering
 {
-    public class Module
+    public record Module(ModuleType Type, string Id, string Name, IReadOnlyCollection<Blueprint> Blueprints, IReadOnlyCollection<ExperimentalEffect> ExperimentalEffects)
     {
-        public Module(ModuleType type, string id, string name, IReadOnlyCollection<Blueprint> blueprints, IReadOnlyCollection<ExperimentalEffect> experimentalEffects)
-        {
-            Type = type;
-            Id = id;
-            Name = name;
-            Blueprints = blueprints;
-            ExperimentalEffects = experimentalEffects;
-        }
-
-        public ModuleType Type { get; }
-
-        public string Id { get; }
-
-        public string Name { get; }
-
-        public IReadOnlyCollection<Blueprint> Blueprints { get; }
-
-        public IReadOnlyCollection<ExperimentalEffect> ExperimentalEffects { get; }
-
         private static readonly IReadOnlyDictionary<string, Module> _modulesById;
 
         public static IReadOnlyCollection<Module> All { get; }
@@ -216,7 +197,7 @@ namespace EDMats.Models.Engineering
                     Array.Sort(experimentalEffects, (left, right) => string.Compare(left.Name, right.Name, StringComparison.OrdinalIgnoreCase));
                 }
                 {
-                    var blueprints = new Blueprint[3];
+                    var blueprints = new Blueprint[4];
                     var experimentalEffects = new ExperimentalEffect[5];
                     modules[1] = FrameShiftDrive = new Module(CoreInternals, "fsd", "Frame Shift Drive", blueprints, experimentalEffects);
 
@@ -247,6 +228,16 @@ namespace EDMats.Models.Engineering
                         }
                     );
                     blueprints[2] = new Blueprint(
+                        FrameShiftDrive,
+                        "v1",
+                        "Pre-Engineered V1",
+                        new[]
+                        {
+                            new BlueprintGradeRequirements(BlueprintGrade.Grade1, new[] { new MaterialQuantity(Material.ChemicalProcessors, 28), new MaterialQuantity(Material.DataminedWakeExceptions, 18), new MaterialQuantity(Material.ElectrochemicalArrays, 26), new MaterialQuantity(Material.Tellurium, 26) }, 1)
+                        },
+                        IsPreEngineered: true
+                    );
+                    blueprints[3] = new Blueprint(
                         FrameShiftDrive,
                         "s",
                         "Shielded",

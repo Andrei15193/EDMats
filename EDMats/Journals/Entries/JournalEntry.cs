@@ -2,13 +2,8 @@
 
 namespace EDMats.Journals.Entries
 {
-    public abstract class JournalEntry
+    public abstract record JournalEntry(DateTime Timestamp)
     {
-        public JournalEntry(DateTime timestamp)
-            => Timestamp = timestamp;
-
-        public DateTime Timestamp { get; }
-
-        public abstract void Populate(CommanderInfo commanderInfo);
+        public abstract void Accept(JournalEntryVisitor visitor);
     }
 }

@@ -28,7 +28,7 @@ namespace EDMats.Pages.Controls
             nameof(ItemsSource),
             typeof(IEnumerable<object>),
             typeof(ItemSelector),
-            new PropertyMetadata(Enumerable.Empty<object>(), _FilterOrItemsChanged)
+            new PropertyMetadata(Array.Empty<object>(), _FilterOrItemsChanged)
         );
         public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register(
             nameof(SelectedItem),
@@ -68,7 +68,7 @@ namespace EDMats.Pages.Controls
         public IEnumerable<object> ItemsSource
         {
             get => (IEnumerable<object>)GetValue(ItemsSourceProperty);
-            set => SetValue(ItemsSourceProperty, value ?? Enumerable.Empty<object>());
+            set => SetValue(ItemsSourceProperty, value ?? Array.Empty<object>());
         }
 
         public object SelectedItem

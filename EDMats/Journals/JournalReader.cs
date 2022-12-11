@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using EDMats.Journals.Entries;
-using EDMats.Models.Materials;
+using EDMats.Journals.EntryFactories;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -11,80 +9,41 @@ namespace EDMats.Journals
 {
     public class JournalReader
     {
-        private readonly IReadOnlyDictionary<string, Func<JObject, JournalEntry>> _journalEntryFactories = new Dictionary<string, Func<JObject, JournalEntry>>(StringComparer.OrdinalIgnoreCase)
+        private readonly IEnumerable<IJournalEntryFactory<JournalEntry>> _journalEntryFactories = new IJournalEntryFactory<JournalEntry>[]
         {
-            { "Materials", _TryGetMaterialsJournalEntry },
-            { "MaterialCollected", _TryGetMaterialCollectedJournalEntry }
+            new MaterialCollectedJournalEntryFactory(),
+            new MaterialsJournalEntryFactory(),
+            new MaterialTradeJournalEntryFactory(),
+            new MissionCompletedJournalEntryFactory()
         };
 
-        public CommanderInfo Read(TextReader textReader)
+        public IEnumerable<JournalEntry> Read(TextReader textReader)
         {
-            var commanderInfo = new CommanderInfo();
+            var journalEntries = new List<JournalEntry>();
 
-            var journalEntryJsonText = textReader.ReadLine();
-            while (journalEntryJsonText is object)
+            string journalEntryJsonText;
+            do
             {
-                var journalEntryJson = JsonConvert.DeserializeObject<JObject>(journalEntryJsonText);
-
-                if (journalEntryJson is object && journalEntryJson.TryGetValue("event", StringComparison.Ordinal, out var eventToken) && _journalEntryFactories.TryGetValue(eventToken.Value<string>(), out var factory))
-                    factory(journalEntryJson)?.Populate(commanderInfo);
-
                 journalEntryJsonText = textReader.ReadLine();
-            }
+                if (!string.IsNullOrWhiteSpace(journalEntryJsonText))
+                {
+                    var journalEntryJson = JsonConvert.DeserializeObject<JObject>(journalEntryJsonText);
+                    if (journalEntryJson is not null && _TryCreateJournalEntry(journalEntryJson, out var journalEntry))
+                        journalEntries.Add(journalEntry);
+                }
+            } while (journalEntryJsonText is not null);
 
-            return commanderInfo;
+            return journalEntries;
         }
 
-        private static JournalEntry _TryGetMaterialsJournalEntry(JObject journalEntryJson)
+        private bool _TryCreateJournalEntry(JObject journalEntryJson, out JournalEntry journalEntry)
         {
-            return new MaterialsJournalEntry(
-                _GetTimestampFrom(journalEntryJson),
-                _GetMaterialQuantities("Raw"),
-                _GetMaterialQuantities("Manufactured"),
-                _GetMaterialQuantities("Encoded")
-            );
+            using (var journalEntryFactory = _journalEntryFactories.GetEnumerator())
+                do
+                    journalEntry = null;
+                while (journalEntryFactory.MoveNext() && !journalEntryFactory.Current.TryCreate(journalEntryJson, out journalEntry));
 
-            IReadOnlyCollection<MaterialQuantity> _GetMaterialQuantities(string propertyName)
-            {
-                journalEntryJson.TryGetValue(propertyName, StringComparison.OrdinalIgnoreCase, out var x);
-                var y = x;
-
-                var materialQuantities = journalEntryJson.TryGetValue(propertyName, StringComparison.OrdinalIgnoreCase, out var materialQuantitiesJson)
-                    ? ((JArray)materialQuantitiesJson).OfType<JObject>().Select(_TryGetMaterialQuantityFrom).Where(materialQuantity => materialQuantity is object)
-                    : Enumerable.Empty<MaterialQuantity>();
-
-                return materialQuantities as IReadOnlyCollection<MaterialQuantity> ?? materialQuantities.ToArray();
-            }
-        }
-
-        private static JournalEntry _TryGetMaterialCollectedJournalEntry(JObject journalEntryJson)
-        {
-            var materialQuantity = _TryGetMaterialQuantityFrom(journalEntryJson);
-            if (materialQuantity is object)
-                return new MaterialCollectedJournalEntry(_GetTimestampFrom(journalEntryJson), materialQuantity);
-            else
-                return null;
-        }
-
-        private static DateTime _GetTimestampFrom(JObject journalEntryJson)
-            => journalEntryJson.GetValue("timestamp", StringComparison.OrdinalIgnoreCase).Value<DateTime>();
-
-        private static MaterialQuantity _TryGetMaterialQuantityFrom(JObject materialQuantityJson)
-        {
-            if (materialQuantityJson.TryGetValue("Name", StringComparison.OrdinalIgnoreCase, out var nameToken)
-                && materialQuantityJson.TryGetValue("Count", StringComparison.OrdinalIgnoreCase, out var countToken))
-            {
-                var materialQuantity = new MaterialQuantity(Material.FindById(nameToken.Value<string>()), countToken.Value<int>());
-
-#warning Remove when all materials have been tested
-                if (materialQuantityJson.TryGetValue("Name_Localised", StringComparison.OrdinalIgnoreCase, out var localisedName)
-                    && materialQuantity.Material.Name != localisedName.Value<string>().Trim())
-                    throw new InvalidDataException($"Expected '{materialQuantity.Material.Name}' material name, actual '{localisedName}' received.");
-
-                return materialQuantity;
-            }
-            else
-                return null;
+            return journalEntry is not null;
         }
     }
 }

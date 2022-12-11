@@ -6,8 +6,8 @@ namespace EDMats.ViewModels
     {
         private int _repetitions;
 
-        public BlueprintRequirementRepetitionsViewModel(BlueprintGradeRequirements gradeRequirements, int repetitions = 8)
-            => (GradeRequirements, Repetitions) = (gradeRequirements, repetitions);
+        public BlueprintRequirementRepetitionsViewModel(BlueprintGradeRequirements gradeRequirements)
+            => (GradeRequirements, Repetitions) = (gradeRequirements, gradeRequirements.DefaultRepetitions);
 
         public BlueprintGradeRequirements GradeRequirements { get; }
 

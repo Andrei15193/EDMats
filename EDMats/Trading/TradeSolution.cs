@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace EDMats.Trading
@@ -6,7 +7,7 @@ namespace EDMats.Trading
     public class TradeSolution
     {
         public TradeSolution()
-            : this(Enumerable.Empty<TradeEntry>())
+            : this(Array.Empty<TradeEntry>())
         {
         }
 

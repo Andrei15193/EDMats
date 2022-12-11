@@ -1,0 +1,284 @@
+﻿{
+    "timestamp": "2022-10-09T11:57:30Z",
+    "event": "Materials",
+    "Raw": [
+        {
+            "Name": "carbon",
+            "Count": 141
+        },
+        {
+            "Name": "manganese",
+            "Count": 4
+        },
+        {
+            "Name": "nickel",
+            "Count": 57
+        },
+        {
+            "Name": "iron",
+            "Count": 57
+        },
+        {
+            "Name": "sulphur",
+            "Count": 116
+        },
+        {
+            "Name": "phosphorus",
+            "Count": 107
+        },
+        {
+            "Name": "technetium",
+            "Count": 5
+        },
+        {
+            "Name": "arsenic",
+            "Count": 16
+        },
+        {
+            "Name": "polonium",
+            "Count": 24
+        },
+        {
+            "Name": "zinc",
+            "Count": 36
+        },
+        {
+            "Name": "tin",
+            "Count": 42
+        },
+        {
+            "Name": "cadmium",
+            "Count": 38
+        },
+        {
+            "Name": "zirconium",
+            "Count": 12
+        },
+        {
+            "Name": "niobium",
+            "Count": 6
+        },
+        {
+            "Name": "molybdenum",
+            "Count": 3
+        },
+        {
+            "Name": "mercury",
+            "Count": 6
+        }
+    ],
+    "Manufactured": [
+        {
+            "Name": "exquisitefocuscrystals",
+            "Name_Localised": "Exquisite Focus Crystals",
+            "Count": 74
+        },
+        {
+            "Name": "biotechconductors",
+            "Name_Localised": "Biotech Conductors",
+            "Count": 46
+        },
+        {
+            "Name": "mechanicalscrap",
+            "Name_Localised": "Mechanical Scrap",
+            "Count": 2
+        },
+        {
+            "Name": "chemicaldistillery",
+            "Name_Localised": "Chemical Distillery",
+            "Count": 4
+        },
+        {
+            "Name": "chemicalprocessors",
+            "Name_Localised": "Chemical Processors",
+            "Count": 5
+        },
+        {
+            "Name": "galvanisingalloys",
+            "Name_Localised": "Galvanising Alloys",
+            "Count": 2
+        },
+        {
+            "Name": "chemicalmanipulators",
+            "Name_Localised": "Chemical Manipulators",
+            "Count": 3
+        },
+        {
+            "Name": "thermicalloys",
+            "Name_Localised": "Thermic Alloys",
+            "Count": 5
+        },
+        {
+            "Name": "fedproprietarycomposites",
+            "Name_Localised": "Proprietary Composites",
+            "Count": 2
+        },
+        {
+            "Name": "shieldemitters",
+            "Name_Localised": "Shield Emitters",
+            "Count": 1
+        },
+        {
+            "Name": "crystalshards",
+            "Name_Localised": "Crystal Shards",
+            "Count": 3
+        },
+        {
+            "Name": "shieldingsensors",
+            "Name_Localised": "Shielding Sensors",
+            "Count": 3
+        },
+        {
+            "Name": "uncutfocuscrystals",
+            "Name_Localised": "Flawed Focus Crystals",
+            "Count": 1
+        },
+        {
+            "Name": "heatresistantceramics",
+            "Name_Localised": "Heat Resistant Ceramics",
+            "Count": 5
+        },
+        {
+            "Name": "temperedalloys",
+            "Name_Localised": "Tempered Alloys",
+            "Count": 3
+        },
+        {
+            "Name": "compactcomposites",
+            "Name_Localised": "Compact Composites",
+            "Count": 4
+        },
+        {
+            "Name": "protolightalloys",
+            "Name_Localised": "Proto Light Alloys",
+            "Count": 1
+        },
+        {
+            "Name": "highdensitycomposites",
+            "Name_Localised": "High Density Composites",
+            "Count": 2
+        },
+        {
+            "Name": "protoradiolicalloys",
+            "Name_Localised": "Proto Radiolic Alloys",
+            "Count": 2
+        },
+        {
+            "Name": "chemicalstorageunits",
+            "Name_Localised": "Chemical Storage Units",
+            "Count": 3
+        },
+        {
+            "Name": "imperialshielding",
+            "Name_Localised": "Imperial Shielding",
+            "Count": 1
+        },
+        {
+            "Name": "conductivepolymers",
+            "Name_Localised": "Conductive Polymers",
+            "Count": 4
+        },
+        {
+            "Name": "conductivecomponents",
+            "Name_Localised": "Conductive Components",
+            "Count": 2
+        }
+    ],
+    "Encoded": [
+        {
+            "Name": "shieldcyclerecordings",
+            "Name_Localised": "Distorted Shield Cycle Recordings",
+            "Count": 3
+        },
+        {
+            "Name": "shielddensityreports",
+            "Name_Localised": "Untypical Shield Scans ",
+            "Count": 2
+        },
+        {
+            "Name": "shieldsoakanalysis",
+            "Name_Localised": "Inconsistent Shield Soak Analysis",
+            "Count": 8
+        },
+        {
+            "Name": "bulkscandata",
+            "Name_Localised": "Anomalous Bulk Scan Data",
+            "Count": 3
+        },
+        {
+            "Name": "emissiondata",
+            "Name_Localised": "Unexpected Emission Data",
+            "Count": 1
+        },
+        {
+            "Name": "scandatabanks",
+            "Name_Localised": "Classified Scan Databanks",
+            "Count": 6
+        },
+        {
+            "Name": "scanarchives",
+            "Name_Localised": "Unidentified Scan Archives",
+            "Count": 6
+        },
+        {
+            "Name": "archivedemissiondata",
+            "Name_Localised": "Irregular Emission Data",
+            "Count": 2
+        },
+        {
+            "Name": "disruptedwakeechoes",
+            "Name_Localised": "Atypical Disrupted Wake Echoes",
+            "Count": 94
+        },
+        {
+            "Name": "hyperspacetrajectories",
+            "Name_Localised": "Eccentric Hyperspace Trajectories",
+            "Count": 7
+        },
+        {
+            "Name": "wakesolutions",
+            "Name_Localised": "Strange Wake Solutions",
+            "Count": 11
+        },
+        {
+            "Name": "scrambledemissiondata",
+            "Name_Localised": "Exceptional Scrambled Emission Data",
+            "Count": 4
+        },
+        {
+            "Name": "fsdtelemetry",
+            "Name_Localised": "Anomalous FSD Telemetry",
+            "Count": 41
+        },
+        {
+            "Name": "dataminedwake",
+            "Name_Localised": "Datamined Wake Exceptions",
+            "Count": 3
+        },
+        {
+            "Name": "shieldfrequencydata",
+            "Name_Localised": "Peculiar Shield Frequency Data",
+            "Count": 1
+        },
+        {
+            "Name": "industrialfirmware",
+            "Name_Localised": "Cracked Industrial Firmware",
+            "Count": 2
+        },
+        {
+            "Name": "consumerfirmware",
+            "Name_Localised": "Modified Consumer Firmware",
+            "Count": 30
+        },
+        {
+            "Name": "encodedscandata",
+            "Name_Localised": "Divergent Scan Data",
+            "Count": 5
+        },
+        {
+            "Name": "securityfirmware",
+            "Name_Localised": "Security Firmware Patch",
+            "Count": 3
+        }
+    ]
+}

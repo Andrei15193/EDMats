@@ -353,7 +353,7 @@ namespace EDMats.Tests.Trading
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = _tradeSolutionService.TryFindSolution(
-                Enumerable.Empty<MaterialQuantity>(),
+                Array.Empty<MaterialQuantity>(),
                 new[] { new MaterialQuantity(Material.Germanium, 5), new MaterialQuantity(Material.Iron, 5) },
                 AllowedTrade.All
             );
@@ -373,7 +373,7 @@ namespace EDMats.Tests.Trading
 
             var tradeSolution = _tradeSolutionService.TryFindSolution(
                 new[] { new MaterialQuantity(Material.Zinc, 1) },
-                Enumerable.Empty<MaterialQuantity>(),
+                Array.Empty<MaterialQuantity>(),
                 AllowedTrade.All
             );
 
@@ -393,7 +393,7 @@ namespace EDMats.Tests.Trading
             var tradeSolution = _tradeSolutionService.TryFindSolution(
                 new[] { new MaterialQuantity(Material.Zinc, 1) },
                 new[] { new MaterialQuantity(Material.Germanium, 5), new MaterialQuantity(Material.Iron, 5) },
-                Enumerable.Empty<AllowedTrade>()
+                Array.Empty<AllowedTrade>()
             );
 
             Assert.Null(tradeSolution);

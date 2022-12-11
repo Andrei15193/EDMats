@@ -28,7 +28,7 @@ namespace EDMats.Trading.Implementations
             var availableMaterialQuantitiesList = _SubtractFromMatchingWithPositiveAmounts(availableMaterialQuantitiesCollection, desiredMaterialQuantitiesCollection).ToArray();
 
             if (desiredMaterialQuantitiesList.Length == 0)
-                return new TradeSolution(Enumerable.Empty<TradeEntry>());
+                return new TradeSolution(Array.Empty<TradeEntry>());
             else if (availableMaterialQuantitiesList.Length == 0)
                 return null;
 
@@ -43,7 +43,7 @@ namespace EDMats.Trading.Implementations
         {
             var desiredMaterialData = desiredMaterialsData.FirstOrDefault();
             if (desiredMaterialData == null)
-                return new TradeSolution(Enumerable.Empty<TradeEntry>());
+                return new TradeSolution(Array.Empty<TradeEntry>());
 
             IReadOnlyCollection<TradeEntry> tradeEntries = null;
             var searchStates = new Stack<SearchState>();

@@ -1,11 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31624.102
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EDMats", "EDMats\EDMats.csproj", "{0B33AB3A-EF40-4E73-A7A2-AE023A82371C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EDMats.Tests", "EDMats.Tests\EDMats.Tests.csproj", "{34375798-6AC2-416D-A8ED-1F1DB103B105}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EDMats.Tests", "EDMats.Tests\EDMats.Tests.csproj", "{34375798-6AC2-416D-A8ED-1F1DB103B105}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{16785526-727D-44EC-97A6-B05548882986}"
+	ProjectSection(SolutionItems) = preProject
+		Utils\get-log.ps1 = Utils\get-log.ps1
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

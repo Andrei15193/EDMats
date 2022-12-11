@@ -4,27 +4,8 @@ using System.Linq;
 
 namespace EDMats.Models.Materials
 {
-    public class Material
+    public record Material(string Id, string Name, MaterialGrade Grade, MaterialCategory Category, int Capacity)
     {
-        internal Material(string id, string name, MaterialGrade grade, MaterialCategory category, int capacity)
-        {
-            Id = id;
-            Name = name;
-            Grade = grade;
-            Category = category;
-            Capacity = capacity;
-        }
-
-        public string Id { get; }
-
-        public string Name { get; }
-
-        public MaterialGrade Grade { get; }
-
-        public MaterialCategory Category { get; }
-
-        public int Capacity { get; }
-
         public MaterialType Type
             => Category.Type;
 

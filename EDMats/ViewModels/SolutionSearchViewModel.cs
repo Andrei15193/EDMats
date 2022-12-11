@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace EDMats.ViewModels
     {
         private Module _selectedModule;
         private Blueprint _selectedBlueprint;
-        private IEnumerable<BlueprintRequirementRepetitionsViewModel> _blueprintGradeRequirements = Enumerable.Empty<BlueprintRequirementRepetitionsViewModel>();
+        private IEnumerable<BlueprintRequirementRepetitionsViewModel> _blueprintGradeRequirements = Array.Empty<BlueprintRequirementRepetitionsViewModel>();
         private ExperimentalEffect _selectedExperimentalEffect;
         private int _experimentalEffectRepetitions;
         private TradeSolution _rawMaterialsTradeSolution;
@@ -111,7 +112,7 @@ namespace EDMats.ViewModels
             {
                 if (_blueprintGradeRequirements != value)
                 {
-                    _blueprintGradeRequirements = value ?? Enumerable.Empty<BlueprintRequirementRepetitionsViewModel>();
+                    _blueprintGradeRequirements = value ?? Array.Empty<BlueprintRequirementRepetitionsViewModel>();
                     NotifyPropertyChanged();
                 }
             }
@@ -148,7 +149,7 @@ namespace EDMats.ViewModels
 
         public void SearchTradeSolutions()
         {
-            if (SelectedBlueprint is object || SelectedExperimentalEffect is object)
+            if (SelectedBlueprint is not null || SelectedExperimentalEffect is not null)
             {
                 var commanderProfile = _commanderProfileStorageHandler.Load();
                 var commanderInfo = _GetCommanderInfo(commanderProfile.JournalsDirectoryPath);
@@ -157,11 +158,11 @@ namespace EDMats.ViewModels
                 var commanderMaterialsByType = commanderInfo.Materials.ToLookup(materialQuantity => materialQuantity.Material.Type);
                 var requiredMaterialsByType = (
                     from materialQuantity in (
-                            from gradeRequirement in BlueprintGradeRequirements ?? Enumerable.Empty<BlueprintRequirementRepetitionsViewModel>()
+                            from gradeRequirement in BlueprintGradeRequirements ?? Array.Empty<BlueprintRequirementRepetitionsViewModel>()
                             from requiredMaterialQuantity in gradeRequirement.GradeRequirements.Requirements
                             select new MaterialQuantity(requiredMaterialQuantity.Material, gradeRequirement.Repetitions * requiredMaterialQuantity.Amount)
                         ).Concat(
-                            from requiredMaterialQuantity in SelectedExperimentalEffect?.Requirements ?? Enumerable.Empty<MaterialQuantity>()
+                            from requiredMaterialQuantity in SelectedExperimentalEffect?.Requirements ?? Array.Empty<MaterialQuantity>()
                             select new MaterialQuantity(requiredMaterialQuantity.Material, ExperimentalEffectRepetitions * requiredMaterialQuantity.Amount)
                         )
                     group materialQuantity.Amount by materialQuantity.Material into amountsByMaterial
@@ -178,7 +179,7 @@ namespace EDMats.ViewModels
                 TradeSolution _TryFindTradeSoluton(MaterialType materialType)
                 {
                     if (!requiredMaterialsByType.Contains(materialType))
-                        return new TradeSolution(Enumerable.Empty<TradeEntry>());
+                        return new TradeSolution(Array.Empty<TradeEntry>());
                     else if (commanderMaterialsByType.Contains(materialType))
                         return _tradeSolutionService.TryFindSolution(requiredMaterialsByType[materialType], commanderMaterialsByType[materialType], allowedTrades);
                     else
@@ -187,24 +188,24 @@ namespace EDMats.ViewModels
             }
         }
 
-
         private CommanderInfo _GetCommanderInfo(string journalsDirectoryPath)
         {
+            var commanderInfoJournalEntryVisitor = new CommanderInfoJournalEntryVisitor();
+
             var journalsDirectory = new DirectoryInfo(journalsDirectoryPath);
             if (journalsDirectory.Exists)
             {
                 var latestJournalFile = journalsDirectory
                     .EnumerateFiles("*.log", SearchOption.TopDirectoryOnly).OrderByDescending(journalFile => journalFile.LastWriteTimeUtc)
                     .FirstOrDefault();
-                if (latestJournalFile is object)
+                if (latestJournalFile is not null)
                     using (var fileStream = new FileStream(latestJournalFile.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                     using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
-                        return _journalReader.Read(streamReader);
-                else
-                    return new CommanderInfo();
+                        foreach (var journalEntry in _journalReader.Read(streamReader))
+                            journalEntry.Accept(commanderInfoJournalEntryVisitor);
             }
-            else
-                return new CommanderInfo();
+
+            return commanderInfoJournalEntryVisitor.CommanderInfo;
         }
 
         private void _BlueprintGradeRequirementChanged(object sender, PropertyChangedEventArgs e)

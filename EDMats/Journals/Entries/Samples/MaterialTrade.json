@@ -1,0 +1,18 @@
+﻿{
+    "timestamp": "2022-10-09T12:27:30Z",
+    "event": "MaterialTrade",
+    "MarketID": 3222950656,
+    "TraderType": "manufactured",
+    "Paid": {
+        "Material": "chemicalmanipulators",
+        "Material_Localised": "Chemical Manipulators",
+        "Category": "Manufactured",
+        "Quantity": 1
+    },
+    "Received": {
+        "Material": "chemicaldistillery",
+        "Material_Localised": "Chemical Distillery",
+        "Category": "Manufactured",
+        "Quantity": 3
+    }
+}

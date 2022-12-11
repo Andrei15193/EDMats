@@ -1,15 +1,4 @@
 ﻿namespace EDMats.Models.Materials
 {
-    public sealed class MaterialQuantity
-    {
-        public MaterialQuantity(Material material, int amount)
-        {
-            Material = material;
-            Amount = amount;
-        }
-
-        public Material Material { get; }
-
-        public int Amount { get; }
-    }
+    public sealed record MaterialQuantity(Material Material, int Amount);
 }

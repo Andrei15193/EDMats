@@ -44,7 +44,7 @@ namespace EDMats.Tests.Models.Engineering
                         Assert.Equal(blueprint.GradeRequirements, blueprint.GradeRequirements.OrderBy(requirement => requirement.Grade));
                         foreach (var gradeRequirement in blueprint.GradeRequirements)
                         {
-                            Assert.True(gradeRequirement.Requirements.All(requirement => requirement.Amount == 1));
+                            Assert.True(blueprint.IsPreEngineered || gradeRequirement.Requirements.All(requirement => requirement.Amount == 1));
                             Assert.Equal(gradeRequirement.Requirements, gradeRequirement.Requirements.OrderBy(requirement => requirement.Material.Name, StringComparer.OrdinalIgnoreCase).ToList());
                         }
                     }
