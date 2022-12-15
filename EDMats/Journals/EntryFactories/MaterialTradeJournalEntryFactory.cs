@@ -10,8 +10,8 @@ namespace EDMats.Journals.EntryFactories
         {
             if (string.Equals("MaterialTrade", JournalEntryFactoryUtils.GetEventFrom(journalEntryJson), StringComparison.OrdinalIgnoreCase))
             {
-                var paid = JournalEntryFactoryUtils.TryGetMaterialQuantityFrom(journalEntryJson.Property("Paid", StringComparison.OrdinalIgnoreCase).Value<JObject>(), "Material");
-                var received = JournalEntryFactoryUtils.TryGetMaterialQuantityFrom(journalEntryJson.Property("Received", StringComparison.OrdinalIgnoreCase).Value<JObject>(), "Material");
+                var paid = JournalEntryFactoryUtils.TryGetMaterialQuantityFrom(journalEntryJson.Property("Paid", StringComparison.OrdinalIgnoreCase).Value as JObject, "Material", "Quantity");
+                var received = JournalEntryFactoryUtils.TryGetMaterialQuantityFrom(journalEntryJson.Property("Received", StringComparison.OrdinalIgnoreCase).Value as JObject, "Material", "Quantity");
 
                 journalEntry = new MaterialTradeJournalEntry(JournalEntryFactoryUtils.GetTimestampFrom(journalEntryJson), paid, received);
             }

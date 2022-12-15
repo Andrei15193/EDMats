@@ -7,5 +7,5 @@
            mc:Ignorable="d"
            d:DesignHeight="450"
            d:DesignWidth="800">
-    <Run Text="[" /><Run Text="{Binding Material.Grade, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MaterialView}, Mode=OneTime}" /><Run Text="]" /><Run Text="{Binding Material.Name, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MaterialView}, Mode=OneTime}" />
+    <Run Text="[" /><Run Text="{Binding Material.Grade, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MaterialView}, Mode=OneTime}" /><Run Text="]" /><Run Text="{Binding Material.Name, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MaterialView}, Mode=OneTime}" /><Run Text="[" /><Run Text="{Binding Material.Type.Name, RelativeSource={RelativeSource FindAncestor, AncestorType=controls:MaterialView}, Mode=OneTime}" /><Run Text="]" />
 </TextBlock>

@@ -16,10 +16,10 @@ namespace EDMats.Journals.EntryFactories
         public static MaterialQuantity TryGetMaterialQuantityFrom(JObject materialQuantityJson)
             => TryGetMaterialQuantityFrom(materialQuantityJson, "Name");
 
-        public static MaterialQuantity TryGetMaterialQuantityFrom(JObject materialQuantityJson, string materialNameProperty = "Name")
+        public static MaterialQuantity TryGetMaterialQuantityFrom(JObject materialQuantityJson, string materialNameProperty = "Name", string countProperty = "Count")
         {
             if (materialQuantityJson.TryGetValue(materialNameProperty, StringComparison.OrdinalIgnoreCase, out var nameToken)
-                && materialQuantityJson.TryGetValue("Count", StringComparison.OrdinalIgnoreCase, out var countToken))
+                && materialQuantityJson.TryGetValue(countProperty, StringComparison.OrdinalIgnoreCase, out var countToken))
             {
                 var materialQuantity = new MaterialQuantity(Material.FindById(nameToken.Value<string>()), countToken.Value<int>());
 
