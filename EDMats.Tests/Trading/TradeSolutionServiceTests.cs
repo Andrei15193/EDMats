@@ -4,27 +4,27 @@ using System.Linq;
 using EDMats.Models.Materials;
 using EDMats.Trading;
 using EDMats.Trading.Implementations;
-using Moq;
+using NSubstitute;
 using Xunit;
 
 namespace EDMats.Tests.Trading
 {
     public class TradeSolutionServiceTests
     {
-        private readonly Mock<IMaterialTraderService> _materialTraderService;
+        private readonly IMaterialTraderService _materialTraderService;
         private readonly TradeSolutionService _tradeSolutionService;
 
         public TradeSolutionServiceTests()
         {
-            _materialTraderService = new Mock<IMaterialTraderService>();
-            _tradeSolutionService = new TradeSolutionService(_materialTraderService.Object);
+            _materialTraderService = Substitute.For<IMaterialTraderService>();
+            _tradeSolutionService = new TradeSolutionService(_materialTraderService);
         }
 
         [Fact]
         public void Trade6For1()
         {
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
+                .GetTradeRate(Material.Zinc, Material.Iron)
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = _tradeSolutionService.TryFindSolution(
@@ -49,7 +49,7 @@ namespace EDMats.Tests.Trading
         public void Trade12For2()
         {
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
+                .GetTradeRate(Material.Zinc, Material.Iron)
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = _tradeSolutionService.TryFindSolution(
@@ -74,7 +74,7 @@ namespace EDMats.Tests.Trading
         public void Trade6For1Having9Available()
         {
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
+                .GetTradeRate(Material.Zinc, Material.Iron)
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = _tradeSolutionService.TryFindSolution(
@@ -99,13 +99,13 @@ namespace EDMats.Tests.Trading
         public void Trade6For1HavingMoreDifferentMaterialsAvailable()
         {
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
+                .GetTradeRate(Material.Zinc, Material.Iron)
                 .Returns(new TradeRate(1, 6));
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Germanium))
+                .GetTradeRate(Material.Zinc, Material.Germanium)
                 .Returns(new TradeRate(1, 6));
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Manganese))
+                .GetTradeRate(Material.Zinc, Material.Manganese)
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = _tradeSolutionService.TryFindSolution(
@@ -130,10 +130,10 @@ namespace EDMats.Tests.Trading
         public void TradingPrioritizesLowerGradeSameCategoryOverDifferentCategory()
         {
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
+                .GetTradeRate(Material.Zinc, Material.Iron)
                 .Returns(new TradeRate(1, 6));
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Germanium))
+                .GetTradeRate(Material.Zinc, Material.Germanium)
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = _tradeSolutionService.TryFindSolution(
@@ -158,10 +158,10 @@ namespace EDMats.Tests.Trading
         public void TradingPrioritizesLowerGradeFromDifferentCategoryOverDowngradingFromSameCategory()
         {
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Nickel))
+                .GetTradeRate(Material.Zinc, Material.Nickel)
                 .Returns(new TradeRate(1, 36));
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Tin))
+                .GetTradeRate(Material.Zinc, Material.Tin)
                 .Returns(new TradeRate(3, 1));
 
             var tradeSolution = _tradeSolutionService.TryFindSolution(
@@ -186,10 +186,10 @@ namespace EDMats.Tests.Trading
         public void TradingPrioritizesSameGradeFromDifferentCategoryOverDowngradingFromSameCategory()
         {
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Germanium))
+                .GetTradeRate(Material.Zinc, Material.Germanium)
                 .Returns(new TradeRate(1, 6));
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Tin))
+                .GetTradeRate(Material.Zinc, Material.Tin)
                 .Returns(new TradeRate(3, 1));
 
             var tradeSolution = _tradeSolutionService.TryFindSolution(
@@ -214,10 +214,10 @@ namespace EDMats.Tests.Trading
         public void TradingPrioritizesDowngradeFromSameCategoryOverDowngradeFromDifferentCategory()
         {
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Tungsten))
+                .GetTradeRate(Material.Zinc, Material.Tungsten)
                 .Returns(new TradeRate(2, 1));
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Tin))
+                .GetTradeRate(Material.Zinc, Material.Tin)
                 .Returns(new TradeRate(3, 1));
 
             var tradeSolution = _tradeSolutionService.TryFindSolution(
@@ -242,10 +242,10 @@ namespace EDMats.Tests.Trading
         public void Trade2DifferentMaterialsForSameOne()
         {
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
+                .GetTradeRate(Material.Zinc, Material.Iron)
                 .Returns(new TradeRate(1, 6));
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Germanium))
+                .GetTradeRate(Material.Zinc, Material.Germanium)
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = _tradeSolutionService.TryFindSolution(
@@ -274,7 +274,7 @@ namespace EDMats.Tests.Trading
         public void DowngradingMaterialsMakesAsFewTradesAsPossible()
         {
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Tin))
+                .GetTradeRate(Material.Zinc, Material.Tin)
                 .Returns(new TradeRate(3, 1));
 
             var tradeSolution = _tradeSolutionService.TryFindSolution(
@@ -299,10 +299,10 @@ namespace EDMats.Tests.Trading
         public void TradingMaterialsConsidersAllowedTrades()
         {
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
+                .GetTradeRate(Material.Zinc, Material.Iron)
                 .Returns(new TradeRate(1, 6));
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Germanium))
+                .GetTradeRate(Material.Zinc, Material.Germanium)
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = _tradeSolutionService.TryFindSolution(
@@ -327,10 +327,10 @@ namespace EDMats.Tests.Trading
         public void TradeSolutionIsNullWhenItCannotBeFound()
         {
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
+                .GetTradeRate(Material.Zinc, Material.Iron)
                 .Returns(new TradeRate(1, 6));
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Germanium))
+                .GetTradeRate(Material.Zinc, Material.Germanium)
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = _tradeSolutionService.TryFindSolution(
@@ -346,10 +346,10 @@ namespace EDMats.Tests.Trading
         public void TradeSolutionReturnsEmptyTradeEntriesWhenThereAreNoDesiredMaterials()
         {
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
+                .GetTradeRate(Material.Zinc, Material.Iron)
                 .Returns(new TradeRate(1, 6));
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Germanium))
+                .GetTradeRate(Material.Zinc, Material.Germanium)
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = _tradeSolutionService.TryFindSolution(
@@ -365,10 +365,10 @@ namespace EDMats.Tests.Trading
         public void TradeSolutionIsNullWhenThereAreNoAvailableMaterials()
         {
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
+                .GetTradeRate(Material.Zinc, Material.Iron)
                 .Returns(new TradeRate(1, 6));
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Germanium))
+                .GetTradeRate(Material.Zinc, Material.Germanium)
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = _tradeSolutionService.TryFindSolution(
@@ -384,10 +384,10 @@ namespace EDMats.Tests.Trading
         public void TradeSolutionIsNullWhenThereAreNoAlloedTrades()
         {
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
+                .GetTradeRate(Material.Zinc, Material.Iron)
                 .Returns(new TradeRate(1, 6));
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Germanium))
+                .GetTradeRate(Material.Zinc, Material.Germanium)
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = _tradeSolutionService.TryFindSolution(
@@ -403,10 +403,10 @@ namespace EDMats.Tests.Trading
         public void TradeSolutionHasEmptyTradeListIfTheDesiredMaterialsAreAlreadyAvailable()
         {
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
+                .GetTradeRate(Material.Zinc, Material.Iron)
                 .Returns(new TradeRate(1, 6));
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Germanium))
+                .GetTradeRate(Material.Zinc, Material.Germanium)
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = _tradeSolutionService.TryFindSolution(
@@ -422,10 +422,10 @@ namespace EDMats.Tests.Trading
         public void TradeSolutionDoesNotTradeDesiredMaterials()
         {
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
+                .GetTradeRate(Material.Zinc, Material.Iron)
                 .Returns(new TradeRate(1, 6));
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Germanium))
+                .GetTradeRate(Material.Zinc, Material.Germanium)
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = _tradeSolutionService.TryFindSolution(
@@ -450,13 +450,13 @@ namespace EDMats.Tests.Trading
         public void TradeSameMaterialForMultiple()
         {
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Zinc, Material.Iron))
+                .GetTradeRate(Material.Zinc, Material.Iron)
                 .Returns(new TradeRate(1, 6));
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Germanium, Material.Iron))
+                .GetTradeRate(Material.Germanium, Material.Iron)
                 .Returns(new TradeRate(1, 6));
             _materialTraderService
-                .Setup(materialTraderService => materialTraderService.GetTradeRate(Material.Manganese, Material.Iron))
+                .GetTradeRate(Material.Manganese, Material.Iron)
                 .Returns(new TradeRate(1, 6));
 
             var tradeSolution = _tradeSolutionService.TryFindSolution(
